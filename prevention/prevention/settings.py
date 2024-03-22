@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+CORE_ALLOWED_ORIGINS={'http://localhost:5174/'}
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'base',
+    
 ]
 
 MIDDLEWARE = [
