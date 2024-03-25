@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../input_Button/Input";
 import { Link } from "react-router-dom";
 import image2 from "../../assets/black signup2.jpeg.jpg";
 import TooglePassword from "./TooglePassword";
+import axios from 'axios'
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -17,12 +18,35 @@ const Signup = () => {
     togglePasswordVisibility,
   ] = TooglePassword();
 
-  const handleSubmit = (e) => {
-    // e.preventDefault();
-    console.log("email: ", email);
-    console.log("password: ", password);
-    console.log("confirmPassword: ", confirmPassword);
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    console.log(email,password)
+try {
+  
+  const response= await fetch('http://127.0.0.1:8000/api/token/',
+  {
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body:JSON.stringify({'username':email,'password':password})
+  });
+
+  const data= await response.json();
+  console.log(data)
+
+     
+
+} catch (error) {
+     console.log(error)
+}
+
+
+
+    
   };
+
+
 
   return (
     <div className="font-Poppins min-h-screen flex items-center justify-center lg:justify-start lg:gap-36 lg:px-12 w-full lg:bg-[#FDFDF5]">
