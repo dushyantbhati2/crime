@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Input from "../input_Button/Input";
 import { Link } from "react-router-dom";
-import image2 from "../../assets/black signup2.jpeg.jpg";
+import image2 from "../../assets/black signup final.jpeg";
 import TooglePassword from "./TooglePassword";
 
 const Login = () => {
@@ -23,14 +23,14 @@ const Login = () => {
     console.log("password: ", password);
   };
   return (
-    <div className="font-Poppins min-h-screen flex items-center justify-center lg:justify-start lg:gap-36 lg:px-12 w-full lg:bg-[#FDFDF5]  ">
+    <div className="font-Poppins min-h-screen flex items-center justify-center lg:justify-start lg:gap-36 lg:px-12 w-full lg:bg-white  ">
       <div className="hidden lg:flex w-1/2">
         {" "}
         <img src={image2} alt="" />
       </div>
       <form
         onSubmit={handleSubmit}
-        className="  bg-tertiary/20 text-textBlack shadow-lg rounded-lg px-8 py-6 max-w-md  w-[340px] md:w-96 md:h-[500px]"
+        className=" bg-[#CACACA]/20 text-textBlack shadow-lg rounded-lg px-8 py-6 max-w-md  w-[340px] md:w-96 md:h-[500px]"
       >
         <h1 className="text-3xl font-bold text-center mb-4 ">Sign In</h1>
         <Input
