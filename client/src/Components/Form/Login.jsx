@@ -3,12 +3,16 @@ import Input from "../input_Button/Input";
 import { Link } from "react-router-dom";
 import image2 from "../../assets/black signup final.jpeg";
 import TooglePassword from "./TooglePassword";
-import axios from 'axios'
+import axios from "../../axios/axiosDefaults.js";
+import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate= useNavigate()
+
+ 
 
   
   const [
@@ -32,7 +36,7 @@ const Login = () => {
   //     headers:{
   //       'Content-Type':'application/json'
   //     },
-  //     body:JSON.stringify({'username':email,'password':password})
+  //     body:JSON.stringify({'email':email,'password':password})
   //   });
   
   //   const data= await response.json();
@@ -50,13 +54,14 @@ const Login = () => {
    
   
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/token/', {
+      const response = await axios.post('token/', {
         'email': email,
         'password': password
       });
       const data =await response.data;
       console.log(data);
       localStorage.setItem('token',JSON.stringify(data))
+      navigate("/")
     } catch (error) {
       console.error(error.response.data);
     }
@@ -100,7 +105,7 @@ const Login = () => {
         <div className=" flex items-center pb-4 pt-2 ">
           <p className=" ">
             New to Website?{" "}
-            <Link to="/" className=" underline text-indigo-700 font-semibold">
+            <Link to="/signup" className=" underline text-indigo-700 font-semibold">
               Sign Up
             </Link>
           </p>

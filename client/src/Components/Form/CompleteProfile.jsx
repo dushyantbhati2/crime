@@ -1,19 +1,45 @@
 import React, { useState } from "react";
-import Input from "../input_Button/Input";
 import Select from "react-select";
 import image2 from "../../assets/black signup2.jpeg.jpg";
+import { useNavigate } from "react-router-dom";
+import axios from "../../axios/axiosDefaults.js";
+import { useAuth } from "../../context/AuthContext";
 
 const CompleteProfile = () => {
-  const [username, setUsername] = useState("");
   const [gender, setGender] = useState(null);
   const [occupation, setOccupation] = useState(null);
+  const navigate =useNavigate()
+  const [auth, setAuth] =useAuth()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-
-    console.log("username: ", username);
-    console.log("gender: ", gender.value);
-    console.log("occupation: ", occupation.value);
+    console.log("gender: ", gender.value.length);
+    console.log("occupation: ", (occupation.value.length));
+    console.log(auth.user.username)
+    console.log(typeof(auth.user.username))
+    try {
+      const response = await axios.post('completeProfile/', {
+        'username':auth.user.username,  
+        'gender':gender,
+        'occupation':occupation
+      });
+      const data =await response.data;
+      
+      console.log(data);
+      setAuth(
+        {
+          ...auth,
+          user:data?.user,
+          token: data?.token
+          
+        }
+        )
+      console.log(auth)
+      navigate("/login")
+      
+    } catch (error) {
+      console.error(error.response.data);
+    }
   };
 
   const genderOptions = [
@@ -58,15 +84,7 @@ const CompleteProfile = () => {
         <h1 className="text-2xl font-semibold text-center mb-8">
           Complete Your Profile
         </h1>
-        <Input
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          id="username"
-          type="text"
-          placeholder="Username"
-          name="Username"
-          htmlFor="username"
-        />
+       
         <div>
           <label className="" htmlFor="gender">
             Gender

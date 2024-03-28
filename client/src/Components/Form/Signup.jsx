@@ -3,13 +3,20 @@ import Input from "../input_Button/Input";
 import { Link } from "react-router-dom";
 import image2 from "../../assets/black signup2.jpeg.jpg";
 import TooglePassword from "./TooglePassword";
-import axios from 'axios'
+import axios from "../../axios/axiosDefaults.js";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const Signup = () => {
+
+  const navigate =useNavigate()
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const [auth,setAuth]= useAuth()
   const [
     passwordType,
     confirmPasswordType,
@@ -18,29 +25,31 @@ const Signup = () => {
     togglePasswordVisibility,
   ] = TooglePassword();
 
+
   const handleSubmit = async(e) => {
     e.preventDefault();
     console.log(email,password)
-try {
-  
-  const response= await fetch('http://127.0.0.1:8000/api/token/',
-  {
-    method:'POST',
-    headers:{
-      'Content-Type':'application/json'
-    },
-    body:JSON.stringify({'username':email,'password':password})
-  });
+    try {
+      const response = await axios.post('signup/', {
+        'email': email,
+        'username':username,
+        'password': password,
+        'cnfpassword':confirmPassword
+      });
+      const data =await response.data;
+      console.log(data)
+      
+      setAuth({
+        ...auth,
+        user:data.user,
+        
+      })
 
-  const data= await response.json();
-  console.log(data)
-
-     
-
-} catch (error) {
-     console.log(error)
-}
-
+      navigate("/complete-profile")
+      
+    } catch (error) {
+      console.error(error);
+    }
 
 
     
@@ -66,6 +75,15 @@ try {
           placeholder="Email"
           name="Email"
           htmlFor="email"
+        />
+         <Input
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          id="username"
+          type="text"
+          placeholder="Username"
+          name="Username"
+          htmlFor="username"
         />
         <Input
           changeVisibility={() => togglePasswordVisibility("password")}
@@ -101,14 +119,14 @@ try {
             </Link>
           </p>
         </div>
-        <Link to="/complete-profile">
+        
           <button
             type="submit"
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm font-medium text-white bg-[#000A1E] hover:bg-slate-900 focus:outline-none"
           >
             Sign Up
           </button>
-        </Link>
+       
       </form>
     </div>
   );
