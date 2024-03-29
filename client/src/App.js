@@ -14,11 +14,13 @@ import Home from "./Pages/Home/Home";
 import About from "./Pages/About/About";
 import PageNotFound from "./Pages/Error/PageNotFound";
 import Layout from "./Pages/Layout/Layout";
+import Community from "./Pages/community/Community";
 
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
+<Route path="/community" element={<Community/>}/>
       <Route path="/" element={<Home/>}/>
       <Route path="signup" element={<Signup />} />
       <Route path="complete-profile" element={<CompleteProfile />} />

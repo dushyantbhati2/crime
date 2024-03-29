@@ -30,7 +30,7 @@ const Signup = () => {
     e.preventDefault();
     console.log(email,password)
     try {
-      const response = await axios.post('signup/', {
+      const response = await axios.post('http://127.0.0.1:8000/api/signup/', {
         'email': email,
         'username':username,
         'password': password,
