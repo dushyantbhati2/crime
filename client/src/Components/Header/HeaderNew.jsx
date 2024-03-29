@@ -10,7 +10,7 @@ export default function HeaderNew() {
     setShowInput(!showInput);
   };
   return (
-    <nav className="w-full fixed flex items-center shadow-sm  top-0 bg-[#ADC4CE]/10 min-h-20 px-8 py-3 ">
+    <nav className="w-full fixed flex items-center shadow-sm  top-0 bg-[#ADC4CE]/10 min-h-20 px-8 py-3  ">
       <div className="flex w-full justify-between items-center ">
         <Link to="/" className="flex flex-col items-center">
           <p  className="text-3xl font-semibold">Citizens</p>

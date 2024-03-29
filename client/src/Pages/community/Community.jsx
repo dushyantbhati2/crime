@@ -8,8 +8,8 @@ const Community = () => {
   return (
     <div>
       <SidebarMob/>
-      <HeaderNew/>
       <SidebarPc/>
+      <HeaderNew/>
       <Container/>
     </div>
   )
