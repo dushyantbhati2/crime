@@ -14,6 +14,7 @@ import Home from "./Pages/Home/Home";
 import About from "./Pages/About/About";
 import PageNotFound from "./Pages/Error/PageNotFound";
 import Layout from "./Pages/Layout/Layout";
+import Mapp from "./Mapp";
 
 
 const router = createBrowserRouter(
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
       <Route path="login" element={<Login />} />
       <Route path="about" element={<About />} />
       <Route path="*" element={<PageNotFound />} />
+      <Route path="/map" element={<Mapp/>}/>
       </Route>
     
   )
