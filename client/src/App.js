@@ -2,6 +2,7 @@ import React from "react";
 import CompleteProfile from "./Components/Form/CompleteProfile";
 import Signup from "./Components/Form/Signup";
 import Login from "./Components/Form/Login";
+import CrimeMap from "./Pages/crimeMap/CrimeMap"
 import {
   BrowserRouter as Router,
   Routes,
@@ -14,7 +15,6 @@ import Home from "./Pages/Home/Home";
 import About from "./Pages/About/About";
 import PageNotFound from "./Pages/Error/PageNotFound";
 import Layout from "./Pages/Layout/Layout";
-import Mapp from "./Mapp";
 
 
 const router = createBrowserRouter(
@@ -26,7 +26,7 @@ const router = createBrowserRouter(
       <Route path="login" element={<Login />} />
       <Route path="about" element={<About />} />
       <Route path="*" element={<PageNotFound />} />
-      <Route path="/map" element={<Mapp/>}/>
+      <Route path="/map" element={<CrimeMap/>}/>
       </Route>
     
   )

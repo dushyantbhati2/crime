@@ -12,7 +12,20 @@ import requests
 import json
 from django.http import JsonResponse
 from django.conf import settings
-
+from langchain.chat_models import ChatOpenAI
+from langchain.schema import (
+    AIMessage,
+    HumanMessage,
+    SystemMessage
+)
+import time
+import threading
+import os
+from dotenv import load_dotenv
+load_dotenv()
+API_KEY=os.environ.get('OPEN_API_KEY')
+os.environ["OPENAI_API_KEY"]=API_KEY
+chat = ChatOpenAI(temperature=0)
 class LoginView(APIView):
     def post(self,request):
         email=request.data.get('email')
@@ -90,12 +103,56 @@ class CompleteProfile(APIView):
 # from django.http import JsonResponse
 
 
+def fetch_coordinates(district_dict):
+    district = district_dict['district'] + ','+'Arunachal Pradesh'+',India'
+    ans=requests.get(f'https://geocode.maps.co/search?q={district}&api_key=6606f2a2e4dd1326692138pxc82a5e6').json()
+    lat=ans[0]['lat']
+    lon=ans[0]['lon']
+    district_dict['lat'] = lat
+    district_dict['lon'] = lon
+
 def map(request):
     
     json_file_path = settings.BASE_DIR / 'data.json'
 
     with open(json_file_path, 'r') as file:
         data = json.load(file)
-    print(data)
-    return JsonResponse(data,safe=False) 
+    # address='Pune India'
+    # ans=requests.get(f'https://geocode.maps.co/search?q={address}&api_key=6606f2a2e4dd1326692138pxc82a5e6').json()
+    # lat=ans[0]['lat']
+    # lon=ans[0]['lon']
+    # print(lat,lon)
+    organised={}
+    for i in data:
+        state=i['States/UTs']
+        district=i['District']
+        total=i['Total Cognizable IPC crimes']
+        # address = district + ','+ state +',India'
+        # ans=requests.get(f'https://geocode.maps.co/search?q={address}&api_key=6606f2a2e4dd1326692138pxc82a5e6').json()
+        # size=len(list(ans))
+        # lat=''
+        # lon=''
+        # if size:
+        #     lat=ans[0]['lat']
+        # if size:
+        #     lon=ans[0]['lon']
+        if state in organised:
+            organised[state].append({'district':district,'total':total})
+        else:
+            organised[state]=[{'district':district,'total':total}] 
+        
+        # time.sleep(3) 
+    
+    
+    threads = []
+    addcor=organised['Arunachal Pradesh']
+    for i in addcor:
+        thread = threading.Thread(target=fetch_coordinates, args=(i,))
+        threads.append(thread)
+        thread.start()
+        time.sleep(2)
+
+    for thread in threads:
+        thread.join()
+    return JsonResponse(organised,safe=False) 
 
