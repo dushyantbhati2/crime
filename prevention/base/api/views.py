@@ -8,6 +8,10 @@ from ..models import Profile
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from .. import models
+import requests
+import json
+from django.http import JsonResponse
+from django.conf import settings
 
 class LoginView(APIView):
     def post(self,request):
@@ -81,4 +85,17 @@ class CompleteProfile(APIView):
         new_user_profile=models.Profile.objects.create(user=new_user,gender=gender,occupation=occupation)
         new_user_profile.save()
         return Response({'Sucess':'Sucess'})
+
+# import requests
+# from django.http import JsonResponse
+
+
+def map(request):
+    
+    json_file_path = settings.BASE_DIR / 'data.json'
+
+    with open(json_file_path, 'r') as file:
+        data = json.load(file)
+    print(data)
+    return JsonResponse(data,safe=False) 
 
