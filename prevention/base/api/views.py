@@ -103,56 +103,54 @@ class CompleteProfile(APIView):
 # from django.http import JsonResponse
 
 
-def fetch_coordinates(district_dict):
-    district = district_dict['district'] + ','+'Arunachal Pradesh'+',India'
+def fetch_coordinates(district_dict,demand_state):
+    district = district_dict['district'] + ','+demand_state+',India'
     ans=requests.get(f'https://geocode.maps.co/search?q={district}&api_key=6606f2a2e4dd1326692138pxc82a5e6').json()
     lat=ans[0]['lat']
     lon=ans[0]['lon']
     district_dict['lat'] = lat
     district_dict['lon'] = lon
 
-def map(request):
+class map(APIView):
     
-    json_file_path = settings.BASE_DIR / 'data.json'
-
-    with open(json_file_path, 'r') as file:
-        data = json.load(file)
-    # address='Pune India'
-    # ans=requests.get(f'https://geocode.maps.co/search?q={address}&api_key=6606f2a2e4dd1326692138pxc82a5e6').json()
-    # lat=ans[0]['lat']
-    # lon=ans[0]['lon']
-    # print(lat,lon)
-    organised={}
-    for i in data:
-        state=i['States/UTs']
-        district=i['District']
-        total=i['Total Cognizable IPC crimes']
-        # address = district + ','+ state +',India'
-        # ans=requests.get(f'https://geocode.maps.co/search?q={address}&api_key=6606f2a2e4dd1326692138pxc82a5e6').json()
-        # size=len(list(ans))
-        # lat=''
-        # lon=''
-        # if size:
-        #     lat=ans[0]['lat']
-        # if size:
-        #     lon=ans[0]['lon']
-        if state in organised:
-            organised[state].append({'district':district,'total':total})
-        else:
-            organised[state]=[{'district':district,'total':total}] 
+    def post(self,request):
+        demand_state=request.data.get('state')
+        json_file_path = settings.BASE_DIR / 'data.json'
+        print(demand_state)
+        with open(json_file_path, 'r') as file:
+            data = json.load(file)
+        organised={}
+        for i in data:
+            state=i['States/UTs']
+            district=i['District']
+            total=i['Total Cognizable IPC crimes']
+            if district == 'Total':
+                continue
+            if total < 1000:
+                color='green'
+            elif total < 2000:
+                color='yellow'
+            elif total < 5000:
+                color='orange'
+            else:
+                color='red'
+            if state in organised:
+                organised[state].append({'district':district,'total':total,'color':color})
+            else:
+                organised[state]=[{'district':district,'total':total,'color':color}] 
         
-        # time.sleep(3) 
-    
-    
-    threads = []
-    addcor=organised['Arunachal Pradesh']
-    for i in addcor:
-        thread = threading.Thread(target=fetch_coordinates, args=(i,))
-        threads.append(thread)
-        thread.start()
-        time.sleep(2)
+        if demand_state not in organised:
+            return Response({'error':'enter a correct state'},status=status.HTTP_404_NOT_FOUND)
+        threads = []
+        addcor=organised[demand_state]
+        for i in addcor:
+            thread = threading.Thread(target=fetch_coordinates, args=(i,demand_state))
+            threads.append(thread)
+            thread.start()
+            time.sleep(2)
 
-    for thread in threads:
-        thread.join()
-    return JsonResponse(organised,safe=False) 
+        for thread in threads:
+            thread.join()
+
+        return Response({'data':organised[demand_state]},status=status.HTTP_200_OK) 
 

@@ -9,5 +9,5 @@ urlpatterns = [
     path('completeProfile/',views.CompleteProfile.as_view(),name='completeProfile'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('profile/<str:pk>',Profile_detail.as_view(),name='profile_detail'),
-    path('call/',views.map,name='map')
+    path('map/',views.map.as_view(),name='map')
 ]

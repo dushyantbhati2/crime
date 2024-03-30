@@ -1,34 +1,21 @@
 import React from 'react';
-import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
+import { MapContainer, TileLayer, GeoJSON,Circle
+ } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
+import { useFetch } from '../../context/UseFet';
+
+
 
 const CountryMap = () => {
-  // GeoJSON data for Rajasthan
-  const rajasthanBorder = {
-    type: 'Feature',
-    properties: { name: 'Rajasthan' },
-    geometry: {
-      type: 'Polygon',
-      coordinates: [
-        [
-          [74.0, 27.0],
-          [74.0, 28.0],
-          [75.0, 28.0],
-          [75.0, 27.0],
-          [74.0, 27.0],
-        ],
-      ],
-    },
-  };
-
+  const {data,loading} = useFetch('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=X0q7ZCwcKkbiC3AtTDO9lho83ADOkKHx2HCDcFZ2Pphx3IXNWDIn372Chn8L5qib')
+   
   return (
-    <MapContainer center={[27.0, 74.0]} zoom={7} className='h-[650px] w-1/2 m-4'>
+    <MapContainer center={[20.5937, 78.9629]} zoom={5} className='h-[600px] w-screen p-0 absolute m-0'>
       <TileLayer 
-        attribution='&Copy;<a href="https://www.openstreetmap.org/copyright">openmap</a>contributors'
-        url='https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=X0q7ZCwcKkbiC3AtTDO9lho83ADOkKHx2HCDcFZ2Pphx3IXNWDIn372Chn8L5qib'
+         url='https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=X0q7ZCwcKkbiC3AtTDO9lho83ADOkKHx2HCDcFZ2Pphx3IXNWDIn372Chn8L5qib'
       />
-      {/* Render GeoJSON data for Rajasthan border */}
-      <GeoJSON data={rajasthanBorder} />
+     <Circle center={[19.7515, 75.7139]} radius={200000} pathOptions={{ color: 'red' }} />
+    
     </MapContainer>
   );
 };
