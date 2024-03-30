@@ -13,7 +13,7 @@ const StateMap = () => {
   const fetchmap=async()=>{
     try {
       const response = await axios.post('map/', {
-        'state': 'Andhra Pradesh',
+        "state": "Andhra Pradesh",
         
       });
       const data =await response.data;
