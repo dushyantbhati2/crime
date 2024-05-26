@@ -38,4 +38,15 @@ class ProfileSerializer(ModelSerializer):
     class Meta:
         model  = Profile
         fields='__all__'
-        
+
+class PostFileSerializer(ModelSerializer):
+    class Meta:
+        model=models.PostFile
+        fields=('file',)
+
+class PostSerializer(ModelSerializer):
+    files=PostFileSerializer(many=True)
+    class Meta:
+        model=models.Post
+        fields=('post_user', 'description', 'post_id', 'likes', 'files')
+
