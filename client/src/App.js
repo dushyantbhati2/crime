@@ -3,52 +3,35 @@ import CompleteProfile from "./Components/Form/CompleteProfile";
 import Signup from "./Components/Form/Signup";
 import Login from "./Components/Form/Login";
 import CrimeMap from "./Pages/crimeMap/CrimeMap"
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  createBrowserRouter,
-  createRoutesFromElements,
-  RouterProvider
-} from "react-router-dom";
+import PrivateRoute from "./auth/PrivateRoute";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home/Home";
 import About from "./Pages/About/About";
 import PageNotFound from "./Pages/Error/PageNotFound";
 import Layout from "./Pages/Layout/Layout";
-
-
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<Layout />}>
-      <Route path="/" element={<Home/>}/>
-      <Route path="signup" element={<Signup />} />
-      <Route path="complete-profile" element={<CompleteProfile />} />
-      <Route path="login" element={<Login />} />
-      <Route path="about" element={<About />} />
-      <Route path="*" element={<PageNotFound />} />
-      <Route path="/map" element={<CrimeMap/>}/>
-      </Route>
-    
-  )
-);
+import ChatGpt from "./Pages/ChatGpt/ChatGpt";
 
 function App() {
   return (
-    // <Router>
-    // <Routes>
-    //   <Route path="/signup" element={<Signup/>} />
-    //   <Route path="/complete-profile" element={<CompleteProfile/>} />
-    //   <Route path="/login" element={<Login/>} />
-    //   <Route path="/" element={<Home/>} />
-    //   <Route path="/about" element={<About/>} />
-    //   <Route path="*" element={<PageNotFound/>} />
+    <Router>
+      <Routes>
+        <Route path="/" element={<Layout/>}>
+        {/* Public Routes */}
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/complete-profile" element={<CompleteProfile />} />
+        <Route path="/login" element={<Login />} />
+        
+        {/* Private Routes */}
+        <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/map" element={<CrimeMap />} />
+          <Route path="/chat" element={<ChatGpt />} />
 
-    // </Routes>
-
-    // </Router>
-    <>
-      <RouterProvider router={router} />
-    </>
+        {/* 404 Route */}
+        <Route path="*" element={<PageNotFound />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 

@@ -38,7 +38,7 @@ const CompleteProfile = () => {
       navigate("/login")
       
     } catch (error) {
-      console.error(error.response.data);
+      console.error(response.error);
     }
   };
 

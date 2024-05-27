@@ -23,9 +23,9 @@ import threading
 import os
 from dotenv import load_dotenv
 load_dotenv()
-API_KEY=os.environ.get('OPEN_API_KEY')
-os.environ["OPENAI_API_KEY"]=API_KEY
-chat = ChatOpenAI(temperature=0)
+# API_KEY=os.environ.get('OPEN_API_KEY')
+# os.environ["OPENAI_API_KEY"]=API_KEY
+# chat = ChatOpenAI(temperature=0)
 class LoginView(APIView):
     def post(self,request):
         email=request.data.get('email')
