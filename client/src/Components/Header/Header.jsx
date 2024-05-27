@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
@@ -18,80 +19,55 @@ export default function Header() {
 
   };
 
-  return (
-    <header className="shadow sticky z-50 top-0">
-      <nav className="bg-[#ADC4CE] border-gray-700 px-4 py-2.5 opa">
-        <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-          <Link to="/" className="flex items-center">
-            <img
-              src="https://images.pexels.com/photos/17632032/pexels-photo-17632032/free-photo-of-rear-grille-with-a-logo-of-a-lamborghini-huracan-sports-car.jpeg?auto=compress&cs=tinysrgb&w=600"
-              className="mr-3 h-12 rounded-2xl ms-10"
-              alt="Logo"
-            />
-          </Link>
+  const [clickSearch, setClickSearch]= useState(false)
 
-          <div className="hidden justify-between items-center w-full lg:flex lg:w-auto ">
-            <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0 mx-4">
-              <li>
-                <NavLink
-                  to="/"
-                  className={({ isActive }) =>
-                    `block py-2 pr-4 pl-3 duration-200 ${
-                      isActive ? "text-orange-700" : "text-gray-700"
-                    } border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`
-                  }
-                >
-                  Home
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/about"
-                  className={({ isActive }) =>
-                    `block py-2 pr-4 pl-3 duration-200 ${
-                      isActive ? "text-orange-700" : "text-gray-700"
-                    } border-b border-gray-100 hover:bg-green-100 hover:rounded-lg lg:hover:bg-transperent lg:border-0 hover:text-gray-600 lg:p-0`
-                  }
-                >
-                  About
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/chat"
-                  className={({ isActive }) =>
-                    `block py-2 pr-4 pl-3 duration-200 ${
-                      isActive ? "text-orange-700" : "text-gray-700"
-                    } border-b border-gray-100 hover:bg-green-100 hover:rounded-lg lg:hover:bg-transperent lg:border-0 hover:text-gray-600 lg:p-0`
-                  }
-                >
-                  Chat
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  onClick={handleLogout}
-                  className={({ isActive }) =>
-                    `block py-2 pr-4 pl-3 duration-200 ${
-                      isActive ? "text-orange-700" : "text-gray-700"
-                    } border-b border-gray-100 hover:bg-green-100 hover:rounded-lg lg:hover:bg-transperent lg:border-0 hover:text-gray-600 lg:p-0`
-                  }
-                >
-                  Logout
-                </NavLink>
-              </li>
-              <li>
-                <Link
-                  to="#"
-                  className="text-white bg-black focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none"
-                >
-                  profile
-                </Link>
-              </li>
-            </ul>
+
+  return (
+    <div className="navbar  fixed h-18 z-50 bg-[#576066] animate-slide-down">
+      <div className="navbar-start ">
+        <div className="dropdown">
+          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
           </div>
+          <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 text-base rounded-box w-52 ">
+            <li className=''><Link to="/">Home</Link></li>
+            <li><Link to="/allprojects">All Projects</Link></li>
+            <li>
+            <summary>Projects</summary>
+              <ul className="p-2  text-sm">
+                <li><Link to="">Hospitals</Link></li>
+                <li><Link to="">Home </Link></li>
+                <li><Link to="">Industrial </Link></li>
+                <li><Link to="">Farms </Link></li>
+                <li><Link to="">Hotels </Link></li>
+              </ul>
+            </li>
+            <li><Link to="/allprojects">All Projects</Link></li>
+
+            <li><Link to="">About</Link></li>
+            <li><Link to="">Contact</Link></li>
+          </ul>
         </div>
-      </nav>
-    </header>
+        <Link to="/" className="btn btn-ghost text-gray-300 text-2xl hover:bg-[#122932] hover:rounded-lg hover:scale-105 hover:ease-out duration-100 ">daisyUI</Link>
+      </div>
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal px-1 text-base  text-gray-300 space-x-1  gap-1 ">
+          <li className="hover:bg-[#122932] hover:rounded-lg hover:scale-105 hover:ease-out duration-100 "><Link to="/">Home</Link></li>
+          <li className="hover:bg-[#122932] hover:rounded-lg hover:scale-105 hover:ease-out duration-100"><Link to="/">Map</Link></li>
+          <li className="hover:bg-[#122932] hover:rounded-lg hover:scale-105 hover:ease-out duration-100"><Link to="/allprojects">All Projects</Link></li>
+          <li className="hover:bg-[#122932] hover:rounded-lg hover:scale-105 hover:ease-out duration-100"><Link to="">About</Link></li>
+          <li className="hover:bg-[#122932] hover:rounded-lg hover:scale-105 hover:ease-out duration-100"><Link to="">Contact</Link></li>
+        </ul>
+      </div>
+      <div className="navbar-end">
+     {clickSearch? ( <div className="form-control">
+        <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto mr-1" />
+      </div>):""}
+      <button onClick={()=>setClickSearch(true)} className="btn btn-ghost btn-circle  hover:bg-[#122932]/50  hover:scale-105 hover:ease-out duration-100">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+      </button>
+      
+      </div>
+    </div>
   );
 }
