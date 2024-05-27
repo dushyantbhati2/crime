@@ -20,8 +20,8 @@ module.exports = {
       },
       animation: {
         'slide-down': 'slide-down 0.8s ease-out forwards',
-        'slide-in-left': 'slide-in-left 0.8s ease-out forwards',
-        'slide-in-right': 'slide-in-right 0.8s ease-out forwards',
+        'slide-in-left': 'slide-in-left 0.75s ease-out forwards',
+        'slide-in-right': 'slide-in-right 0.75s ease-out forwards',
       },
       keyframes: {
         'slide-down': {
