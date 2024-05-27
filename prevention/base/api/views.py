@@ -2,7 +2,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-from .serializers import ProfileSerializer
+from .serializers import ProfileSerializer,PostSerializer
 from .serializers import userSerializers
 from ..models import Profile
 from django.shortcuts import get_object_or_404
@@ -12,20 +12,14 @@ import requests
 import json
 from django.http import JsonResponse
 from django.conf import settings
-from langchain.chat_models import ChatOpenAI
-from langchain.schema import (
-    AIMessage,
-    HumanMessage,
-    SystemMessage
-)
+# from langchain.chat_models import ChatOpenAI
+# from langchain.schema import (
+#     AIMessage,
+#     HumanMessage,
+#     SystemMessage
+# )
 import time
 import threading
-import os
-from dotenv import load_dotenv
-load_dotenv()
-# API_KEY=os.environ.get('OPEN_API_KEY')
-# os.environ["OPENAI_API_KEY"]=API_KEY
-# chat = ChatOpenAI(temperature=0)
 class LoginView(APIView):
     def post(self,request):
         email=request.data.get('email')
@@ -99,8 +93,6 @@ class CompleteProfile(APIView):
         new_user_profile.save()
         return Response({'Sucess':'Sucess'})
 
-# import requests
-# from django.http import JsonResponse
 
 
 def fetch_coordinates(district_dict,demand_state):
@@ -154,3 +146,23 @@ class map(APIView):
 
         return Response({'data':organised[demand_state]},status=status.HTTP_200_OK) 
 
+class posts(APIView):
+    def get(self,request,pk=None):
+        posts=models.Post.objects.all()
+        serializer=PostSerializer(posts,many=True)
+        return Response(serializer.data)
+    
+    def post(self,request):
+        username=request.data.get('username')
+        description=request.data.get('description')
+        files=request.files.get('files')
+
+        user=User.objects.get(username=username)
+        new_post=models.Post.objects.create(post_user=user,description=description,files=files)
+        new_post.save()
+        return Response({'Sucess':'Sucess'})
+    
+    def delete(self,request,pk):
+        post=models.Post.objects.get(post_id=pk)
+        post.delete()
+        return Response({'Sucess':'Post deleted'})
