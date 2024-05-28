@@ -18,55 +18,44 @@ from django.conf import settings
 #     HumanMessage,
 #     SystemMessage
 # )
-import time
-import threading
 class LoginView(APIView):
-    def post(self,request):
-        email=request.data.get('email')
-        password=request.data.get('password')
-        user=User.objects.filter(email=email).first()
+    def post(self, request):
+        
+        email = request.data.get('email')
+        password = request.data.get('password')
+        user = User.objects.filter(email=email).first()
+        
 
         if user and user.check_password(password):
-            refresh=RefreshToken.for_user(user)
+            refresh = RefreshToken.for_user(user)
             user.save()
-            serializer=userSerializers(user)
-            return Response({'refresh':str(refresh),'access':str(refresh.access_token),'user':serializer.data})
+            serializer = userSerializer(user)
+            return Response({'refresh': str(refresh), 'access': str(refresh.access_token), 'user': serializer.data})
         else:
-            return Response({'error':'Invalid credentials'},status=400)
-
+            return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
 
 class SignupView(APIView):
-    def post(self,request):
-        email=request.data.get('email')
-        password=request.data.get('password')
-        password2=request.data.get('cnfpassword')
-        username=request.data.get('username')
-        # gender=request.data.get('gender')
-        # occupation=request.data.get('occupation')
+    def post(self, request):
+        email = request.data.get('email')
+        password = request.data.get('password')
+        password2 = request.data.get('cnfpassword')
+        username = request.data.get('username')
 
-        if password!=password2:
-            return Response({'error':'Password do not match'},status=status.HTTP_400_BAD_REQUEST)
+        if password != password2:
+            return Response({'error': 'Passwords do not match'}, status=status.HTTP_400_BAD_REQUEST)
 
-        elif User.objects.filter(email=email).exists():
-            return Response({'error':'Email already exits'},status=status.HTTP_400_BAD_REQUEST)
+        if User.objects.filter(email=email).exists():
+            return Response({'error': 'Email already exists'}, status=status.HTTP_400_BAD_REQUEST)
         
-        elif User.objects.filter(username=username).exists():
-            return Response({'error':'Username already exits'},status=status.HTTP_400_BAD_REQUEST)
+        if User.objects.filter(username=username).exists():
+            return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
         
+        new_user = User.objects.create_user(username=username, email=email)
+        new_user.set_password(password)
+        new_user.save()
         
-        else:
-            new_user=User.objects.create_user(username=username,email=email)
-            new_user.set_password(password)
-            new_user.save()
-            
-            # new_user_profile=models.Profile.objects.create(user=new_user,gender=gender,occupation=occupation)
-            # new_user_profile.save()
-            
-            # refresh=RefreshToken.for_user(new_user)
-            serializer=userSerializers(new_user)
-            return Response({'user':serializer.data})
-
-        
+        serializer = userSerializer(new_user)
+        return Response({'user': serializer.data})
 
 
 class Profile_detail(APIView):
@@ -91,7 +80,7 @@ class CompleteProfile(APIView):
         new_user=User.objects.get(username=username)
         new_user_profile=models.Profile.objects.create(user=new_user,gender=gender,occupation=occupation)
         new_user_profile.save()
-        return Response({'Sucess':'Sucess'})
+        return Response({'Sucess':'Sucessfully created profile'})
 
 
 
@@ -102,6 +91,7 @@ def fetch_coordinates(district_dict,demand_state):
     lon=ans[0]['lon']
     district_dict['lat'] = lat
     district_dict['lon'] = lon
+    
 
 class map(APIView):
     

@@ -19,21 +19,6 @@ class userSerializers(ModelSerializer):
         user.save()
         return user    
 
-# class SignUpSerializer(ModelSerializer):
-#     email = serializers.CharField(max_length=85)
-#     password = serializers.CharField(write_only=True)
-#     username = serializers.CharField(max_length = 30)
-#     class Meta:
-#         model = User
-#         fields = ['username', 'email', 'password']
-    
-    
-    
-#     def validate(self, attrs):
-#         email_exists = User.objects.filter(email=attrs['email'].exist()) 
-#         if email_exists:
-#             raise serializers.ValidationError("Email already exists")
-#         return attrs
 class ProfileSerializer(ModelSerializer):
     class Meta:
         model  = Profile
@@ -50,3 +35,7 @@ class PostSerializer(ModelSerializer):
         model=models.Post
         fields=('post_user', 'description', 'post_id', 'likes', 'files')
 
+class CommentSerializer(ModelSerializer):
+    class Meta:
+        model=models.Comments
+        fields='__all__'
