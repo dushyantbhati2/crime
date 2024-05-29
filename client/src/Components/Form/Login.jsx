@@ -55,12 +55,12 @@ const Login = () => {
 
   return (
     <div className="font-Poppins min-h-screen flex items-center justify-center lg:justify-start lg:gap-36 lg:px-12 w-full lg:bg-white">
-      <div className="hidden lg:flex w-1/2 animate-slide-in-left">
+      <div className="hidden lg:flex w-1/2">
         <img src={image2} alt="" />
       </div>
       <form
         onSubmit={handleSubmit}
-        className="bg-[#CACACA]/20 text-textBlack shadow-lg rounded-lg px-8 py-6 max-w-md w-[340px] md:w-96 md:h-[500px] animate-slide-in-left"
+        className="bg-[#CACACA]/20 text-textBlack shadow-lg rounded-lg px-8 py-6 max-w-md w-[340px] md:w-96 md:h-[500px]"
       >
         <h1 className="text-3xl font-bold text-center mb-4">Sign In</h1>
         <Input
