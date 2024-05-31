@@ -10,6 +10,8 @@ import About from "./Pages/About/About";
 import PageNotFound from "./Pages/Error/PageNotFound";
 import Layout from "./Pages/Layout/Layout";
 import ChatGpt from "./Pages/ChatGpt/ChatGpt";
+import Community from "./Pages/community/Community"
+import SingleCommunity from "./Pages/community/SingleCommunity";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/map" element={<CrimeMap />} />
           <Route path="/chat" element={<ChatGpt />} />
+<Route path="/community" element={<Community/>}/>
+<Route path="/community/1" element={<SingleCommunity/>}/>
 
         {/* 404 Route */}
         <Route path="*" element={<PageNotFound />} />
