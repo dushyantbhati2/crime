@@ -25,7 +25,7 @@ export default function Header() {
   return (
     <>
       <div className="flex justify-between h-16 items-center">
-        <div className="bg-[#F0F0F0] w-[200px] text-white p-2 flex justify-center ">
+        <div className="bg-[#F0F0F0] w-[200px] hidden md:block text-white p-2 flex justify-center ">
           {/* <Link className="hover:bg-[#122932] hover:rounded-lg hover:scale-105 hover:ease-out duration-100 px-3 py-2">Crime</Link> */}
         </div>
         <div className="h-16 w-[150px] bg-white flex items-center font-semibold overflow-hidden">
@@ -33,8 +33,8 @@ export default function Header() {
             <img src={logo} className="rounded-full w-[50px] h-[50px] " />
           </div>
         </div>
-        <div className="w-[calc(100%-500px)] h-16 flex items-center bg-white justify-center font-semibold">
-          <ul className=" px-1 text-base space-x-1  gap-6  flex align-center ">
+        <div className="w-[calc(100%-500px)] flex flex-col h-16  items-center bg-white justify-center font-semibold">
+          <ul className=" px-1 text-base space-x-1 hidden gap-6  flex align-center">
             <li className="hover:bg-[#F0F0F0] hover:rounded-lg hover:scale-105 hover:ease-out duration-100 p-2">
               <Link to="/">Home</Link>
             </li>
