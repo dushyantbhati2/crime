@@ -4,6 +4,8 @@ import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import CardSection from "./CardSection";
 import logo from "../../assets/black signup1.jpeg.jpg";
+import Sidebar from "./Sidebar";
+
 
 export default function Header() {
   const [auth, setAuth] = useAuth();
@@ -25,16 +27,18 @@ export default function Header() {
   return (
     <>
       <div className="flex justify-between h-16 items-center">
-        <div className="bg-[#F0F0F0] w-[200px] text-white p-2 flex justify-center ">
-          {/* <Link className="hover:bg-[#122932] hover:rounded-lg hover:scale-105 hover:ease-out duration-100 px-3 py-2">Crime</Link> */}
-        </div>
-        <div className="h-16 w-[150px] bg-white flex items-center font-semibold overflow-hidden">
-          <div className="  hover:scale-105 hover:ease-out duration-100 px-3 py-2 bg-white ml-8">
+        <div id="first" className="bg-[#F0F0F0] w-[200px] text-white p-2 flex justify-center ">
+          {/* <div className=" lg:hidden hover:scale-105 hover:ease-out duration-100 px-3 py-2 bg-white ml-8">
             <img src={logo} className="rounded-full w-[50px] h-[50px] " />
+          </div> */}
+        </div>
+        <div className="h-16  md:w-[150px] bg-white flex items-center font-semibold overflow-hidden">
+          <div className="w-[200px] hover:scale-105 hover:ease-out duration-100 px-3 py-2 bg-white lg:ml-8">
+            <img src={logo} className="rounded-full min-w-[44px] min-h-[44px] scale-110 " />
           </div>
         </div>
-        <div className="w-[calc(100%-500px)] h-16 flex items-center bg-white justify-center font-semibold">
-          <ul className=" px-1 text-base space-x-1  gap-6  flex align-center ">
+        <div className="w-[calc(100%-500px)] h-16  items-center hidden flex lg:block bg-white justify-center font-semibold">
+          <ul className=" px-1 text-base space-x-1 gap-6  flex align-center  ">
             <li className="hover:bg-[#F0F0F0] hover:rounded-lg hover:scale-105 hover:ease-out duration-100 p-2">
               <Link to="/">Home</Link>
             </li>
@@ -60,6 +64,8 @@ export default function Header() {
             <Link to="">Signup</Link>
           </button>
         </div>
+        <Sidebar/>
+
       </div>
     </>
   );
