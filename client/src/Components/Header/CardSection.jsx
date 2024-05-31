@@ -42,6 +42,13 @@ const CardSection = () => {
               alt=""
             />
           </div>
+            <p className="text-base lg:text-lg mb-6 mt-6 text-zinc-800">
+              Discover our safety features
+            </p>
+            <button className="p-2 w-full border border-zinc-700 text-zinc-800 hover:bg-white hover:scale-105 hover:ease-out duration-100">
+              Explore now
+            </button>
+          </div>
         </div>
         <div className="flex items-center justify-center flex-col mt-12">
           <h5>Trusted by communities worldwide</h5>
@@ -60,10 +67,8 @@ const CardSection = () => {
             <div className="w-[80%] lg:w-[40%]">
               <h2 className="text-3xl font-semibold mt-4 mb-8 w-[200px] lg:w-full">Intuitive and user-friendly design</h2>
               <p>
-                We offer a variety of safety services, including live crime tracking, community collaboration, and emergency assistance.              </p>
-              {/* <button className="p-2 mt-6 w-[40%] border border-zinc-700  text-zinc-800 hover:scale-105 hover:ease-out duration-100 hover:bg-[#F0F0F0]">
-                Explore now
-              </button> */}
+                We offer a variety of safety services, including live crime tracking, community collaboration, and emergency assistance.
+              </p>
             </div>
             <div className="lg:hidden">
               <img className="w-[350px] h-[250px]" src={img1} alt="" />
@@ -75,12 +80,6 @@ const CardSection = () => {
               <p>
                 Our straightforward approach to safety ensures quick access to essential resources. We prioritize user-friendly solutions for effective crime prevention.
               </p>
-              {/* <button className="p-2 mt-6 w-[40%] border border-zinc-700  text-zinc-800 hover:scale-105 hover:ease-out duration-100 hover:bg-[#F0F0F0]">
-                Explore now
-              </button> */}
-            </div>
-            <div>
-              <img className="w-[350px] h-[250px]" src={img2} alt="" />
             </div>
           </div>
           <div className="flex justify-evenly items-center mt-[60px] mb-[60px] flex-wrap">
@@ -90,7 +89,7 @@ const CardSection = () => {
             <div className="w-[80%] lg:w-[40%] ">
               <h2 className="text-3xl font-semibold mt-4 mb-8 w-[200px] lg:w-full">Customized solutions for all</h2>
               <p>
-              Whether you're an individual or a community organization, we have safety measures to suit your needs. We tailor our services to ensure maximum protection.
+                Whether you're an individual or a community organization, we have safety measures to suit your needs. We tailor our services to ensure maximum protection.
               </p>
               <div className="lg:hidden mt-3">
               <img className="w-[320px] lg:w-[350px] h-[250px] object-contain" src={img3} alt="" />
@@ -141,9 +140,7 @@ const CardSection = () => {
           </div>
           </div>
         </div>
-      </div>
     </>
   );
 };
-
 export default CardSection;
