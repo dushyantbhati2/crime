@@ -5,6 +5,7 @@ import { MdGroups } from "react-icons/md";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { FiMenu } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
+import { IoMenuSharp } from "react-icons/io5";
 
 const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -14,7 +15,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="relative md:sticky md:top-0 md:h-screen">
+    <div className="relative md:sticky md:top-0 md:h-screen md:hidden">
       <div
         className={`fixed md:relative top-0  h-screen w-64 bg-white shadow-md transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
@@ -93,11 +94,11 @@ const Sidebar = () => {
         </nav>
       </div>
       <button
-        className="md:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-full shadow-md"
+        className="md:hidden fixed top-3 right-4 z-50 p-2 bg-[#F0F0F0] rounded-full shadow-md"
         onClick={toggleSidebar}
       >
         {isSidebarOpen ? (
-          <FiMenu className="h-6 w-6 text-gray-700" />
+          <IoMenuSharp className="h-6 w-6 text-gray-700 " />
         ) : (
           <RxCross2 className="h-6 w-6 text-gray-700" />
         )}

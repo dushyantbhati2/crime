@@ -4,11 +4,18 @@ import instagram from "../../assets/icons/instagram.png";
 import github from "../../assets/icons/github.png";
 import twitter from "../../assets/icons/twitter.png";
 import logo from "../../assets/black signup1.jpeg.jpg";
-
+import { FaYoutube } from "react-icons/fa6";
+import { FaInstagramSquare } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa6";
+import { FiInstagram } from "react-icons/fi"
+import { PiInstagramLogoDuotone } from "react-icons/pi"
+import { PiYoutubeLogoDuotone } from "react-icons/pi"
+import { PiGithubLogoDuotone } from "react-icons/pi";
+import { PiTwitterLogoDuotone } from "react-icons/pi";
 export default function Footer() {
     return (
         <footer className="bg-white border-y flex flex-col md:flex-row h-auto md:h-[200px] w-full justify-around items-center p-4 md:p-0">
-            <div className="flex flex-col md:flex-row gap-4 justify-center w-full md:w-[300px] items-center">
+            <div className="flex flex-col gap-4 justify-center w-full md:w-[300px] items-center">
                 <div className="flex flex-col justify-center items-center md:items-start">
                     <img src={logo} className="rounded-full w-[44px] h-[44px] scale-110" alt="Logo" />
                     <h1 className="font-bold text-2xl">SafeZone</h1>
@@ -36,16 +43,20 @@ export default function Footer() {
             </div>
             <div className="w-full md:w-[300px] flex justify-center min-h-[64px] pb-6 md:justify-start gap-4 mt-4 md:mt-0">
                 <div className="flex justify-center items-center bg-white w-16 h-16 rounded-full">
-                    <img src={youtube} alt="YouTube Icon" className="w-9 h-9" />
+                    {/* <img src={youtube} alt="YouTube Icon" className="w-9 h-9" /> */}
+                    <PiYoutubeLogoDuotone className="w-12 h-12" />
+                </div>
+                <div className="flex justify-center items-center  w-16 h-16 rounded-full">
+                    {/* <img src={instagram} alt="Instagram Icon" className="w-9 h-9" /> */}
+                    <PiInstagramLogoDuotone className="w-11 h-11"  />
                 </div>
                 <div className="flex justify-center items-center bg-white w-16 h-16 rounded-full">
-                    <img src={instagram} alt="Instagram Icon" className="w-9 h-9" />
+                    {/* <img src={github} alt="GitHub Icon" className="w-9 h-9" /> */}
+                    <PiGithubLogoDuotone  className="w-11 h-11"  />
                 </div>
                 <div className="flex justify-center items-center bg-white w-16 h-16 rounded-full">
-                    <img src={github} alt="GitHub Icon" className="w-9 h-9" />
-                </div>
-                <div className="flex justify-center items-center bg-white w-16 h-16 rounded-full">
-                    <img src={twitter} alt="Twitter Icon" className="w-9 h-9" />
+                    {/* <img src={twitter} alt="Twitter Icon" className="w-9 h-9" /> */}
+                    <PiTwitterLogoDuotone  className="w-11 h-11"  />
                 </div>
             </div>
             <div className="text-center md:text-left lg:hidden pb-10">
