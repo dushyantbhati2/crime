@@ -4,10 +4,6 @@ import instagram from "../../assets/icons/instagram.png";
 import github from "../../assets/icons/github.png";
 import twitter from "../../assets/icons/twitter.png";
 import logo from "../../assets/black signup1.jpeg.jpg";
-import { FaYoutube } from "react-icons/fa6";
-import { FaInstagramSquare } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa6";
-import { FiInstagram } from "react-icons/fi"
 import { PiInstagramLogoDuotone } from "react-icons/pi"
 import { PiYoutubeLogoDuotone } from "react-icons/pi"
 import { PiGithubLogoDuotone } from "react-icons/pi";
