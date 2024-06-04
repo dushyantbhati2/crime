@@ -2,7 +2,7 @@ from rest_framework.serializers import ModelSerializer
 from django.contrib.auth.models import User
 from rest_framework  import serializers
 from base import models
-from ..models import Profile
+from ..models import Profile,Comments
 class userSerializers(ModelSerializer):
     class Meta:
         model=User
@@ -49,4 +49,10 @@ class PostSerializer(ModelSerializer):
     class Meta:
         model=models.Post
         fields=('post_user', 'description', 'post_id', 'likes', 'files')
+
+class CommentSerializer(ModelSerializer):
+    # files=PostFileSerializer(many=True)
+    class Meta:
+        model=Comments
+        fields='__all__'
 

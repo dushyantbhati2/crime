@@ -1,0 +1,111 @@
+.icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    animation: 1s ease-out forwards;
+  }
+  
+  .icon1 {
+    --finalTop: 10%;
+    --finalLeft: 50%;
+    animation-name: moveIcon1;
+  }
+  
+  .icon2 {
+    --finalTop: 20%;
+    --finalLeft: 20%;
+    animation-name: moveIcon2;
+  }
+  
+  .icon3 {
+    --finalTop: 70%;
+    --finalLeft: 20%;
+    animation-name: moveIcon3;
+  }
+  
+  .icon4 {
+    --finalTop: 85%;
+    --finalLeft: 50%;
+    animation-name: moveIcon4;
+  }
+  
+  .icon5 {
+    --finalTop: 20%;
+    --finalLeft: 80%;
+    animation-name: moveIcon5;
+  }
+  
+  .icon6 {
+    --finalTop: 70%;
+    --finalLeft: 80%;
+    animation-name: moveIcon6;
+  }
+  
+  .icon7 {
+    --finalTop: 45%;
+    --finalLeft: 10%;
+    animation-name: moveIcon7;
+  }
+  
+  .icon8 {
+    --finalTop: 45%;
+    --finalLeft: 90%;
+    animation-name: moveIcon8;
+  }
+  
+  @keyframes moveIcon1 {
+    to {
+      top: var(--finalTop);
+      left: var(--finalLeft);
+    }
+  }
+  
+  @keyframes moveIcon2 {
+    to {
+      top: var(--finalTop);
+      left: var(--finalLeft);
+    }
+  }
+  
+  @keyframes moveIcon3 {
+    to {
+      top: var(--finalTop);
+      left: var(--finalLeft);
+    }
+  }
+  
+  @keyframes moveIcon4 {
+    to {
+      top: var(--finalTop);
+      left: var(--finalLeft);
+    }
+  }
+  
+  @keyframes moveIcon5 {
+    to {
+      top: var(--finalTop);
+      left: var(--finalLeft);
+    }
+  }
+  
+  @keyframes moveIcon6 {
+    to {
+      top: var(--finalTop);
+      left: var(--finalLeft);
+    }
+  }
+  
+  @keyframes moveIcon7 {
+    to {
+      top: var(--finalTop);
+      left: var(--finalLeft);
+    }
+  }
+  
+  @keyframes moveIcon8 {
+    to {
+      top: var(--finalTop);
+      left: var(--finalLeft);
+    }
+  }
+  

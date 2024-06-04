@@ -2,7 +2,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-from .serializers import ProfileSerializer,PostSerializer
+from .serializers import ProfileSerializer,PostSerializer,CommentSerializer
 from .serializers import userSerializers
 from ..models import Profile
 from django.shortcuts import get_object_or_404
@@ -12,6 +12,8 @@ import requests
 import json
 from django.http import JsonResponse
 from django.conf import settings
+from django.shortcuts import redirect
+
 # from langchain.chat_models import ChatOpenAI
 # from langchain.schema import (
 #     AIMessage,
@@ -147,22 +149,57 @@ class map(APIView):
         return Response({'data':organised[demand_state]},status=status.HTTP_200_OK) 
 
 class posts(APIView):
-    def get(self,request,pk=None):
-        posts=models.Post.objects.all()
-        serializer=PostSerializer(posts,many=True)
+    def get(self, request, pk=None):
+        posts = models.Post.objects.all()
+        serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
-    
-    def post(self,request):
-        username=request.data.get('username')
-        description=request.data.get('description')
-        files=request.files.get('files')
 
-        user=User.objects.get(username=username)
-        new_post=models.Post.objects.create(post_user=user,description=description,files=files)
+    def post(self, request):
+        username = request.data.get('username')
+        description = request.data.get('description')
+        files = request.data.get('files')
+        user = User.objects.get(username=username)
+        new_post = models.Post.objects.create(post_user=user, description=description, files=files)
         new_post.save()
-        return Response({'Sucess':'Sucess'})
-    
-    def delete(self,request,pk):
-        post=models.Post.objects.get(post_id=pk)
+        return Response({'Success': 'Post created'})
+
+    def delete(self, request, pk):
+        post = models.Post.objects.get(post_id=pk)
         post.delete()
-        return Response({'Sucess':'Post deleted'})
+        return Response({'Success': 'Post deleted'})
+class comments(APIView):
+    def get(self, request, pk=None):
+        comments = models.Comments.objects.all()
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
+
+    def delete(self, request, pk):
+        comment = models.Comments.objects.get(id=pk)
+        comment.delete()
+        return Response({'Success': 'Comment deleted'})
+
+    def post(self, request):
+        username = request.data.get('username')
+        content = request.data.get('content')
+        files = request.data.get('files')
+        user = User.objects.get(username=username)
+        new_comment = models.Comment.objects.create(comment_user=user, content=content, files=files)
+        new_comment.save()
+        return Response({'Success': 'Comment created'})
+
+def Like(request):
+    username = request.user.username
+    post_id = request.GET.get('post_id')
+    post = models.Post.objects.get(post_id=post_id)
+    like = models.LikePost.objects.filter(post=post, username=username).first()
+
+    if like is None:
+        new_like = models.LikePost.objects.create(post=post, username=username)
+        new_like.save()
+        post.likes += 1
+        post.save()
+        
+    else:
+        like.delete()
+        post.likes -= 1
+        post.save()
