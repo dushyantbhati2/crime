@@ -24,24 +24,25 @@ const CardSection = () => {
   }, []);
   return (
     <>
-      <div className="m-10 overflow-hidden">
+    
+      <div className="overflow-hidden bg-community">
         <div className="flex justify-between items-center w-full gap-7 flex-wrap">
           <div className=" md:w-[450px] md:ml-[200px]  flex flex-col gap-10 justify-center ">
-            <h1 className="text-5xl font-bold w-[300px] md:w-[330px] ml-2 ">
+            <h1 className="text-5xl font-heading text-white font-bold w-[300px] md:w-[330px] leading-[125%] my-10">
               Track crime in real-time
             </h1>
-            <p className="text-lg  text-zinc-800 ml-2 ">
+            <p className="text-lg  text-white font-muli ">
               Discover our safety features
             </p>
             <div className=" w-[300px] md:w-[600px] shadow-lg lg:hidden">
               <img
-                className="h-[200px] md:h-[400px]"
+                className="h-[250px] md:h-[400px]"
                 src="https://i.blogs.es/635f55/maps/1366_2000.jpg"
                 alt=""
               />
             </div>
             <div className="flex justify-center">
-              <button className="py-2 px-2 rounded-sm w-[250px] md:w-full border border-zinc-700  text-zinc-800 hover:bg-white duration-100 ml-1">
+              <button className="py-2 px-2 rounded-xl w-[250px] md:w-full border border-zinc-700  text-black bg-white hover:text-black duration-100 ml-1">
                 Explore now
               </button>
             </div>
@@ -54,23 +55,23 @@ const CardSection = () => {
             />
           </div>
         </div>
-        <div className="flex items-center justify-center flex-col mt-12">
+        <div className="flex items-center justify-center flex-col mt-12 text-white">
           <h5>Trusted by communities worldwide</h5>
-          <div className="flex flex-row gap-3 md:gap-12 text-xl md:text-2xl font-bold p-6 pb-10">
+          <div className="flex flex-row gap-3 md:gap-12 text-xl md:text-2xl font-bold p-6 pb-10 text-white">
             <h2>Safety</h2>
             <h2>Safety</h2>
             <h2>Safety</h2>
             <h2>Safety</h2>
           </div>
         </div>
-        <div className="bg-white w-[99.99%] flex flex-col gap-10">
+        <div className="bg-white flex flex-col gap-10 ">
           <div className="flex justify-evenly items-center mt-[20px] flex-wrap">
             <div className="hidden md:block">
-              <img className="w-[350px] h-[250px] object-contain" src={img1} alt="" />
+              <img className="w-[350px] h-[250px] object-contain rounded-3xl" src={img1} alt="" />
             </div>
             <div className="w-[80%] lg:w-[40%]">
               <h2 className="text-3xl font-semibold mt-4 mb-8 w-[200px] md:w-full">Intuitive and user-friendly design</h2>
-              <p>
+              <p className='font-muli leading-6	'>
                 We offer a variety of safety services, including live crime tracking, community collaboration, and emergency assistance.              </p>
               {/* <button className="p-2 mt-6 w-[40%] border border-zinc-700  text-zinc-800 hover:scale-105 hover:ease-out duration-100 hover:bg-[#F0F0F0]">
                 Explore now
@@ -83,7 +84,7 @@ const CardSection = () => {
           <div className="flex justify-evenly items-center mt-[60px] flex-wrap">
             <div className="w-[80%] md:w-[40%]">
               <h2 className="text-3xl font-semibold mt-4 mb-8 w-[200px] md:w-full">Simplicity is key</h2>
-              <p>
+              <p className='font-muli leading-6	'>
                 Our straightforward approach to safety ensures quick access to essential resources. We prioritize user-friendly solutions for effective crime prevention.
               </p>
               {/* <button className="p-2 mt-6 w-[40%] border border-zinc-700  text-zinc-800 hover:scale-105 hover:ease-out duration-100 hover:bg-[#F0F0F0]">
@@ -100,7 +101,7 @@ const CardSection = () => {
             </div>
             <div className="w-[80%] md:w-[40%] ">
               <h2 className="text-3xl font-semibold mt-4 mb-8 w-[200px] md:w-full">Customized solutions for all</h2>
-              <p>
+              <p className='font-muli leading-6	'>
                 Whether you're an individual or a community organization, we have safety measures to suit your needs. We tailor our services to ensure maximum protection.
               </p>
               <div className="md:hidden mt-3">
@@ -113,15 +114,15 @@ const CardSection = () => {
           </div>
         </div>
         <div>
-          <div class="mt-[100px] flex flex-row justify-evenly p-8 flex-wrap">
-            <div class="text-center mb-8">
+          <div class="mt-[100px] flex flex-row justify-evenly p-8 flex-wrap ">
+            <div class="text-center mb-8 ">
               <h1 class="text-3xl font-semibold mb-8">Connect with other users</h1>
               <p class="text-gray-600 ">Explore SafeZone's integration options for seamless user experience.</p>
               <button className="p-2 mt-10 rounded-sm w-[200px] border border-zinc-700  text-zinc-800 hover:bg-white hover:scale-105 hover:ease-out duration-100">
                 Connect apps
               </button>
             </div>
-            <div className="relative w-[400px] h-[400px]">
+            <div className="relative w-[400px] h-[400px] ">
               <div className="icon icon1 absolute flex justify-center items-center bg-white w-16 h-16 rounded-full shadow-lg">
                 <img src={lock1} alt="Lock Icon" className="w-8 h-8" />
               </div>

@@ -16,6 +16,7 @@ module.exports = {
         Poppins:"'Poppins', sans-serif",
         text: ["Manrope", "sans-serif"],
         heading: ["Lexend", "sans-serif"],
+        muli: ["Mulish", "sans-serif"],
       },
       colors: {
         'primary':"#9ca3af",

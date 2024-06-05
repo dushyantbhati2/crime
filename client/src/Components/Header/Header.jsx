@@ -26,8 +26,8 @@ export default function Header() {
 
   return (
     <>
-      <div className="sticky flex justify-between h-16 items-center z-50 top-0">
-        <div id="first" className="bg-[#F0F0F0] w-[100px] h-16 md:w-[200px] text-white p-2 flex justify-center ">
+      <div className="sticky flex justify-between h-16 items-center z-50 top-0 w-full">
+        <div id="first" className="bg-[#F0F0F0]  h-16  text-white p-2 flex justify-center ">
           {/* <div className=" lg:hidden hover:scale-105 hover:ease-out duration-100 px-3 py-2 bg-white ml-8">
             <img src={logo} className="rounded-full w-[50px] h-[50px] " />
           </div> */}
