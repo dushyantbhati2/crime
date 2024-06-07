@@ -6,3 +6,7 @@ admin.site.register(models.Profile)
 admin.site.register(models.Post)
 admin.site.register(models.Comments)
 admin.site.register(models.PostFile)
+admin.site.register(models.LikesPost)
+admin.site.register(models.BookmarkPost)
+admin.site.register(models.Community)
+

@@ -2,7 +2,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-from .serializers import ProfileSerializer,PostSerializer,CommentSerializer
+from .serializers import ProfileSerializer,PostSerializer,CommentSerializer,BookmarkSerializer,CommunitySerializer
 from .serializers import userSerializers
 from ..models import Profile
 from django.shortcuts import get_object_or_404
@@ -157,7 +157,7 @@ class posts(APIView):
     def post(self, request):
         username = request.data.get('username')
         description = request.data.get('description')
-        files = request.data.get('files')
+        files = request.FILES.get('files')
         user = User.objects.get(username=username)
         new_post = models.Post.objects.create(post_user=user, description=description, files=files)
         new_post.save()
@@ -167,39 +167,92 @@ class posts(APIView):
         post = models.Post.objects.get(post_id=pk)
         post.delete()
         return Response({'Success': 'Post deleted'})
+
+
+
 class comments(APIView):
-    def get(self, request, pk=None):
-        comments = models.Comments.objects.all()
+    def get(self, request, pk):
+        post1=models.Post.objects.get(post_id=pk)
+        comments = models.Comments.objects.filter(post=post1)
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)
-
-    def delete(self, request, pk):
-        comment = models.Comments.objects.get(id=pk)
+    def delete(self,request,pk):
+        comment=models.Comments.objects.get(id=pk)
         comment.delete()
-        return Response({'Success': 'Comment deleted'})
+        return Response({'Success':"Comment successfully deleted"})
+    def post(self,request,pk):
+        post=models.Post.objects.get(post_id=pk)
+        username=request.data.get('username')
+        content=request.data.get('content')
+        files=request.FILES.get('files')
+        user=User.objects.get(username=username)
+        comment=models.Comments.objects.create(comment_user=user,content=content,post=post,files=files)
+        comment.save()
+        serializer=CommentSerializer(comment)
+        return Response(serializer.data)
 
-    def post(self, request):
+class Likes(APIView):
+    def post(self,request,pk):
+        post=models.Post.objects.get(post_id=pk)
+        username=request.data.get('username')
+        user=User.objects.get(username=username)
+        likes=models.LikesPost.objects.create(like_user=user,post=post)
+        likes.save()
+        post.likes+=1
+        post.save()
+        return Response({'likes':post.likes})
+    def delete(self,request,pk):
+        post = models.Post.objects.get(post_id=pk)
         username = request.data.get('username')
-        content = request.data.get('content')
-        files = request.data.get('files')
-        user = User.objects.get(username=username)
-        new_comment = models.Comment.objects.create(comment_user=user, content=content, files=files)
-        new_comment.save()
-        return Response({'Success': 'Comment created'})
-
-def Like(request):
-    username = request.user.username
-    post_id = request.GET.get('post_id')
-    post = models.Post.objects.get(post_id=post_id)
-    like = models.LikePost.objects.filter(post=post, username=username).first()
-
-    if like is None:
-        new_like = models.LikePost.objects.create(post=post, username=username)
-        new_like.save()
-        post.likes += 1
+        user=User.objects.get(username=username)
+        likes = models.LikesPost.objects.get(like_user=user,post=post)
+        likes.delete()
+        post.likes-=1
         post.save()
+        return Response({'likes':post.likes})
+
+
+class Bookmark(APIView):
+    def get(self,request):
+        username=request.data.get('username')
+        user=User.objects.get(username=username)
+        bookmarks=models.BookmarkPost.objects.filter(bookmark_user=user)
+        serializer=BookmarkSerializer(bookmarks,many=True)
+        return Response(serializer.data)
+    def post(self,request,pk):
+        post=models.Post.objects.get(post_id=pk)
+        username=request.data.get('username')
+        user=User.objects.get(username=username)
+        bookmarks=models.BookmarkPost.objects.create(bookmark_user=user,post=post)
+        bookmarks.save()
+        return Response({'Success':'Successfully bookmarked '})
+    def delete(self,request,pk):
+        post = models.Post.objects.get(post_id=pk)
+        username = request.data.get('username')
+        user =  User.objects.get(username=username)
+        bookmarks=models.BookmarkPost.objects.get(bookmark_user=user,post=post)
+        bookmarks.delete()
+        return Response({'Success':'Successfully deleted'})     
+
+class Community(APIView):
+    def get(self,request,pk=None):
+        communities=models.Community.objects.all()
+        serializer=CommunitySerializer(communities,many=True)
+        return Response(serializer.data)
+    def post(self,request):
+        username = request.data.get('username')
+        user =  User.objects.get(username=username)
+        com_description = request.data.get('com_description')
+        com_name= request.data.get('com_name')
+        com_image = request.FILES.get('com_image')
+        community = models.Community.objects.create(com_user=user,com_name=com_name,com_description=com_description,com_image=com_image)
+        community.save()
+        return Response({'success':'Successfully Created Community'})
         
-    else:
-        like.delete()
-        post.likes -= 1
-        post.save()
+    def delete(self,request,pk):
+        username=request.data.get('username')
+        user=User.objects.get(username=username)
+        community = models.Community.objects.get(com_id=pk,com_user=user)
+        community.delete()
+        return Response({'Succes':'Deleted Community'})
+

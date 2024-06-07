@@ -12,6 +12,12 @@ urlpatterns = [
     path('map/', views.map.as_view(), name='map'),
     path('allposts/', views.posts.as_view(), name='posts'),
     path('allposts/<uuid:pk>', views.posts.as_view(), name='posts'),
-    path('allposts/<uuid:pk>/comments/', views.comments.as_view(), name='comments'),
+    path('comments/<uuid:pk>', views.comments.as_view(), name='comments'),
+    path('likes/<uuid:pk>',views.Likes.as_view(),name='likes'),
+    path('bookmark/<uuid:pk>',views.Bookmark.as_view(),name = 'Bookmarks'),
+    path('bookmark/',views.Bookmark.as_view(),name = 'Bookmarks'),
+    path('community/<uuid:pk>',views.Community.as_view(),name = 'Community'),
+    path('community/',views.Community.as_view(),name = 'Community'),
+
     # path('allposts/<uuid:pk>/delete/', views.deletepost.as_view(), name='deletepost'),
 ]
