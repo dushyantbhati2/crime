@@ -13,6 +13,9 @@ import json
 from django.http import JsonResponse
 from django.conf import settings
 from django.shortcuts import redirect
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from django.contrib.auth import authenticate
 
 # from langchain.chat_models import ChatOpenAI
 # from langchain.schema import (
@@ -23,12 +26,15 @@ from django.shortcuts import redirect
 import time
 import threading
 class LoginView(APIView):
-    def post(self,request):
-        email=request.data.get('email')
+    authentication_classes = []
+    permission_classes = [] 
+    def post(self,request,format=None):
+        username=request.data.get('username')
         password=request.data.get('password')
-        user=User.objects.filter(email=email).first()
+        # user=User.objects.filter(email=email).first()
+        user=authenticate(username=username,password=password,request=request)
 
-        if user and user.check_password(password):
+        if user is not None:
             refresh=RefreshToken.for_user(user)
             user.save()
             serializer=userSerializers(user)
@@ -38,6 +44,8 @@ class LoginView(APIView):
 
 
 class SignupView(APIView):
+    authentication_classes = []
+    permission_classes = []
     def post(self,request):
         email=request.data.get('email')
         password=request.data.get('password')
@@ -72,6 +80,8 @@ class SignupView(APIView):
 
 
 class Profile_detail(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self,request,pk):
         curr_user=User.objects.get(username=pk)
         profile = Profile.objects.get(user=curr_user)
@@ -86,6 +96,8 @@ class TokenRefreshView(APIView):
         return Response({'access_token': access_token}, status=status.HTTP_200_OK)
 
 class CompleteProfile(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     def post(self,request):
         username=request.data.get('username')
         gender=request.data.get('gender')
@@ -106,7 +118,8 @@ def fetch_coordinates(district_dict,demand_state):
     district_dict['lon'] = lon
 
 class map(APIView):
-    
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     def post(self,request):
         demand_state=request.data.get('state')
         json_file_path = settings.BASE_DIR / 'data.json'
@@ -149,6 +162,8 @@ class map(APIView):
         return Response({'data':organised[demand_state]},status=status.HTTP_200_OK) 
 
 class posts(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self, request, pk=None):
         posts = models.Post.objects.all()
         serializer = PostSerializer(posts, many=True)
@@ -171,6 +186,8 @@ class posts(APIView):
 
 
 class comments(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self, request, pk):
         post1=models.Post.objects.get(post_id=pk)
         comments = models.Comments.objects.filter(post=post1)
@@ -192,6 +209,8 @@ class comments(APIView):
         return Response(serializer.data)
 
 class Likes(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     def post(self,request,pk):
         post=models.Post.objects.get(post_id=pk)
         username=request.data.get('username')
@@ -213,6 +232,8 @@ class Likes(APIView):
 
 
 class Bookmark(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self,request):
         username=request.data.get('username')
         user=User.objects.get(username=username)
@@ -235,6 +256,8 @@ class Bookmark(APIView):
         return Response({'Success':'Successfully deleted'})     
 
 class Community(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self,request,pk=None):
         communities=models.Community.objects.all()
         serializer=CommunitySerializer(communities,many=True)
@@ -250,9 +273,7 @@ class Community(APIView):
         return Response({'success':'Successfully Created Community'})
         
     def delete(self,request,pk):
-        username=request.data.get('username')
-        user=User.objects.get(username=username)
-        community = models.Community.objects.get(com_id=pk,com_user=user)
+        community = models.Community.objects.get(com_id=pk)
         community.delete()
         return Response({'Succes':'Deleted Community'})
 
