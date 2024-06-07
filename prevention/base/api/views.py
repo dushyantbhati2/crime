@@ -2,11 +2,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-<<<<<<< HEAD
-from .serializers import ProfileSerializer,PostSerializer,CommentSerializer
-=======
 from .serializers import ProfileSerializer,PostSerializer,CommentSerializer,BookmarkSerializer,CommunitySerializer
->>>>>>> 47ca22573a8466e92a62505103fc2af9b18a89a3
 from .serializers import userSerializers
 from ..models import Profile
 from django.shortcuts import get_object_or_404
@@ -18,11 +14,6 @@ import json
 from django.http import JsonResponse
 from django.conf import settings
 from django.shortcuts import redirect
-<<<<<<< HEAD
-import time
-=======
-
->>>>>>> 47ca22573a8466e92a62505103fc2af9b18a89a3
 # from langchain.chat_models import ChatOpenAI
 # from langchain.schema import (
 #     AIMessage,
