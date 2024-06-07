@@ -9,55 +9,66 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from .. import models
 import requests
-import threading
 import json
 from django.http import JsonResponse
 from django.conf import settings
 from django.shortcuts import redirect
+
 # from langchain.chat_models import ChatOpenAI
 # from langchain.schema import (
 #     AIMessage,
 #     HumanMessage,
 #     SystemMessage
 # )
+import time
+import threading
 class LoginView(APIView):
-    def post(self, request):
-        
-        email = request.data.get('email')
-        password = request.data.get('password')
-        user = User.objects.filter(email=email).first()
-        
+    def post(self,request):
+        email=request.data.get('email')
+        password=request.data.get('password')
+        user=User.objects.filter(email=email).first()
 
         if user and user.check_password(password):
-            refresh = RefreshToken.for_user(user)
+            refresh=RefreshToken.for_user(user)
             user.save()
-            serializer = userSerializer(user)
-            return Response({'refresh': str(refresh), 'access': str(refresh.access_token), 'user': serializer.data})
+            serializer=userSerializers(user)
+            return Response({'refresh':str(refresh),'access':str(refresh.access_token),'user':serializer.data})
         else:
-            return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error':'Invalid credentials'},status=400)
+
 
 class SignupView(APIView):
-    def post(self, request):
-        email = request.data.get('email')
-        password = request.data.get('password')
-        password2 = request.data.get('cnfpassword')
-        username = request.data.get('username')
+    def post(self,request):
+        email=request.data.get('email')
+        password=request.data.get('password')
+        password2=request.data.get('cnfpassword')
+        username=request.data.get('username')
+        # gender=request.data.get('gender')
+        # occupation=request.data.get('occupation')
 
-        if password != password2:
-            return Response({'error': 'Passwords do not match'}, status=status.HTTP_400_BAD_REQUEST)
+        if password!=password2:
+            return Response({'error':'Password do not match'},status=status.HTTP_400_BAD_REQUEST)
 
-        if User.objects.filter(email=email).exists():
-            return Response({'error': 'Email already exists'}, status=status.HTTP_400_BAD_REQUEST)
+        elif User.objects.filter(email=email).exists():
+            return Response({'error':'Email already exits'},status=status.HTTP_400_BAD_REQUEST)
         
-        if User.objects.filter(username=username).exists():
-            return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
+        elif User.objects.filter(username=username).exists():
+            return Response({'error':'Username already exits'},status=status.HTTP_400_BAD_REQUEST)
         
-        new_user = User.objects.create_user(username=username, email=email)
-        new_user.set_password(password)
-        new_user.save()
         
-        serializer = userSerializer(new_user)
-        return Response({'user': serializer.data})
+        else:
+            new_user=User.objects.create_user(username=username,email=email)
+            new_user.set_password(password)
+            new_user.save()
+            
+            # new_user_profile=models.Profile.objects.create(user=new_user,gender=gender,occupation=occupation)
+            # new_user_profile.save()
+            
+            # refresh=RefreshToken.for_user(new_user)
+            serializer=userSerializers(new_user)
+            return Response({'user':serializer.data})
+
+        
 
 
 class Profile_detail(APIView):
@@ -82,7 +93,7 @@ class CompleteProfile(APIView):
         new_user=User.objects.get(username=username)
         new_user_profile=models.Profile.objects.create(user=new_user,gender=gender,occupation=occupation)
         new_user_profile.save()
-        return Response({'Sucess':'Sucessfully created profile'})
+        return Response({'Sucess':'Sucess'})
 
 
 
@@ -93,7 +104,6 @@ def fetch_coordinates(district_dict,demand_state):
     lon=ans[0]['lon']
     district_dict['lat'] = lat
     district_dict['lon'] = lon
-    
 
 class map(APIView):
     
@@ -139,59 +149,6 @@ class map(APIView):
         return Response({'data':organised[demand_state]},status=status.HTTP_200_OK) 
 
 class posts(APIView):
-<<<<<<< HEAD
-    def get(self,request,pk=None):
-        if pk is None:
-            posts=models.Post.objects.all()
-            serializer=PostSerializer(posts,many=True)
-            return Response(serializer.data)
-        else:
-            post = models.Post.objects.get(post_id=pk)
-            serializer = PostSerializer(post)
-            return Response(serializer.data)
-    
-    def post(self,request):
-        username=request.data.get('username')
-        description=request.data.get('description')
-        files=request.files.getlist('files')
-        user=User.objects.get(username=username)
-        new_post=models.Post.objects.create(post_user=user,description=description)
-        new_post.save()
-        for f in files:
-            new_file=models.PostFile.objects.create(post=new_post, file=f)
-            new_file.save()
-        return Response({'Sucess':'Sucess'})
-    
-    def delete(self,request,pk):
-        post=models.Post.objects.get(post_id=pk)
-        post.delete()
-        return Response({'Sucess':'Post deleted'})
-    
-
-class CommentsSection(APIView):
-    def get(self,request,pk):
-        post=models.Post.objects.get(post_id=pk)
-        comments=models.Comments.objects.filter(post=post)
-        serial=CommentSerializer(comments,many=True)
-        return Response(serial.data)
-    
-    def post(self,request):
-        username=request.data.get('username')
-        content=request.data.get('content')
-        files=request.files.get('files')
-        post_id=request.data.get('id')
-        curr_user=User.models.get(username=username)
-        post=models.Post.objects.get(post_id=post_id)
-        new_comment=models.Comments.objects.create(post=post,comment_user=curr_user,content=content,files=files)
-        new_comment.save()
-        return Response({'Sucess':'Comment Added'})        
-    
-    def delete(self,request,pk):
-        comment=models.Comments.objects.get(comment_id=pk)
-        comment.delete()
-        return Response({'Sucess':'Post deleted'})
-    
-=======
     def get(self, request, pk=None):
         posts = models.Post.objects.all()
         serializer = PostSerializer(posts, many=True)
@@ -299,4 +256,3 @@ class Community(APIView):
         community.delete()
         return Response({'Succes':'Deleted Community'})
 
->>>>>>> 47ca22573a8466e92a62505103fc2af9b18a89a3
