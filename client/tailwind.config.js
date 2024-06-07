@@ -5,10 +5,18 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        "custom-gradient": "linear-gradient(90deg, #764fe3 0%, #7592ee 100%)",
+        community:
+          "linear-gradient(109.6deg, rgba(0, 0, 0, 0.93) 11.2%, rgb(63, 61, 61) 78.9%)",
+      },
       fontFamily:
       {
         Roboto:"'Roboto',sans-serif",
         Poppins:"'Poppins', sans-serif",
+        text: ["Manrope", "sans-serif"],
+        heading: ["Lexend", "sans-serif"],
+        muli: ["Mulish", "sans-serif"],
       },
       colors: {
         'primary':"#9ca3af",
@@ -40,11 +48,6 @@ module.exports = {
     },
   },
   plugins: [
-    require('daisyui'),
   ],
-  daisyui: {
-    themes: ["light", "dark", "cupcake","business"],
-    darkTheme: "light", // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
-   
-  },
+  
 }
