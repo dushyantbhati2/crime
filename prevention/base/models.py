@@ -12,8 +12,8 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
     
-class Post(models.Model):
-    post_user=models.ForeignKey(User,on_delete=models.CASCADE)
+class Post(models.Model): 
+    post_user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='post_user')
     description=models.TextField(blank=True)
     post_id=models.UUIDField(default=uuid4,primary_key=True)
     likes=models.IntegerField(default=0)
@@ -27,14 +27,12 @@ class PostFile(models.Model):
 
 class Comments(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    comment_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment_user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='comment_user')
     id = models.UUIDField(default=uuid4, primary_key=True)
     content = models.TextField(blank=True) 
     files = models.FileField(upload_to='comments_files', blank=True, null=True) 
-
     def __str__(self):
         return self.comment_user.username
-
 class LikesPost(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     like_user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -44,12 +42,12 @@ class LikesPost(models.Model):
 
 class BookmarkPost(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    bookmark_user=models.ForeignKey(User,on_delete=models.CASCADE)
+    bookmark_user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='bookmark_user')
     def __str__(self):
         return self.bookmark_user.username
 
 class Community(models.Model):
-    com_user=models.ForeignKey(User,on_delete=models.CASCADE)
+    com_user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='com_user')
     com_id=models.UUIDField(default=uuid4, primary_key=True)
     com_name=models.CharField(max_length=100)
     com_description=models.CharField(max_length=400)

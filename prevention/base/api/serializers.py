@@ -18,22 +18,6 @@ class userSerializers(ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user    
-
-# class SignUpSerializer(ModelSerializer):
-#     email = serializers.CharField(max_length=85)
-#     password = serializers.CharField(write_only=True)
-#     username = serializers.CharField(max_length = 30)
-#     class Meta:
-#         model = User
-#         fields = ['username', 'email', 'password']
-    
-    
-    
-#     def validate(self, attrs):
-#         email_exists = User.objects.filter(email=attrs['email'].exist()) 
-#         if email_exists:
-#             raise serializers.ValidationError("Email already exists")
-#         return attrs
 class ProfileSerializer(ModelSerializer):
     class Meta:
         model  = Profile
@@ -45,23 +29,28 @@ class PostFileSerializer(ModelSerializer):
         fields=('file',)
 
 class PostSerializer(ModelSerializer):
+    post_user = userSerializers()
     files=PostFileSerializer(many=True)
     class Meta:
         model=models.Post
-        fields=('post_user', 'description', 'post_id', 'likes', 'files')
+        fields=( 'description', 'post_id', 'likes', 'files','post_user',)
 
-class CommentSerializer(ModelSerializer):
-    # files=PostFileSerializer(many=True)
+class CommentSerializer(serializers.ModelSerializer):
+    comment_user = userSerializers()
     class Meta:
-        model=Comments
-        fields='__all__'
+        model = models.Comments
+        fields = ['id', 'comment_user', 'content', 'files'] 
 
 class BookmarkSerializer(ModelSerializer):
+    bookmark_user=userSerializers()
     class Meta:
         model=BookmarkPost
         fields='__all__'
+        extra_field='bookmark_user'
 
 class CommunitySerializer(ModelSerializer):
+    com_user=userSerializers()
     class Meta:
         model=Community
         fields='__all__'
+        extra_field='com_user'
