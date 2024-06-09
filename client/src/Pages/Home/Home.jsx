@@ -1,17 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Layout from "../Layout/Layout";
-import Header from "../../Components/Header/Header";
-import CommunityHero from "../community/CommunityHero";
+import Cards from "./Cards";
+import MainCard from "./MainCard";
 
-import CardSection from "../../Components/Header/CardSection";
 
 export default function Home() {
   return (
-   <>
-   <CommunityHero/>
-    <CardSection/>
-   </>
+   <div className="bg-community">
+    <MainCard/>
+    <Cards/>    
+   </div>
 
   
   );

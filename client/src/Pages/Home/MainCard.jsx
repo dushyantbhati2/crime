@@ -1,6 +1,6 @@
 import React from "react";
 import sideImage from '../../assets/communitySide.png'
-const CommunityHero = () => {
+const MainCard = () => {
   return (
     <>
       <div className="flex py-16 lg:py-0 flex-col lg:flex-row justify-center w-full text-white gap-8 lg:gap-16 items-center  h-auto min-h-[500px] p-4 lg:p-0">
@@ -26,4 +26,4 @@ const CommunityHero = () => {
   );
 };
 
-export default CommunityHero;
+export default MainCard;
