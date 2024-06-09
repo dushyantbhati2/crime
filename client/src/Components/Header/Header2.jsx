@@ -3,7 +3,7 @@ import Logo from "../../assets/black signup1.jpeg.jpg";
 
 const Header2 = () => {
   return (
-    <header className="bg-white shadow font-heading sticky top-0">
+    <header className="bg-white shadow font-heading h-[70px] flex sticky top-0">
       <div className="container mx-auto flex justify-between items-center py-2 px-4 ">
         <div className="flex items-center border border-black overflow-hidden rounded-full h-12 w-12">
           <img src={Logo} alt="Logo" className="h-12 scale-[1.12] rounded-full  w-12 " />
