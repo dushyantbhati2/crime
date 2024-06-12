@@ -6,7 +6,7 @@ import TooglePassword from "./TooglePassword";
 import axios from "../../axios/axiosDefaults.js";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-
+import { signupApi, useSignupUserMutation } from "../../services/signup.js";
 const Signup = () => {
 
   const navigate =useNavigate()
@@ -16,7 +16,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [auth,setAuth]= useAuth()
+  // const [auth,setAuth]= useAuth()
   const [
     passwordType,
     confirmPasswordType,
@@ -25,37 +25,25 @@ const Signup = () => {
     togglePasswordVisibility,
   ] = TooglePassword();
 
-
+  const [signupUser,{data,error,isLoading}]=useSignupUserMutation();
   const handleSubmit = async(e) => {
     e.preventDefault();
     console.log(email,password)
     try {
-      const response = await axios.post('signup/', {
-        'email': email,
-        'username':username,
-        'password': password,
-        'cnfpassword':confirmPassword
-      });
-      const data =await response.data;
-      console.log(data)
-      
-      setAuth({
-        ...auth,
-        user:data.user,
-        
-      })
-
+      const User={
+        email:email,
+        password:password,
+        cnfpassword:confirmPassword,
+        username:username
+      }  
+      const si=await signupUser(User)
+      console.log(si)
       navigate("/complete-profile")
       
     } catch (error) {
       console.error(error);
     }
-
-
-    
   };
-
-
 
   return (
     <div className="font-Poppins min-h-screen flex items-center justify-center lg:justify-start lg:gap-36 lg:px-12 w-full lg:bg-[#FDFDF5]">

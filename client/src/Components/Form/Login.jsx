@@ -3,16 +3,18 @@ import Input from "../input_Button/Input";
 import { Link } from "react-router-dom";
 import image2 from "../../assets/black signup final.jpeg";
 import TooglePassword from "./TooglePassword";
-import axios from "../../axios/axiosDefaults.js";
+// import axios from "../../axios/axiosDefaults.js";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.js";
+import {useLoginUserMutation} from "../../services/login.js"
 
 const Login = () => {
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false); // Changed initial loading state to false
+  // const [loading, setLoading] = useState(false); // Changed initial loading state to false
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const [auth, setAuth] = useAuth();
+  // const [auth, setAuth] = useAuth();
+  const [loginUser,{data,error,isLoading}]=useLoginUserMutation();
 
   const [
     passwordType,
@@ -25,31 +27,16 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(email, password);
-
     try {
-      const response = await axios.post("token/", {
-        email: email,
-        password: password,
-      });
-      const data = await response.data;
-      console.log(data.user);
-      console.log(data.refresh);
-      console.log(data.access);
-      setAuth({
-        ...auth,
-        user: data.user,
-        refToken: data.refresh,
-        accToken: data.access,
-      });
-      console.log(auth);
-
-      localStorage.setItem("token", JSON.stringify(data.access));
-      
-      setLoading(false); // Set loading to false after successful login
-      
-      navigate("/"); // Navigate to home route after successful login
-    } catch (error) {
-      console.error(error.response.data);
+      const User={
+        username:email,
+        password:password
+      }
+      const resp=await loginUser(User);
+      console.log(resp);
+      navigate("/");
+    } catch (err){
+      console.error(err);
     }
   };
 
@@ -98,9 +85,9 @@ const Login = () => {
         <button
           type="submit"
           className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm font-medium text-white bg-[#000A1E] hover:bg-slate-900 focus:outline-none mt-10"
-          disabled={loading} // Disable button when loading is true
+          disabled={isLoading} // Disable button when loading is true
         >
-          {loading ? 'Signing In...' : 'Sign In'} {/* Show appropriate text based on loading state */}
+          {isLoading ? 'Signing In...' : 'Sign In'} {/* Show appropriate text based on loading state */}
         </button>
       </form>
     </div>

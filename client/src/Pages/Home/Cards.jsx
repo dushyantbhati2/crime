@@ -1,10 +1,10 @@
 import React from "react";
 import sideImage from "../../assets/communitySide.png";
-import img1 from "/Users/ro..../Desktop/Crime/crime/client/src/assets/imgforhome1.jpg"
-import img2 from "/Users/ro..../Desktop/Crime/crime/client/src/assets/imgforhome2.jpg"
-import img3 from "/Users/ro..../Desktop/Crime/crime/client/src/assets/imgforhome3.jpg"
-import gif1 from "/Users/ro..../Desktop/Crime/crime/client/src/assets/gif/map3.gif"
-import gif2 from "/Users/ro..../Desktop/Crime/crime/client/src/assets/gif/map.gif"
+import img1 from "../../assets/imgforhome1.jpg"
+import img2 from "../../assets/imgforhome2.jpg"
+import img3 from "../../assets/imgforhome3.jpg"
+import gif1 from "../../assets/gif/map3.gif"
+import gif2 from "../../assets/gif/map.gif"
 
 import SingleCard from "./SingleCard";
 const Cards = () => {

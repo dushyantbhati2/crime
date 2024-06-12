@@ -32,7 +32,7 @@ class LoginView(APIView):
             return Response({'refresh':str(refresh),'access':str(refresh.access_token),'user':serializer.data})
         else:
             return Response({'error':'Invalid credentials'},status=400)
-
+ 
 class SignupView(APIView):
     authentication_classes = []
     permission_classes = []
