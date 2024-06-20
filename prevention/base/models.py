@@ -55,3 +55,35 @@ class Community(models.Model):
     com_image=models.ImageField(upload_to="com_images",blank=True)
     def __str__(self):
         return self.com_name
+
+class Camps(models.Model):
+    camp_id=models.UUIDField(default=uuid4,primary_key=True)
+    camp_name=models.CharField(max_length=100)
+    camp_type=models.CharField(max_length=20)
+    date=models.DateField()
+    description=models.CharField(max_length=1000)
+    created_by=models.ForeignKey(User,on_delete=models.CASCADE)
+    location  = models.CharField(max_length=200)
+    meet_link=models.URLField(blank=True)
+    camp_theme=models.CharField(max_length=20)
+    no_of_registered_user=models.IntegerField(default=0)
+    status=models.BooleanField(default=False) 
+    
+    def __str__(self):
+        return self.camp_name
+
+class Camp_user(models.Model):
+    camp=models.ForeignKey(Camps,on_delete=models.CASCADE)
+    registered_user=models.ForeignKey(User,on_delete=models.CASCADE)
+    feedback = models.TextField(blank=True)
+    
+    def __str__(self):
+        return self.registered_user.username
+class Camp_files(models.Model):
+    camp = models.ForeignKey(Camps,on_delete=models.CASCADE)
+    camp_files = models.FileField(upload_to='camp_files')
+    
+    def __str__(self):
+        return self.camp.camp_name
+    
+    
