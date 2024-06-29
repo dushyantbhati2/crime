@@ -1,133 +1,300 @@
-import React from 'react';
-import { FaBell, FaEnvelope, FaUser } from 'react-icons/fa';
+import React from "react";
+import { FaImage } from "react-icons/fa6";
+import { MdOutlineAttachFile } from "react-icons/md";
+import { MdEmojiEmotions } from "react-icons/md";
 
 const Community = () => {
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="bg-gray-100 p-4 grid sm:grid-cols-10  items-center shadow">
-        <div className="text-lg sm:text-2xl font-medium font-heading sm:col-span-2 px-1">Community</div>
-        <div className="flex sm:col-span-8 justify-between w-full items-center space-x-4 font-text">
-          <input
-            type="text"
-            placeholder="Search for help"
-            className="px-4 py-2 border rounded-full"
-          />
-          <div className="flex items-center space-x-7">
-            <FaEnvelope className="text-xl" />
-            <FaBell className="text-xl" />
-            <FaUser className="text-xl" />
-          </div>
+    <div className="min-h-screen sm:px-16 bg-gray-900 text-white flex ">
+      <aside className="w-[220px] h-[650px] my-10 bg-gray-800 rounded-3xl  text-white p-4 relative right-5">
+        <div className="text-xl font-bold">Connected</div>
+        <nav className="mt-4">
+          <ul>
+            <li className="my-2">
+              <a href="#">
+                Home
+              </a>
+            </li>
+            <li className="my-2">
+              <a href="#" >
+                Parent Profile
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div className="mt-8">
+          <div className="font-semibold">Favorites</div>
+          <ul>
+            <li className="my-2">
+              <a href="#" >
+                Messages
+              </a>
+            </li>
+            <li className="my-2">
+              <a href="#" >
+                Friends
+              </a>
+            </li>
+            <li className="my-2">
+              <a href="#" >
+                Activities
+              </a>
+            </li>
+            <li className="my-2">
+              <a href="#" >
+                Workshops
+              </a>
+            </li>
+            <li className="my-2">
+              <a href="#" >
+                Peer Networks
+              </a>
+            </li>
+            <li className="my-2">
+              <a href="#" >
+                Progress Tracking
+              </a>
+            </li>
+          </ul>
         </div>
-      </header>
-      <div className="grid sm:grid-cols-10 ">
-        <aside className="bg-gray-100  p-4 space-y-6 sm:col-span-2">
-          <nav>
-            <ul className="space-y-4 font-Poppins px-2">
-              <li className="flex items-center space-x-2">
-                
-                <span className=''>Following</span>
-              </li>
-             
-              <li className="flex text-[15px] items-center space-x-2 ml-6">
-                <span>Alerts</span>
-              </li>
-              <li className="flex text-[15px] items-center space-x-2 ml-6">
-                <span>List</span>
-              </li>
-              <li className="flex text-[15px] items-center space-x-2 ml-6">
-                <span>Scheduled</span>
-              </li>
-              <li className="flex text-[15px] items-center space-x-2 ml-6">
-                <span>Community Activities</span>
-              </li>
-              <li className="flex items-center space-x-2">
-                
-                <span>Donations</span>
-              </li>
-              <li className="flex items-center space-x-2 ">
-                <span>NGO Support</span>
-              </li>
-              <li className="flex items-center space-x-2 ">
-                <span>Report Incident</span>
-              </li>
-              <li className="flex items-center space-x-2 ">
-                <span>Support NGOs</span>
-              </li>
-            </ul>
-          </nav>
-          <div className="absolute bottom-4 left-4">
-            <span>Help & Support</span>
+        <div className="mt-8">
+          <div className="font-semibold">Workshops</div>
+          <ul>
+            <li className="my-2">
+              <a href="#" >
+                Parent Community
+              </a>
+            </li>
+            <li className="my-2">
+              <a href="#" >
+                Tech Enthusiasts
+              </a>
+            </li>
+            <li className="my-2">
+              <a href="#" >
+                Seminar Attendees
+              </a>
+            </li>
+            <li className="my-2">
+              <a href="#">
+                Pet Lovers
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div className="mt-8">
+          <button className="w-full bg-rose-700 text-white py-2 rounded">
+            Support & Signout
+          </button>
+        </div>
+      </aside>
+      <main className="flex-1 my-3 p-6">
+        <header className=" flex mb-6 -ml-3">
+          <div className="w-full  bg-gray-900 p-3 rounded-lg right-0 ">
+            <div className="flex items-center space-x-4">
+              <img
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
+                alt="User Avatar"
+                className="w-10 h-10 rounded-full object-cover"
+              />
+              <input
+                type="text"
+                placeholder="What's on your mind?"
+                className="flex-grow bg-gray-800 text-white placeholder-gray-500 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div className="flex justify-between items-center mt-4">
+              <div className="flex space-x-4">
+                <button className="bg-[#be123c] rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-white">
+                  <FaImage className="h-6 w-6" />
+                </button>
+                <button className="bg-[#be123c] rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-white">
+                  <MdOutlineAttachFile className="h-6 w-6" />
+                </button>
+                <button className="bg-[#be123c] rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-white">
+                  <MdEmojiEmotions className="h-6 w-6" />
+                </button>
+              </div>
+              <button className="bg-[#be123c] text-white rounded-full px-6 py-2 focus:outline-none focus:ring-2 focus:ring-white-500">
+                Post
+              </button>
+            </div>
           </div>
-        </aside>
-        <main className=" flex-1 p-4 space-y-6 sm:col-span-6">
-          <h1 className="text-2xl font-semibold font-heading">Emergency Alerts</h1>
-          <section className="bg-gray-100 p-4 rounded shadow">
-            <h2 className="text-lg font-heading font-medium mb-4">New Updates</h2>
-            <div className="space-y-4 font-Poppins">
-              <div className="flex  border-b py-2 justify-between items-start">
-                <div className="flex space-x-4">
-                  <div className="w-12 h-12 bg-gray-300 rounded-full"></div>
-                  <div>
-                    <p className="font-semibold">Community Alert</p>
-                    <p>on Incident - 3600</p>
-                    <p>Stay safe, stay aware</p>
-                    <p>Ackno Respon</p>
-                  </div>
-                </div>
-                <span className='font-semibold'>1 hour ago</span>
-              </div>
-              <div className="flex border-b py-2  justify-between items-start">
-                <div className="flex space-x-4">
-                  <div className="w-12 h-12 bg-gray-300 rounded-full"></div>
-                  <div>
-                    <p className="font-semibold">NGO Support Team</p>
-                    <p>on Incident - 3600</p>
-                    <p>Thank you for your contribution</p>
-                    <div className="flex space-x-2">
-                      <button className="text-blue-500">Like</button>
-                      <button className="text-blue-500">Reply</button>
-                    </div>
-                  </div>
-                </div>
-                <span className='font-semibold'>1 hour ago</span>
-              </div>
+        </header>
+        <section>
+          <div className="mb-6">
+            <div className="flex items-center space-x-4">
+              <img
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
+                alt="User Avatar"
+                className="w-10 h-10 rounded-full object-cover"
+              />
+
+              <h2 className="text-lg font-semibold mb-2">Parent's joyful moment</h2>
             </div>
-          </section>
-        </main>
-          <section className="bg-gray-100 p-4 rounded shadow sm:col-span-2">
-            <h2 className="text-lg sm:text-xl mb-6 font-medium font-heading">Filter Options</h2>
-            <div className="space-y-4 font-Poppins">
-              <div className="flex justify-between items-center">
-                <span>Comments</span>
-                <input type="checkbox" checked className="form-checkbox" />
-              </div>
-              <div className="flex justify-between items-center">
-                <span>Likes</span>
-                <input type="checkbox" checked className="form-checkbox" />
-              </div>
-              <div className="flex justify-between items-center">
-                <span>Reviews</span>
-                <input type="checkbox" checked className="form-checkbox" />
-              </div>
-              <div className="flex justify-between items-center">
-                <span>Mentions</span>
-                <input type="checkbox" checked className="form-checkbox" />
-              </div>
-              <div className="flex justify-between items-center">
-                <span>Donations</span>
-                <input type="checkbox" checked className="form-checkbox" />
-              </div>
-              <div className="flex justify-between items-center">
-                <span>Messages</span>
-                <input type="checkbox" checked className="form-checkbox" />
-              </div>
-              <div className="flex justify-between items-center">
-                <button className="bg-blue-500 text-white px-4 py-2 rounded">Select all</button>
-                <button className="bg-gray-500 text-white px-4 py-2 rounded">Unselect all</button>
-              </div>
+            <p className="text-gray-400 ml-14">
+              Parent's gratitude and love for family adventures. Travel memories
+              shared.
+            </p>
+            <div className="flex mt-4">
+              <img
+                src="https://images.unsplash.com/photo-1517329782449-810562a4ec2f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aW1hZ2V8ZW58MHx8MHx8fDA%3D"
+                alt="Travel"
+                className="w-1/2 rounded-lg mr-4"
+              />
+              <img
+                src="https://plus.unsplash.com/premium_photo-1682513184135-b7b9b76fb4eb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGltYWdlfGVufDB8fDB8fHww"
+                alt="Travel"
+                className="w-1/2 rounded-lg"
+              />
             </div>
-          </section>
-      </div>
+            <div className="flex mt-4 space-x-4">
+              <button className="bg-gray-900 text-white px-4 py-2 rounded">
+                Emp
+              </button>
+              <button className="bg-blue-900 text-white px-4 py-2 rounded">
+                Engage
+              </button>
+              <button className="bg-orange-500 text-white px-4 py-2 rounded">
+                Join
+              </button>
+              <button className="bg-blue-500 text-white px-4 py-2 rounded">
+                Con
+              </button>
+            </div>
+          </div>
+          <div className="mb-6">
+            <div className="flex items-center space-x-4">
+              <img
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
+                alt="User Avatar"
+                className="w-10 h-10 rounded-full object-cover"
+              />
+              <h2 className="text-lg font-semibold mb-2">
+                Parenting Community Engagement
+              </h2>{" "}
+            </div>
+
+            <p className="text-gray-400 ml-14">Parenting Community Discussions</p>
+            <div className="flex  justify-between mt-4 space-x-4">
+              <img
+                src="https://images.unsplash.com/photo-1603201101485-e232d22ad18b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGltYWdlfGVufDB8fDB8fHww"
+                alt="Discussion"
+                className="md:w-[270px] object-cover rounded-lg"
+              />
+              <img
+                src="https://media.istockphoto.com/id/1687720497/photo/business-meeting-sales-team-meeting-of-a-startup-company-brainstorming-and-summarizing.webp?b=1&s=170667a&w=0&k=20&c=26bRvTbpq3QOoS8kMA55ixeR1vHWdmuVisbXKdksKB0="
+                alt="Discussion"
+                className="md:w-[270px] object-cover rounded-lg"
+              />
+              <img
+                src="https://media.istockphoto.com/id/1977348709/photo/laughing-young-businesswoman-talking-with-colleagues-in-an-office-hallway.webp?b=1&s=170667a&w=0&k=20&c=PlA-PNKbN4j3GWuy0vbtCqD3IkbrE3mJLlQ2mHWRAjo="
+                alt="Discussion"
+                className="md:w-[270px] object-cover rounded-lg"
+              />
+            </div>
+            <div className="flex mt-4 space-x-4">
+              <button className="bg-blue-500 text-white px-4 py-2 rounded">
+                Interact
+              </button>
+              <button className="bg-blue-500 text-white px-4 py-2 rounded">
+                Eng
+              </button>
+              <button className="bg-blue-500 text-white px-4 py-2 rounded">
+                Share
+              </button>
+            </div>
+          </div>
+          <div className="mb-6">
+            <div className="flex items-center space-x-4">
+              <img
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
+                alt="User Avatar"
+                className="w-10 h-10 rounded-full object-cover"
+              />
+
+              <h2 className="text-lg font-semibold mb-2">Parenting Advocate</h2>
+            </div>
+            <p className="text-gray-400 ml-14">Parenting Story & Experience Sharing</p>
+            <div className="flex mt-4 space-x-4">
+              <button className="bg-blue-500 text-white px-4 py-2 rounded">
+                Interact
+              </button>
+              <button className="bg-blue-500 text-white px-4 py-2 rounded">
+                Eng
+              </button>
+              <button className="bg-blue-500 text-white px-4 py-2 rounded">
+                Share
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+      <aside className="w-[250px] h-[500px] bg-gray-800 p-4 my-10 rounded-3xl relative left-5  ">
+        <div className="font-semibold">Parental events</div>
+        <ul className="mt-4">
+          <li className="my-2">
+            <a href="#" >
+              Parental gathering
+            </a>
+          </li>
+          <li className="my-2">
+            <a href="#" >
+              Parental decision-making
+            </a>
+          </li>
+          <li className="my-2">
+            <a href="#" >
+              Parental music event
+            </a>
+          </li>
+          <li className="my-2">
+            <a href="#" >
+              Parental stand-up
+            </a>
+          </li>
+        </ul>
+        <div className="font-semiboldmt-8">
+          Parenting Workshops
+        </div>
+        <ul className="mt-4">
+          <li className="my-2">
+            <a href="#" >
+              Interactive Sessions
+            </a>
+          </li>
+          <li className="my-2">
+            <a href="#" >
+              Parent Name
+            </a>
+          </li>
+          <li className="my-2">
+            <a href="#" >
+              Community Support
+            </a>
+          </li>
+        </ul>
+        <div className="font-semibold mt-8">
+          Parenting Resources
+        </div>
+        <ul className="mt-4">
+          <li className="my-2">
+            <a href="#" >
+              Supportive Community
+            </a>
+          </li>
+          <li className="my-2">
+            <a href="#" >
+              Parenting Milestones
+            </a>
+          </li>
+          <li className="my-2">
+            <a href="#" >
+              Parenting Challenges
+            </a>
+          </li>
+        </ul>
+      </aside>
     </div>
   );
 };

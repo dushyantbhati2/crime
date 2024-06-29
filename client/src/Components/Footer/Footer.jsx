@@ -10,7 +10,7 @@ import { PiGithubLogoDuotone } from "react-icons/pi";
 import { PiTwitterLogoDuotone } from "react-icons/pi";
 export default function Footer() {
     return (
-        <footer className="bg-white border-y flex flex-col md:flex-row h-auto md:h-[200px] w-full justify-around items-center p-4 md:p-0">
+        <footer className="bg-sky-500  border-y border-gray-600 flex flex-col md:flex-row h-auto md:h-[200px] w-full justify-around items-center p-4 md:p-0">
             <div className="flex flex-col gap-4 justify-center w-full md:w-[300px] items-center">
                 <div className="flex flex-col justify-center items-center md:items-start">
                     <img src={logo} className="rounded-full w-[44px] h-[44px] scale-110" alt="Logo" />
@@ -38,19 +38,19 @@ export default function Footer() {
                 </ul>
             </div>
             <div className="w-full md:w-[300px] flex justify-center min-h-[64px] pb-6 md:justify-start gap-4 mt-4 md:mt-0">
-                <div className="flex justify-center items-center bg-white w-16 h-16 rounded-full">
+                <div className="flex justify-center items-center border w-16 h-16 rounded-full">
                     {/* <img src={youtube} alt="YouTube Icon" className="w-9 h-9" /> */}
                     <PiYoutubeLogoDuotone className="w-12 h-12" />
                 </div>
-                <div className="flex justify-center items-center  w-16 h-16 rounded-full">
+                <div className="flex justify-center items-center border w-16 h-16 rounded-full">
                     {/* <img src={instagram} alt="Instagram Icon" className="w-9 h-9" /> */}
                     <PiInstagramLogoDuotone className="w-11 h-11"  />
                 </div>
-                <div className="flex justify-center items-center bg-white w-16 h-16 rounded-full">
+                <div className="flex justify-center items-center border w-16 h-16 rounded-full">
                     {/* <img src={github} alt="GitHub Icon" className="w-9 h-9" /> */}
                     <PiGithubLogoDuotone  className="w-11 h-11"  />
                 </div>
-                <div className="flex justify-center items-center bg-white w-16 h-16 rounded-full">
+                <div className="flex justify-center items-center border w-16 h-16 rounded-full">
                     {/* <img src={twitter} alt="Twitter Icon" className="w-9 h-9" /> */}
                     <PiTwitterLogoDuotone  className="w-11 h-11"  />
                 </div>
