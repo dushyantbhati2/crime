@@ -2,13 +2,17 @@ import React from "react";
 import { FaImage } from "react-icons/fa6";
 import { MdOutlineAttachFile } from "react-icons/md";
 import { MdEmojiEmotions } from "react-icons/md";
+import { IoIosHeartEmpty } from "react-icons/io";
+import { FaRegComment } from "react-icons/fa6";
+
+
 
 const Community = () => {
   return (
-    <div className="min-h-screen sm:px-16 bg-gray-900 text-white flex ">
-      <aside className="w-[220px] h-[650px] my-10 bg-gray-800 rounded-3xl  text-white p-4 relative right-5">
+    <div className="min-h-screen sm:px-8 bg-gray-900 text-white flex pt-[50px] ">
+      <aside className="w-[220px] h-[630px]  my-10 bg-gray-800 rounded-3xl  text-white p-4 relative  left-0 top-0 ">
         <div className="text-xl font-bold">Connected</div>
-        <nav className="mt-4">
+        <nav className="mt-4  border-b border-gray-500/50">
           <ul>
             <li className="my-2">
               <a href="#">
@@ -22,7 +26,7 @@ const Community = () => {
             </li>
           </ul>
         </nav>
-        <div className="mt-8">
+        <div className="my-4 border-b border-gray-500/50">
           <div className="font-semibold">Favorites</div>
           <ul>
             <li className="my-2">
@@ -57,7 +61,7 @@ const Community = () => {
             </li>
           </ul>
         </div>
-        <div className="mt-8">
+        <div className="my-4 border-b border-gray-500/50">
           <div className="font-semibold">Workshops</div>
           <ul>
             <li className="my-2">
@@ -82,13 +86,13 @@ const Community = () => {
             </li>
           </ul>
         </div>
-        <div className="mt-8">
+        <div className="mt-4">
           <button className="w-full bg-rose-700 text-white py-2 rounded">
-            Support & Signout
+           Signout
           </button>
         </div>
       </aside>
-      <main className="flex-1 my-3 p-6">
+      <main className="flex-1 my-3 p-6 overflow-y-auto no-scrollbar h-[calc(100vh-70px)]">
         <header className=" flex mb-6 -ml-3">
           <div className="w-full  bg-gray-900 p-3 rounded-lg right-0 ">
             <div className="flex items-center space-x-4">
@@ -136,7 +140,7 @@ const Community = () => {
               Parent's gratitude and love for family adventures. Travel memories
               shared.
             </p>
-            <div className="flex mt-4">
+            {/* <div className="flex mt-4">
               <img
                 src="https://images.unsplash.com/photo-1517329782449-810562a4ec2f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aW1hZ2V8ZW58MHx8MHx8fDA%3D"
                 alt="Travel"
@@ -147,18 +151,55 @@ const Community = () => {
                 alt="Travel"
                 className="w-1/2 rounded-lg"
               />
-            </div>
+            </div> */}
+   <div className="carousel rounded-box w-full mt-4">
+  <div className="carousel-item w-1/2 h-[450px]">
+    <img
+                src="https://images.unsplash.com/photo-1517329782449-810562a4ec2f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aW1hZ2V8ZW58MHx8MHx8fDA%3D"
+                className="w-full object-cover" />
+  </div>
+  <div className="carousel-item w-1/2 h-[450px]">
+    <img
+                src="https://plus.unsplash.com/premium_photo-1682513184135-b7b9b76fb4eb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGltYWdlfGVufDB8fDB8fHww"
+                className="w-full object-cover" />
+  </div>
+  <div className="carousel-item w-1/2 h-[450px]">
+    <img
+      src="https://img.daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.jpg"
+      className="w-full object-cover" />
+  </div>
+  <div className="carousel-item w-1/2 h-[450px]">
+    <img
+      src="https://img.daisyui.com/images/stock/photo-1494253109108-2e30c049369b.jpg"
+      className="w-full object-cover" />
+  </div>
+  <div className="carousel-item w-1/2 h-[450px]">
+    <img
+      src="https://img.daisyui.com/images/stock/photo-1550258987-190a2d41a8ba.jpg"
+      className="w-full object-cover" />
+  </div>
+  <div className="carousel-item w-1/2 h-[450px]">
+    <img
+      src="https://img.daisyui.com/images/stock/photo-1559181567-c3190ca9959b.jpg"
+      className="w-full object-cover" />
+  </div>
+  <div className="carousel-item w-1/2 h-[450px]">
+    <img
+      src="https://img.daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg"
+      className="w-full object-cover" />
+  </div>
+</div>
             <div className="flex mt-4 space-x-4">
-              <button className="bg-gray-900 text-white px-4 py-2 rounded">
-                Emp
+              <button className="bg-gray-900 text-white px-4 rounded ">
+              <IoIosHeartEmpty size={28}/>
               </button>
-              <button className="bg-blue-900 text-white px-4 py-2 rounded">
-                Engage
+              <button  className=" text-white px-4 py-2 rounded">
+              <FaRegComment  />
               </button>
-              <button className="bg-orange-500 text-white px-4 py-2 rounded">
-                Join
+              <button className=" text-white px-4 py-2 rounded">
+              <FaRegComment    style = {{transform: 'scaleY(-1)' }} />
               </button>
-              <button className="bg-blue-500 text-white px-4 py-2 rounded">
+              <button className=" text-white px-4 py-2 rounded">
                 Con
               </button>
             </div>
@@ -230,9 +271,9 @@ const Community = () => {
           </div>
         </section>
       </main>
-      <aside className="w-[250px] h-[500px] bg-gray-800 p-4 my-10 rounded-3xl relative left-5  ">
+      <aside className="w-[250px] h-[530px] bg-gray-800 p-4 my-10 rounded-3xl relative left-5  ">
         <div className="font-semibold">Parental events</div>
-        <ul className="mt-4">
+        <ul className="mt-4 pb-2 border-b border-gray-500/50">
           <li className="my-2">
             <a href="#" >
               Parental gathering
@@ -254,10 +295,10 @@ const Community = () => {
             </a>
           </li>
         </ul>
-        <div className="font-semiboldmt-8">
+        <div className="font-semibold mt-4">
           Parenting Workshops
         </div>
-        <ul className="mt-4">
+        <ul className="my-6 pb-2 border-b border-gray-500/50">
           <li className="my-2">
             <a href="#" >
               Interactive Sessions
@@ -274,10 +315,10 @@ const Community = () => {
             </a>
           </li>
         </ul>
-        <div className="font-semibold mt-8">
+        <div className="font-semibold mt-4">
           Parenting Resources
         </div>
-        <ul className="mt-4">
+        <ul className="my-4 border-b border-gray-500/50">
           <li className="my-2">
             <a href="#" >
               Supportive Community

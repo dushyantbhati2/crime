@@ -22,7 +22,7 @@ const Header3 = () => {
 
   return (
     <header
-      className={`bg-sky-500 text-gray-900 border-b  border-gray-600 shadow   font-heading h-[70px] flex fixed w-full transition-transform duration-300 ${
+      className={`bg-sky-500 text-gray-900 border-b  border-gray-600 shadow z-50   font-heading h-[70px] flex fixed top-0 w-full transition-transform duration-300 ${
         show ? 'translate-y-0' : '-translate-y-full'
       }`}
     >
