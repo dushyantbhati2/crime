@@ -1,13 +1,21 @@
-import React from "react";
-import { FaImage } from "react-icons/fa6";
-import { MdOutlineAttachFile } from "react-icons/md";
-import { MdEmojiEmotions } from "react-icons/md";
-import { IoIosHeartEmpty } from "react-icons/io";
+import React,{useState} from "react";
+import { IoMdHeartEmpty } from "react-icons/io";
+import { IoMdHeart } from "react-icons/io";
+import { FaRegPaperPlane } from "react-icons/fa";
 import { FaRegComment } from "react-icons/fa6";
+import CommunityPost from './CommunityPost'
+import { CiBookmark } from "react-icons/ci";
+import { IoIosBookmark } from "react-icons/io";
+import { PiPaperPlaneTilt } from "react-icons/pi";
+import { TfiComment } from "react-icons/tfi";
 
-
+import Comments from '../../Components/comments/Comments'
 
 const Community = () => {
+
+  const [like, setLike]= useState("false")
+  const [commentBtn, setCommentBtn]= useState("false")
+  const [mark , setMark] = useState("false")
   return (
     <div className="min-h-screen sm:px-8 bg-gray-900 text-white flex pt-[50px] ">
       <aside className="w-[220px] h-[630px]  my-10 bg-gray-800 rounded-3xl  text-white p-4 relative  left-0 top-0 ">
@@ -93,38 +101,7 @@ const Community = () => {
         </div>
       </aside>
       <main className="flex-1 my-3 p-6 overflow-y-auto no-scrollbar h-[calc(100vh-70px)]">
-        <header className=" flex mb-6 -ml-3">
-          <div className="w-full  bg-gray-900 p-3 rounded-lg right-0 ">
-            <div className="flex items-center space-x-4">
-              <img
-                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
-                alt="User Avatar"
-                className="w-10 h-10 rounded-full object-cover"
-              />
-              <input
-                type="text"
-                placeholder="What's on your mind?"
-                className="flex-grow bg-gray-800 text-white placeholder-gray-500 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            <div className="flex justify-between items-center mt-4">
-              <div className="flex space-x-4">
-                <button className="bg-[#be123c] rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-white">
-                  <FaImage className="h-6 w-6" />
-                </button>
-                <button className="bg-[#be123c] rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-white">
-                  <MdOutlineAttachFile className="h-6 w-6" />
-                </button>
-                <button className="bg-[#be123c] rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-white">
-                  <MdEmojiEmotions className="h-6 w-6" />
-                </button>
-              </div>
-              <button className="bg-[#be123c] text-white rounded-full px-6 py-2 focus:outline-none focus:ring-2 focus:ring-white-500">
-                Post
-              </button>
-            </div>
-          </div>
-        </header>
+       <CommunityPost/>
         <section>
           <div className="mb-6">
             <div className="flex items-center space-x-4">
@@ -189,20 +166,49 @@ const Community = () => {
       className="w-full object-cover" />
   </div>
 </div>
-            <div className="flex mt-4 space-x-4">
-              <button className="bg-gray-900 text-white px-4 rounded ">
-              <IoIosHeartEmpty size={28}/>
+           <div>
+           <div className="flex mt-4 space-x-4">
+            <button
+      onClick={() => setLike(!like)}
+      className="bg-gray-900 text-white px-2  rounded transition-all duration-1000"
+    >
+      {like ? (
+        <IoMdHeartEmpty className="transition-transform duration-300 transform scale-100" size={32} />
+      ) : (
+        <IoMdHeart className="text-rose-600  transition-transform duration-300 transform scale-[1.1]" size={32} />
+      )}
+    </button>
+    
+
+
+              <button onClick={() => setCommentBtn(!commentBtn)}  className=" text-white px-2  rounded">
+              {/* <FaRegComment  size={28}/> */}
+              <TfiComment size={26}/>
               </button>
-              <button  className=" text-white px-4 py-2 rounded">
-              <FaRegComment  />
+              <button className=" text-white px-2  rounded">
+              {/* <FaRegPaperPlane size={28}/> */}
+              <PiPaperPlaneTilt  size={28} />
               </button>
-              <button className=" text-white px-4 py-2 rounded">
-              <FaRegComment    style = {{transform: 'scaleY(-1)' }} />
-              </button>
-              <button className=" text-white px-4 py-2 rounded">
-                Con
-              </button>
+
+             
+                  
+              <button
+      onClick={() => setMark(!mark)}
+      className="bg-gray-900 text-white px-2  rounded transition-all duration-1000"
+    >
+      {mark ? (
+        <CiBookmark className="transition-transform duration-300 transform scale-100" size={28} />
+      ) : (
+        <IoIosBookmark className="text-white  transition-transform duration-300 transform scale-[1.1]" size={28} />
+      )}
+    </button>
             </div>
+
+            <div className="w-full py-4">
+              {!commentBtn && <Comments/>}
+            </div>
+
+           </div>
           </div>
           <div className="mb-6">
             <div className="flex items-center space-x-4">
