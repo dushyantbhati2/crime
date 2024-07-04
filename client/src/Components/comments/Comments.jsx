@@ -32,7 +32,7 @@ const Comments = () => {
           <button
             className={`${
               comment.length > 0
-                ? "bg-blue-400 text-black"
+                ? "bg-rose-600 text-white "
                 : "bg-gray-400/10 text-gray-500"
             } text-sm px-6 py-2 rounded-full cursor-pointer`}
             disabled={comment.length === 0}

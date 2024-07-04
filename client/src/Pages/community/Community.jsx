@@ -1,109 +1,29 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IoMdHeart } from "react-icons/io";
-import { FaRegPaperPlane } from "react-icons/fa";
-import { FaRegComment } from "react-icons/fa6";
-import CommunityPost from './CommunityPost'
-import { CiBookmark } from "react-icons/ci";
-import { IoIosBookmark } from "react-icons/io";
+
+import CommunityPost from "./CommunityPost";
+import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
+
 import { PiPaperPlaneTilt } from "react-icons/pi";
 import { TfiComment } from "react-icons/tfi";
 
-import Comments from '../../Components/comments/Comments'
+import Comments from "../../Components/comments/Comments";
+import { Link } from "react-router-dom";
+import LeftSection from "./LeftSection";
+import RightSection from "./RightSection";
 
 const Community = () => {
-
-  const [like, setLike]= useState("false")
-  const [commentBtn, setCommentBtn]= useState("false")
-  const [mark , setMark] = useState("false")
+  const [like, setLike] = useState("false");
+  const [commentBtn, setCommentBtn] = useState("false");
+  const [mark, setMark] = useState("false");
   return (
-    <div className="min-h-screen sm:px-8 bg-gray-900 text-white flex pt-[50px] ">
-      <aside className="w-[220px] h-[630px]  my-10 bg-gray-800 rounded-3xl  text-white p-4 relative  left-0 top-0 ">
-        <div className="text-xl font-bold">Connected</div>
-        <nav className="mt-4  border-b border-gray-500/50">
-          <ul>
-            <li className="my-2">
-              <a href="#">
-                Home
-              </a>
-            </li>
-            <li className="my-2">
-              <a href="#" >
-                Parent Profile
-              </a>
-            </li>
-          </ul>
-        </nav>
-        <div className="my-4 border-b border-gray-500/50">
-          <div className="font-semibold">Favorites</div>
-          <ul>
-            <li className="my-2">
-              <a href="#" >
-                Messages
-              </a>
-            </li>
-            <li className="my-2">
-              <a href="#" >
-                Friends
-              </a>
-            </li>
-            <li className="my-2">
-              <a href="#" >
-                Activities
-              </a>
-            </li>
-            <li className="my-2">
-              <a href="#" >
-                Workshops
-              </a>
-            </li>
-            <li className="my-2">
-              <a href="#" >
-                Peer Networks
-              </a>
-            </li>
-            <li className="my-2">
-              <a href="#" >
-                Progress Tracking
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div className="my-4 border-b border-gray-500/50">
-          <div className="font-semibold">Workshops</div>
-          <ul>
-            <li className="my-2">
-              <a href="#" >
-                Parent Community
-              </a>
-            </li>
-            <li className="my-2">
-              <a href="#" >
-                Tech Enthusiasts
-              </a>
-            </li>
-            <li className="my-2">
-              <a href="#" >
-                Seminar Attendees
-              </a>
-            </li>
-            <li className="my-2">
-              <a href="#">
-                Pet Lovers
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div className="mt-4">
-          <button className="w-full bg-rose-700 text-white py-2 rounded">
-           Signout
-          </button>
-        </div>
-      </aside>
-      <main className="flex-1 my-3 p-6 overflow-y-auto no-scrollbar h-[calc(100vh-70px)]">
-       <CommunityPost/>
+    <div className="min-h-screen sm:px-8 bg-gray-900 text-white grid sm:grid-cols-10 pt-[50px] ">
+    <LeftSection/>
+      <main className=" col-span-6 my-3 p-6 overflow-y-auto no-scrollbar h-[calc(100vh-70px)]">
+        <CommunityPost />
         <section>
-          <div className="mb-6">
+          <Link to={'/post/1'} className="mb-6">
             <div className="flex items-center space-x-4">
               <img
                 src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
@@ -111,7 +31,9 @@ const Community = () => {
                 className="w-10 h-10 rounded-full object-cover"
               />
 
-              <h2 className="text-lg font-semibold mb-2">Parent's joyful moment</h2>
+              <h2 className="text-lg font-semibold mb-2">
+                Parent's joyful moment
+              </h2>
             </div>
             <p className="text-gray-400 ml-14">
               Parent's gratitude and love for family adventures. Travel memories
@@ -129,87 +51,91 @@ const Community = () => {
                 className="w-1/2 rounded-lg"
               />
             </div> */}
-   <div className="carousel rounded-box w-full mt-4">
-  <div className="carousel-item w-1/2 h-[450px]">
-    <img
-                src="https://images.unsplash.com/photo-1517329782449-810562a4ec2f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aW1hZ2V8ZW58MHx8MHx8fDA%3D"
-                className="w-full object-cover" />
-  </div>
-  <div className="carousel-item w-1/2 h-[450px]">
-    <img
-                src="https://plus.unsplash.com/premium_photo-1682513184135-b7b9b76fb4eb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGltYWdlfGVufDB8fDB8fHww"
-                className="w-full object-cover" />
-  </div>
-  <div className="carousel-item w-1/2 h-[450px]">
-    <img
-      src="https://img.daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.jpg"
-      className="w-full object-cover" />
-  </div>
-  <div className="carousel-item w-1/2 h-[450px]">
-    <img
-      src="https://img.daisyui.com/images/stock/photo-1494253109108-2e30c049369b.jpg"
-      className="w-full object-cover" />
-  </div>
-  <div className="carousel-item w-1/2 h-[450px]">
-    <img
-      src="https://img.daisyui.com/images/stock/photo-1550258987-190a2d41a8ba.jpg"
-      className="w-full object-cover" />
-  </div>
-  <div className="carousel-item w-1/2 h-[450px]">
-    <img
-      src="https://img.daisyui.com/images/stock/photo-1559181567-c3190ca9959b.jpg"
-      className="w-full object-cover" />
-  </div>
-  <div className="carousel-item w-1/2 h-[450px]">
-    <img
-      src="https://img.daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg"
-      className="w-full object-cover" />
-  </div>
-</div>
-           <div>
-           <div className="flex mt-4 space-x-4">
-            <button
-      onClick={() => setLike(!like)}
-      className="bg-gray-900 text-white px-2  rounded transition-all duration-1000"
-    >
-      {like ? (
-        <IoMdHeartEmpty className="transition-transform duration-300 transform scale-100" size={32} />
-      ) : (
-        <IoMdHeart className="text-rose-600  transition-transform duration-300 transform scale-[1.1]" size={32} />
-      )}
-    </button>
-    
-
-
-              <button onClick={() => setCommentBtn(!commentBtn)}  className=" text-white px-2  rounded">
-              {/* <FaRegComment  size={28}/> */}
-              <TfiComment size={26}/>
-              </button>
-              <button className=" text-white px-2  rounded">
-              {/* <FaRegPaperPlane size={28}/> */}
-              <PiPaperPlaneTilt  size={28} />
-              </button>
-
-             
-                  
-              <button
-      onClick={() => setMark(!mark)}
-      className="bg-gray-900 text-white px-2  rounded transition-all duration-1000"
-    >
-      {mark ? (
-        <CiBookmark className="transition-transform duration-300 transform scale-100" size={28} />
-      ) : (
-        <IoIosBookmark className="text-white  transition-transform duration-300 transform scale-[1.1]" size={28} />
-      )}
-    </button>
+            <div className="carousel rounded-box w-full mt-4">
+              <div className="carousel-item w-1/2 h-[450px]">
+                <img
+                  src="https://images.unsplash.com/photo-1517329782449-810562a4ec2f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aW1hZ2V8ZW58MHx8MHx8fDA%3D"
+                  className="w-full object-cover"
+                />
+              </div>
+              <div className="carousel-item w-1/2 h-[450px]">
+                <img
+                  src="https://plus.unsplash.com/premium_photo-1682513184135-b7b9b76fb4eb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGltYWdlfGVufDB8fDB8fHww"
+                  className="w-full object-cover"
+                />
+              </div>
+              <div className="carousel-item w-1/2 h-[450px]">
+                <img
+                  src="https://img.daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.jpg"
+                  className="w-full object-cover"
+                />
+              </div>
+              <div className="carousel-item w-1/2 h-[450px]">
+                <img
+                  src="https://img.daisyui.com/images/stock/photo-1494253109108-2e30c049369b.jpg"
+                  className="w-full object-cover"
+                />
+              </div>
+              <div className="carousel-item w-1/2 h-[450px]">
+                <img
+                  src="https://img.daisyui.com/images/stock/photo-1550258987-190a2d41a8ba.jpg"
+                  className="w-full object-cover"
+                />
+              </div>
+              <div className="carousel-item w-1/2 h-[450px]">
+                <img
+                  src="https://img.daisyui.com/images/stock/photo-1559181567-c3190ca9959b.jpg"
+                  className="w-full object-cover"
+                />
+              </div>
+              <div className="carousel-item w-1/2 h-[450px]">
+                <img
+                  src="https://img.daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg"
+                  className="w-full object-cover"
+                />
+              </div>
             </div>
+            <div>
+            <div className="sm:w-2/3 flex items-center mt-2 justify-between">
+                        <button
+                          onClick={() => setLike(!like)}
+                          className="bg-gray-900 flex items-center text-white px-2 rounded transition-all duration-1000"
+                        >
+                          {like ? (
+                            <IoMdHeartEmpty className=" text-2xl transition-transform duration-300 transform scale-100" />
+                          ) : (
+                            <IoMdHeart className="text-rose-600  text-2xl transition-transform duration-300 transform scale-[1.1]" />
+                          )}
+                          <span className="mb-1 ml-1">29</span>
+                        </button>
+                        <button
+                          onClick={() => setCommentBtn(!commentBtn)}
+                          className=" flex items-center text-white px-2 rounded"
+                        >
+                          <TfiComment className="text-xl" />
+                          <span className="mb-1 ml-1">1</span>
+                        </button>
+                        <button
+                          className="flex items-center text-white px-2 rounded"
+                        >
+                          <PiPaperPlaneTilt className="text-2xl" />
+                        </button>
+                        <button
+                          onClick={() => setMark(!mark)}
+                          className="bg-gray-900 flex items-center text-white px-2 rounded transition-all duration-1000"
+                        >
+                          {mark ? (
+                            <BsBookmarkFill className="text-lg transition-transform duration-300 transform scale-110" />
+                          ) : (
+                            <BsBookmark className="text-white text-lg transition-transform duration-300 transform scale-100" />
+                          )}
+                          <span className="mb-1 ml-1">9</span>
+                        </button>
+                      </div>
 
-            <div className="w-full py-4">
-              {!commentBtn && <Comments/>}
+              <div className="w-full py-4">{!commentBtn && <Comments />}</div>
             </div>
-
-           </div>
-          </div>
+          </Link>
           <div className="mb-6">
             <div className="flex items-center space-x-4">
               <img
@@ -222,7 +148,9 @@ const Community = () => {
               </h2>{" "}
             </div>
 
-            <p className="text-gray-400 ml-14">Parenting Community Discussions</p>
+            <p className="text-gray-400 ml-14">
+              Parenting Community Discussions
+            </p>
             <div className="flex  justify-between mt-4 space-x-4">
               <img
                 src="https://images.unsplash.com/photo-1603201101485-e232d22ad18b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGltYWdlfGVufDB8fDB8fHww"
@@ -262,7 +190,9 @@ const Community = () => {
 
               <h2 className="text-lg font-semibold mb-2">Parenting Advocate</h2>
             </div>
-            <p className="text-gray-400 ml-14">Parenting Story & Experience Sharing</p>
+            <p className="text-gray-400 ml-14">
+              Parenting Story & Experience Sharing
+            </p>
             <div className="flex mt-4 space-x-4">
               <button className="bg-blue-500 text-white px-4 py-2 rounded">
                 Interact
@@ -277,71 +207,8 @@ const Community = () => {
           </div>
         </section>
       </main>
-      <aside className="w-[250px] h-[530px] bg-gray-800 p-4 my-10 rounded-3xl relative left-5  ">
-        <div className="font-semibold">Parental events</div>
-        <ul className="mt-4 pb-2 border-b border-gray-500/50">
-          <li className="my-2">
-            <a href="#" >
-              Parental gathering
-            </a>
-          </li>
-          <li className="my-2">
-            <a href="#" >
-              Parental decision-making
-            </a>
-          </li>
-          <li className="my-2">
-            <a href="#" >
-              Parental music event
-            </a>
-          </li>
-          <li className="my-2">
-            <a href="#" >
-              Parental stand-up
-            </a>
-          </li>
-        </ul>
-        <div className="font-semibold mt-4">
-          Parenting Workshops
-        </div>
-        <ul className="my-6 pb-2 border-b border-gray-500/50">
-          <li className="my-2">
-            <a href="#" >
-              Interactive Sessions
-            </a>
-          </li>
-          <li className="my-2">
-            <a href="#" >
-              Parent Name
-            </a>
-          </li>
-          <li className="my-2">
-            <a href="#" >
-              Community Support
-            </a>
-          </li>
-        </ul>
-        <div className="font-semibold mt-4">
-          Parenting Resources
-        </div>
-        <ul className="my-4 border-b border-gray-500/50">
-          <li className="my-2">
-            <a href="#" >
-              Supportive Community
-            </a>
-          </li>
-          <li className="my-2">
-            <a href="#" >
-              Parenting Milestones
-            </a>
-          </li>
-          <li className="my-2">
-            <a href="#" >
-              Parenting Challenges
-            </a>
-          </li>
-        </ul>
-      </aside>
+      <RightSection/>
+
     </div>
   );
 };

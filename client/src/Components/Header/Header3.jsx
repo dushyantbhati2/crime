@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Logo from "../../assets/black signup1.jpeg.jpg";
+import {Link} from "react-router-dom"
 
 const Header3 = () => {
   const [show, setShow] = useState(true);
@@ -32,9 +33,9 @@ const Header3 = () => {
         </div>
         <nav className="flex items-center space-x-10 text-lg">
           <div className="relative group">
-            <button className="inline-flex items-center">
+            <Link to="/" className="inline-flex items-center">
               Home
-            </button>
+            </Link>
           </div>
           <div className="relative group">
             <button className="inline-flex items-center">
@@ -42,9 +43,9 @@ const Header3 = () => {
             </button>
           </div>
           <div className="relative group">
-            <button className="inline-flex items-center">
+            <Link to='/community' className="inline-flex items-center">
               Community
-            </button>
+            </Link>
             <div className="absolute left-0 hidden mt-1 w-48 bg-white shadow-lg rounded group-hover:block">
               <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Option 1</a>
               <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Option 2</a>
