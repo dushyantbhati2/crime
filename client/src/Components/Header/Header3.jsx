@@ -23,7 +23,7 @@ const Header3 = () => {
 
   return (
     <header
-      className={`bg-sky-500 text-gray-900 border-b  border-gray-600 shadow z-50   font-heading h-[70px] flex fixed top-0 w-full transition-transform duration-300 ${
+      className={`bg-sky-500 border-b  border-gray-600 shadow z-50   font-heading h-[70px] flex fixed top-0 w-full transition-transform duration-300 ${
         show ? 'translate-y-0' : '-translate-y-full'
       }`}
     >
@@ -33,17 +33,17 @@ const Header3 = () => {
         </div>
         <nav className="flex items-center space-x-10 text-lg">
           <div className="relative group">
-            <Link to="/" className="inline-flex items-center">
+            <Link to="/" className="inline-flex items-center text-white">
               Home
             </Link>
           </div>
           <div className="relative group">
-            <button className="inline-flex items-center">
+            <button className="inline-flex items-center text-white">
               Map
             </button>
           </div>
           <div className="relative group">
-            <Link to='/community' className="inline-flex items-center">
+            <Link to={'/community'} className="inline-flex items-center text-white">
               Community
             </Link>
             <div className="absolute left-0 hidden mt-1 w-48 bg-white shadow-lg rounded group-hover:block">
@@ -52,7 +52,7 @@ const Header3 = () => {
             </div>
           </div>
           <div className="relative group">
-            <button className="inline-flex items-center">
+            <button className="inline-flex items-center text-white">
               About
             </button>
             <div className="absolute left-0 hidden mt-1 w-48 bg-white shadow-lg rounded group-hover:block">
@@ -61,13 +61,13 @@ const Header3 = () => {
             </div>
           </div>
           <div className="relative group">
-            <button className="inline-flex items-center">
+            <button className="inline-flex items-center text-white">
               Contact
             </button>
           </div>
-          <a href="#" className="inline-flex items-center text-base px-5 py-2 rounded-full text-white hover:shadow-lg bg-gray-900">
+          <Link to="/login" className="inline-flex items-center text-base px-5 py-2 rounded-full text-white hover:shadow-lg bg-gray-900">
             Log In
-          </a>
+          </Link>
         </nav>
       </div>
     </header>

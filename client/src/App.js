@@ -12,6 +12,7 @@ import Layout from "./Pages/Layout/Layout";
 import ChatGpt from "./Pages/ChatGpt/ChatGpt";
 import Community from "./Pages/community/Community";
 import PostSection from "./Components/comments/DisplayComments";
+import Sample from "./Components/Sample.jsx";
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
           <Route path="/chat" element={<ChatGpt />} />
           <Route path="/community" element={<Community />} />
           <Route path="/post/:id" element={<PostSection />} />
-          
+          <Route path="/sample" element={<Sample/>} />
 
           {/* 404 Route */}
           <Route path="*" element={<PageNotFound />} />

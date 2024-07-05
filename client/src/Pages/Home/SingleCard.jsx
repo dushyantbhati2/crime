@@ -1,5 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./SingleCard.css"
+
+export const syncPointer = ({ x: pointerX, y: pointerY }) => {
+  const x = pointerX.toFixed(2);
+  const y = pointerY.toFixed(2);
+  const xp = (pointerX / window.innerWidth).toFixed(2);
+  const yp = (pointerY / window.innerHeight).toFixed(2);
+  document.documentElement.style.setProperty('--x', x);
+  document.documentElement.style.setProperty('--xp', xp);
+  document.documentElement.style.setProperty('--y', y);
+  document.documentElement.style.setProperty('--yp', yp);
+};
+document.body.addEventListener('pointermove', syncPointer);
+
 const SingleCard = ({ heading, des, link, img, classname, classnameimg }) => {
   return (
     <>
@@ -14,9 +28,10 @@ const SingleCard = ({ heading, des, link, img, classname, classnameimg }) => {
           <div className="flex justify-center lg:justify-start">
             <Link
               to={link}
-              className="bg-white text-zinc-800 font-semibold px-6 py-3 rounded-full hover:scale-105 transition-transform duration-150"
-            >
-              Explore
+              
+            ><a href="#"className="button">
+               <span>Explore</span>
+              </a>
             </Link>
           </div>
         </div>

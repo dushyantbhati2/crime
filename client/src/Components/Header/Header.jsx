@@ -51,7 +51,7 @@ export default function Header() {
             <li className="hover:bg-[#F0F0F0]  hover:rounded-lg hover:scale-105 hover:ease-out duration-100 p-2">
               <Link to="">About</Link>
             </li>
-            <li className="hover:bg-[#F0F0F0] hover:rounded-lg hover:scale-105 hover:ease-out duration-100 p-2">
+            <li className="hover:bg-[#F0F0F0]  hover:rounded-lg hover:scale-105 hover:ease-out duration-100 p-2">
               <Link to="">Contact</Link>
             </li>
           </ul>

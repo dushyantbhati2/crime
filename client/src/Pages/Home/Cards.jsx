@@ -6,7 +6,7 @@ import img3 from "../../assets/imgforhome3.jpg"
 import gif1 from "../../assets/gif/map3.gif"
 import gif2 from "../../assets/gif/map.gif"
 
-import SingleCard from "./SingleCard";
+import SingleCard from "./SingleCard.jsx";
 const Cards = () => {
   return (
     <>

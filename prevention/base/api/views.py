@@ -159,7 +159,7 @@ class posts(APIView):
         description = request.data.get('description')
         files = request.FILES.get('files')
         user = User.objects.get(username=username)
-        new_post = models.Post.objects.create(post_user=user, description=description, files=files)
+        new_post = models.Post.objects.create(post_user=user, description=description)
         new_post.save()
         return Response({'Success': 'Post created'})
 

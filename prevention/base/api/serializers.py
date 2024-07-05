@@ -45,10 +45,11 @@ class PostFileSerializer(ModelSerializer):
         fields=('file',)
 
 class PostSerializer(ModelSerializer):
+    post_user = userSerializers()
     files=PostFileSerializer(many=True)
     class Meta:
         model=models.Post
-        fields=('post_user', 'description', 'post_id', 'likes', 'files')
+        fields=('post_user', 'description', 'post_id', 'likes', 'files','post_user',)
 
 class CommentSerializer(ModelSerializer):
     # files=PostFileSerializer(many=True)

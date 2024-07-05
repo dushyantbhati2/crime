@@ -5,14 +5,14 @@ import image2 from "../../assets/black signup final.jpeg";
 import TooglePassword from "./TooglePassword";
 import axios from "../../axios/axiosDefaults.js";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext.js";
+// import { useAuth } from "../../context/AuthContext.js";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false); // Changed initial loading state to false
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const [auth, setAuth] = useAuth();
+  // const [auth, setAuth] = useAuth();
 
   const [
     passwordType,
@@ -26,35 +26,35 @@ const Login = () => {
     e.preventDefault();
     console.log(email, password);
 
-    try {
-      const response = await axios.post("token/", {
-        email: email,
-        password: password,
-      });
-      const data = await response.data;
-      console.log(data.user);
-      console.log(data.refresh);
-      console.log(data.access);
-      setAuth({
-        ...auth,
-        user: data.user,
-        refToken: data.refresh,
-        accToken: data.access,
-      });
-      console.log(auth);
+    // try {
+    //   const response = await axios.post("token/", {
+    //     email: email,
+    //     password: password,
+    //   });
+    //   const data = await response.data;
+    //   console.log(data.user);
+    //   console.log(data.refresh);
+    //   console.log(data.access);
+    //   setAuth({
+    //     ...auth,
+    //     user: data.user,
+    //     refToken: data.refresh,
+    //     accToken: data.access,
+    //   });
+    //   console.log(auth);
 
-      localStorage.setItem("token", JSON.stringify(data.access));
-      
-      setLoading(false); // Set loading to false after successful login
-      
-      navigate("/"); // Navigate to home route after successful login
-    } catch (error) {
-      console.error(error.response.data);
-    }
+    //   localStorage.setItem("token", JSON.stringify(data.access));
+
+    //   setLoading(false); // Set loading to false after successful login
+
+    //   navigate("/"); // Navigate to home route after successful login
+    // } catch (error) {
+    //   console.error(error.response.data);
+    // }
   };
 
   return (
-    <div className="font-Poppins min-h-screen flex items-center justify-center lg:justify-start lg:gap-36 lg:px-12 w-full lg:bg-white">
+    <div className="font-Poppins min-h-screen bg-gray-900 flex items-center justify-center lg:justify-start lg:gap-36 lg:px-12 w-full ">
       <div className="hidden lg:flex w-1/2">
         <img src={image2} alt="" />
       </div>
@@ -90,7 +90,10 @@ const Login = () => {
         <div className="flex items-center pb-4 pt-2">
           <p>
             New to Website?{" "}
-            <Link to="/signup" className="underline text-indigo-700 font-semibold">
+            <Link
+              to="/signup"
+              className="underline text-indigo-700 font-semibold"
+            >
               Sign Up
             </Link>
           </p>
@@ -98,9 +101,9 @@ const Login = () => {
         <button
           type="submit"
           className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm font-medium text-white bg-[#000A1E] hover:bg-slate-900 focus:outline-none mt-10"
-          disabled={loading} // Disable button when loading is true
+          // disabled={loading} // Disable button when loading is true
         >
-          {loading ? 'Signing In...' : 'Sign In'} {/* Show appropriate text based on loading state */}
+          {loading ? "Signing In..." : "Sign In"}
         </button>
       </form>
     </div>

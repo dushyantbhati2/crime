@@ -6,17 +6,14 @@ import router from './Rastaa';
 import { RouterProvider } from 'react-router-dom';
 import Rastaa from './Rastaa';
 import { AuthProvider } from './context/AuthContext';
-
-
+import {Provider} from "react-redux";
+import { store } from './01Redux/Store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <AuthProvider>
-    
-  <React.StrictMode>
+  <Provider store={store}>
    <App />
-  </React.StrictMode>
-  </AuthProvider>
+  </Provider>
 );
 
 
