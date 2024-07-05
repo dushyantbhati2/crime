@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Comments = () => {
+const Comments = ({setCommentBtn}) => {
   const [comment, setComment] = useState("");
 
   const handleOnSubmit = (e) => {
@@ -25,7 +25,7 @@ const Comments = () => {
         <div className="flex justify-end gap-2 mt-2">
           <div
             className="bg-transparent text-white text-sm px-6 py-2 flex items-center justify-center cursor-pointer hover:bg-gray-700 rounded-full"
-            onClick={() => setComment("")}
+            onClick={() => setCommentBtn(false)}
           >
             Cancel
           </div>
