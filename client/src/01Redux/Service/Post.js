@@ -7,14 +7,14 @@ export const postApi = createApi({
     // create a post
     createPost: builder.mutation({
       query: (newPost) => ({
-        url: `/allposts`,
+        url: `/allposts/`,
         method: "POST",
         body: newPost,
       }),
     }),
     // get all posts
     getAllPosts: builder.query({
-      query: () => `/allposts`,
+      query: () => `/allposts/`,
     }),
   }),
 });
