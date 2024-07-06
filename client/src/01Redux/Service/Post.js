@@ -10,6 +10,15 @@ export const postApi = createApi({
         //get all posts
         getAllPosts: builder.query({query:()=>`/allposts`}),
 
+        // create a post 
+        createPost : builder.mutation({
+            query: (newPost)=>({
+                url: `/allposts`,
+                method:"post",
+                headers: {"Content-Type": "application/json"},
+                body: newPost,
+            }),
+        }) ,
 
         
     }),

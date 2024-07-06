@@ -4,7 +4,7 @@ import { FaImage } from "react-icons/fa6";
 import { MdOutlineAttachFile } from "react-icons/md";
 import { MdEmojiEmotions } from "react-icons/md";
 import LeftSection from "./LeftSection";
-import { useGetAllPostsQuery } from "../../01Redux/Service/dummy";
+import { useGetAllPostsQuery } from "../../01Redux/Service/Post";
 import RightSection from "./RightSection";
 
 
