@@ -3,43 +3,43 @@ import Select from "react-select";
 import image2 from "../../assets/black signup2.jpeg.jpg";
 import { useNavigate } from "react-router-dom";
 import axios from "../../axios/axiosDefaults.js";
-import { useAuth } from "../../context/AuthContext";
+// import { useAuth } from "../../context/AuthContext";
 
 const CompleteProfile = () => {
   const [gender, setGender] = useState(null);
   const [occupation, setOccupation] = useState(null);
   const navigate =useNavigate()
-  const [auth, setAuth] =useAuth()
+  // const [auth, setAuth] =useAuth()
 
   const handleSubmit = async(e) => {
     e.preventDefault();
     console.log("gender: ", gender.value.length);
     console.log("occupation: ", (occupation.value.length));
-    console.log(auth.user.username)
-    console.log(typeof(auth.user.username))
-    try {
-      const response = await axios.post('completeProfile/', {
-        'username':auth.user.username,  
-        'gender':gender,
-        'occupation':occupation
-      });
-      const data =await response.data;
+    // console.log(auth.user.username)
+    // console.log(typeof(auth.user.username))
+    // try {
+    //   const response = await axios.post('completeProfile/', {
+    //     'username':auth.user.username,  
+    //     'gender':gender,
+    //     'occupation':occupation
+    //   });
+    //   const data =await response.data;
       
-      console.log(data);
-      setAuth(
-        {
-          ...auth,
-          user:data?.user,
-          token: data?.token
+    //   console.log(data);
+    //   setAuth(
+    //     {
+    //       ...auth,
+    //       user:data?.user,
+    //       token: data?.token
           
-        }
-        )
-      console.log(auth)
-      navigate("/login")
+    //     }
+    //     )
+    //   console.log(auth)
+    //   navigate("/login")
       
-    } catch (error) {
-      console.error(error.response);
-    }
+    // } catch (error) {
+    //   console.error(error.response);
+    // }
   };
 
   const genderOptions = [

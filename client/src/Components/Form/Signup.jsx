@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
 import Input from "../input_Button/Input";
+import { toast } from "react-toastify";
+
 import { Link } from "react-router-dom";
 import image2 from "../../assets/black signup2.jpeg.jpg";
 import TooglePassword from "./TooglePassword";
 import axios from "../../axios/axiosDefaults.js";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { useRegisterMutation } from "../../01Redux/Service/auth.js";
 
 const Signup = () => {
 
-  const navigate =useNavigate()
+  const navigate = useNavigate()
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [auth,setAuth]= useAuth()
+
   const [
     passwordType,
     confirmPasswordType,
@@ -25,34 +27,56 @@ const Signup = () => {
     togglePasswordVisibility,
   ] = TooglePassword();
 
+  const [ register ,{isLoading}] = useRegisterMutation()
 
-  const handleSubmit = async(e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email,password)
-    try {
-      const response = await axios.post('signup/', {
-        'email': email,
-        'username':username,
-        'password': password,
-        'cnfpassword':confirmPassword
-      });
-      const data =await response.data;
-      console.log(data)
-      
-      setAuth({
-        ...auth,
-        user:data.user,
-        
-      })
+    console.log(email, password)
 
-      navigate("/complete-profile")
-      
-    } catch (error) {
-      console.error(error);
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+    } else {
+      try {
+        const res = await register({
+          'email': email,
+          'username': username,
+          'password': password,
+          'cnfpassword': confirmPassword
+        }).unwrap();
+        // dispatch(setCredentials({ ...res }));
+        navigate("/complete-profile")
+        toast.success("User successfully registered");
+      } catch (err) {
+        console.log(err);
+        toast.error(err);
+      }
     }
+    // try {
+    //   const response = await axios.post('signup/',
+    //  {
+    //     'email': email,
+    //     'username':username,
+    //     'password': password,
+    //     'cnfpassword':confirmPassword
+    //   });
+    //   const data =await response.data;
+    //   console.log(data)
+
+    //   setAuth({
+    //     ...auth,
+    //     user:data.user,
+
+    //   })
+
+    //   navigate("/complete-profile")
+
+    // } catch (error) {
+    //   console.error(error);
+    // }
 
 
-    
+
   };
 
 
@@ -76,7 +100,7 @@ const Signup = () => {
           name="Email"
           htmlFor="email"
         />
-         <Input
+        <Input
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           id="username"
@@ -119,14 +143,14 @@ const Signup = () => {
             </Link>
           </p>
         </div>
-        
-          <button
-            type="submit"
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm font-medium text-white bg-[#000A1E] hover:bg-slate-900 focus:outline-none"
-          >
-            Sign Up
-          </button>
-       
+
+        <button
+          type="submit"
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm font-medium text-white bg-[#000A1E] hover:bg-slate-900 focus:outline-none"
+        >
+          Sign Up
+        </button>
+
       </form>
     </div>
   );

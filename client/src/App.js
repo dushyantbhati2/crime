@@ -3,7 +3,6 @@ import CompleteProfile from "./Components/Form/CompleteProfile";
 import Signup from "./Components/Form/Signup";
 import Login from "./Components/Form/Login";
 import CrimeMap from "./Pages/crimeMap/CrimeMap";
-import PrivateRoute from "./auth/PrivateRoute";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home/Home";
 import About from "./Pages/About/About";
@@ -13,18 +12,26 @@ import ChatGpt from "./Pages/ChatGpt/ChatGpt";
 import Community from "./Pages/community/Community";
 import PostSection from "./Components/comments/DisplayComments";
 import Sample from "./Components/Sample.jsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import PrivateRoute from "./Components/Form/PrivateRoutes.jsx";
+
 
 function App() {
   return (
+    <>
+    <ToastContainer/>
     <Router>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          {/* Public Routes */}
-          <Route path="/signup" element={<Signup />} />
+      <Route path="/" element={<Layout />}>
+                <Route path="/signup" element={<Signup />} />
           <Route path="/complete-profile" element={<CompleteProfile />} />
           <Route path="/login" element={<Login />} />
+         
+          {/* Public Routes */}
 
-          {/* Private Routes */}
+          <Route path="" element={<PrivateRoute/>}>
+
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/map" element={<CrimeMap />} />
@@ -32,12 +39,13 @@ function App() {
           <Route path="/community" element={<Community />} />
           <Route path="/post/:id" element={<PostSection />} />
           <Route path="/sample" element={<Sample/>} />
+          </Route>
 
           {/* 404 Route */}
           <Route path="*" element={<PageNotFound />} />
-        </Route>
+          </Route>
       </Routes>
-    </Router>
+    </Router></>
   );
 }
 

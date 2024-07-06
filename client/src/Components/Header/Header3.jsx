@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import Logo from "../../assets/black signup1.jpeg.jpg";
-import {Link} from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../01Redux/features/authFeature';
 
 const Header3 = () => {
+
+  const dispatch = useDispatch()
+  const { userInfo } = useSelector((state) => state.auth);
+const navigate = useNavigate()
   const [show, setShow] = useState(true);
+
   let lastScrollY = window.scrollY;
 
   const handleScroll = () => {
@@ -21,11 +28,17 @@ const Header3 = () => {
     };
   }, [lastScrollY]);
 
+  const onLogout = () => {
+    if(userInfo) dispatch(logout())
+
+      else navigate("/login")
+
+  }
+
   return (
     <header
-      className={`bg-sky-500 border-b  border-gray-600 shadow z-50   font-heading h-[70px] flex fixed top-0 w-full transition-transform duration-300 ${
-        show ? 'translate-y-0' : '-translate-y-full'
-      }`}
+      className={`bg-sky-500 border-b  border-gray-600 shadow z-50   font-heading h-[70px] flex fixed top-0 w-full transition-transform duration-300 ${show ? 'translate-y-0' : '-translate-y-full'
+        }`}
     >
       <div className="container mx-auto flex justify-between items-center py-2 px-4 ">
         <div className="flex items-center border border-black overflow-hidden rounded-full h-12 w-12">
@@ -65,9 +78,9 @@ const Header3 = () => {
               Contact
             </button>
           </div>
-          <Link to="/login" className="inline-flex items-center text-base px-5 py-2 rounded-full text-white hover:shadow-lg bg-gray-900">
-            Log In
-          </Link>
+          <button onClick={() => onLogout()} className="inline-flex items-center text-base px-5 py-2 rounded-full text-white hover:shadow-lg bg-gray-900">
+            {userInfo? 'Logout' :'Login'}
+          </button>
         </nav>
       </div>
     </header>

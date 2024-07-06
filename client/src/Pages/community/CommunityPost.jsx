@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
-import { RxDotFilled } from "react-icons/rx";
-import { SlLocationPin } from "react-icons/sl";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
 import { PiPaperPlaneTilt } from "react-icons/pi";
@@ -10,11 +8,18 @@ import Comments from "../../Components/comments/Comments";
 import { Link } from "react-router-dom";
 import InfoPopup from "../../Components/comments/Popup";
 
-function CommunityPost({post}) {
+function CommunityPost({ post }) {
   const [like, setLike] = useState(false);
   const [commentBtn, setCommentBtn] = useState(false);
   const [mark, setMark] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [files, setFiles] = useState([]);
+
+  useEffect(() => {
+    if (post && post.files) {
+      setFiles(post.files);
+    }
+  }, [post]);
 
   const showModal = () => setIsVisible(true);
   const hideModal = () => setIsVisible(false);
@@ -23,27 +28,16 @@ function CommunityPost({post}) {
     hideModal();
   };
 
-
-  const slides = [
-    { url: "https://images.unsplash.com/photo-1517329782449-810562a4ec2f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aW1hZ2V8ZW58MHx8MHx8fDA%3D" },
-    { url: "https://plus.unsplash.com/premium_photo-1682513184135-b7b9b76fb4eb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGltYWdlfGVufDB8fDB8fHww" },
-    { url: "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D" },
-    { url: "https://plus.unsplash.com/premium_photo-1672116453187-3aa64afe04ad?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGltYWdlfGVufDB8fDB8fHww" },
-    { url: "https://media.istockphoto.com/id/1419539600/photo/business-presentation-and-man-on-a-laptop-in-a-corporate-conference-or-office-collaboration.webp?b=1&s=170667a&w=0&k=20&c=uucFbLp3S3vTpwmYBtI3tiLQssKCgSbX4GTaQdQeeq4=" },
-  ];
-
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const [intervalId, setIntervalId] = useState(null);
 
   const prevSlide = () => {
     const isFirstSlide = currentIndex === 0;
-    const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;
+    const newIndex = isFirstSlide ? files.length - 1 : currentIndex - 1;
     setCurrentIndex(newIndex);
   };
 
   const nextSlide = () => {
-    const isLastSlide = currentIndex === slides.length - 1;
+    const isLastSlide = currentIndex === files.length - 1;
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   };
@@ -60,7 +54,7 @@ function CommunityPost({post}) {
         confirmPrivacy={confirmPrivacy}
       />
       <div className="mb-6">
-        <Link to={"/post/1"}>
+        <Link className="bg-red-500" to={`/post/${post?.id}`}>
           <div className="flex items-center space-x-4">
             <img
               src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
@@ -70,32 +64,32 @@ function CommunityPost({post}) {
             <h2 className="text-lg font-semibold mb-2">{post?.post_user?.username}</h2>
           </div>
           <p className="text-gray-400 ml-14">
-           {post?.description}
+            {post?.description}
           </p>
         </Link>
 
-        <div className="h-[350px] rounded-md sm:min-h-[200px] sm:w-[500px] py-4 px-2  relative group mt-4 md:mt-8 lg:mt-12">
+        <div className="h-[350px] rounded-md sm:min-h-[200px] sm:w-[500px] px-2 relative group mt-4 ">
           <div className="h-full w-full">
             <div
               className="relative w-full h-full"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
             >
               <div
                 style={{
-                  backgroundImage: `url(${slides[currentIndex].url})`,
+                  backgroundImage: `url(http://localhost:8000${files[currentIndex]?.file})`,
                   backgroundRepeat: 'no-repeat',
                   backgroundSize: 'cover',
+                  backgroundPosition:'center'
                 }}
                 className="w-full h-full rounded-md object-contain duration-500 absolute top-0 left-0"
-              ></div>
+              >
+              </div>
             </div>
             {/* Left Arrow */}
-            <div className="lg:hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2  text-white cursor-pointer">
+            <div className="lg:hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 text-white cursor-pointer">
               <BsChevronCompactLeft onClick={prevSlide} size={30} />
             </div>
             {/* Right Arrow */}
-            <div className="lg:hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2  text-white cursor-pointer">
+            <div className="lg:hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 text-white cursor-pointer">
               <BsChevronCompactRight onClick={nextSlide} size={30} />
             </div>
           </div>

@@ -10,7 +10,6 @@ import RightSection from "./RightSection";
 
 const Community = () => {
   const {data:posts , isLoading, isError} =useGetAllPostsQuery()
-console.log(posts)
   
   return (
     <div className="min-h-screen sm:px-8 bg-gray-900 text-white grid sm:grid-cols-10 pt-[50px] ">
