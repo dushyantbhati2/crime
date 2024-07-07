@@ -7,42 +7,70 @@ import { TfiComment } from "react-icons/tfi";
 import Comments from "../../Components/comments/Comments";
 import { Link } from "react-router-dom";
 import InfoPopup from "../../Components/comments/Popup";
-import { useLikePostMutation,useDislikePostMutation } from "../../01Redux/Service/Post";
+import { useLikePostMutation, useDislikePostMutation, useGetAllPostsQuery } from "../../01Redux/Service/Post";
 import { toast } from "react-toastify";
-
+import { useSelector } from "react-redux";
 
 function CommunityPost({ post }) {
-  const [like, setLike] = useState(false);
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const [liked, setLiked] = useState(false);
+  const [likeNum, setLikeNum] =useState(post?.likes)
   const [commentBtn, setCommentBtn] = useState(false);
   const [mark, setMark] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [files, setFiles] = useState([]);
 
   const [likePost] = useLikePostMutation();
-  const [dislikePost]= useDislikePostMutation()
+  const [dislikePost] = useDislikePostMutation();
+
+  // useEffect(() => {
+  //   likedpostList?.data
+  //     .filter(
+  //       (q) => q?.videoId === vid && q?.Viewer === currentUser?.result._id
+  //     )
+  //     .map((m) => setLike(true));
+      
+  // }, [currentUser]);
+
 
   const handleLikePost = async (id) => {
     try {
       const res = await likePost(id).unwrap();
+      setLikeNum(res.likes)
+      setLiked(true);
       toast("You liked the post");
     } catch (error) {
       console.log(error);
       toast.error("Failed to like the post.");
     }
   };
+
   const handleDislikePost = async (id) => {
     try {
       const res = await dislikePost(id).unwrap();
-      toast("You Disliked the post");
+      setLikeNum(res.likes)
+
+      setLiked(false);
+      toast("You disliked the post");
     } catch (error) {
       console.log(error);
-      toast.error("Failed to Dislike the post.");
+      toast.error("Failed to dislike the post.");
+    }
+  };
+
+  const toggleLike = (id) => {
+    if (liked) {
+      handleDislikePost(id);
+    } else {
+      handleLikePost(id);
     }
   };
 
   useEffect(() => {
     if (post && post.files) {
       setFiles(post.files);
+      setLiked(post.liked);  // Assuming post.liked indicates if the post is liked by the current user
     }
   }, [post]);
 
@@ -70,7 +98,6 @@ function CommunityPost({ post }) {
   const goToSlide = (slideIndex) => {
     setCurrentIndex(slideIndex);
   };
-
   return (
     <>
       <InfoPopup
@@ -122,15 +149,15 @@ function CommunityPost({ post }) {
         <div>
           <div className="sm:w-[500px] flex items-center mt-2 justify-between">
             <button
-              onClick={() => handleLikePost(post?.post_id)}
+              onClick={() => toggleLike(post?.post_id)}
               className="bg-gray-900 flex items-center text-white px-2 rounded transition-all duration-1000"
             >
-              {post?.likes ? (
-                <IoMdHeartEmpty className="text-2xl transition-transform duration-300 transform scale-100" />
-              ) : (
+              {liked ? (
                 <IoMdHeart className="text-rose-600 text-2xl transition-transform duration-300 transform scale-[1.1]" />
+              ) : (
+                <IoMdHeartEmpty className="text-2xl transition-transform duration-300 transform scale-100" />
               )}
-              <span className="mb-1 ml-1">{post?.likes}</span>
+              <span className="mb-1 ml-1">{likeNum}</span>
             </button>
             <button
               onClick={() => setCommentBtn(!commentBtn)}

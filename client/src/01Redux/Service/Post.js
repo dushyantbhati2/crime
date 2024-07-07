@@ -34,18 +34,15 @@ export const postApi = createApi({
     likePost: builder.mutation({
       query: (id) => ({
         url:`/likes/${id}`,
-        method:"POST" })   ,      
-        providesTags: [{ type: 'Post', id: 'LIST' }], 
+        method:"POST"
+      }),
     }),
-
     dislikePost: builder.mutation({
       query: (id) => ({
         url: `/likes/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [{ type: "Post", id: "LIST" }],
     }),
-    
   }),
 });
 
