@@ -13,31 +13,30 @@ import json
 from django.http import JsonResponse
 from django.conf import settings
 from django.shortcuts import redirect
-
-# from langchain.chat_models import ChatOpenAI
-# from langchain.schema import (
-#     AIMessage,
-#     HumanMessage,
-#     SystemMessage
-# )
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from django.contrib.auth import authenticate
 import time
 import threading
 class LoginView(APIView):
-    def post(self,request):
-        email=request.data.get('email')
+    authentication_classes = []
+    permission_classes = []
+    def post(self,request,format=None):
+        username=request.data.get('email')
         password=request.data.get('password')
-        user=User.objects.filter(email=email).first()
-
-        if user and user.check_password(password):
+        user=User.objects.get(email=username)
+        user=authenticate(username=user.username,password=password,request=request)
+        if user is not None:
             refresh=RefreshToken.for_user(user)
             user.save()
             serializer=userSerializers(user)
             return Response({'refresh':str(refresh),'access':str(refresh.access_token),'user':serializer.data})
         else:
             return Response({'error':'Invalid credentials'},status=400)
-
-
+ 
 class SignupView(APIView):
+    authentication_classes = []
+    permission_classes = []
     def post(self,request):
         email=request.data.get('email')
         password=request.data.get('password')
@@ -68,10 +67,9 @@ class SignupView(APIView):
             serializer=userSerializers(new_user)
             return Response({'user':serializer.data})
 
-        
-
-
 class Profile_detail(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self,request,pk):
         curr_user=User.objects.get(username=pk)
         profile = Profile.objects.get(user=curr_user)
@@ -86,16 +84,16 @@ class TokenRefreshView(APIView):
         return Response({'access_token': access_token}, status=status.HTTP_200_OK)
 
 class CompleteProfile(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     def post(self,request):
-        username=request.data.get('username')
+        
         gender=request.data.get('gender')
         occupation=request.data.get('occupation')
-        new_user=User.objects.get(username=username)
+        new_user=request.user
         new_user_profile=models.Profile.objects.create(user=new_user,gender=gender,occupation=occupation)
         new_user_profile.save()
         return Response({'Sucess':'Sucess'})
-
-
 
 def fetch_coordinates(district_dict,demand_state):
     district = district_dict['district'] + ','+demand_state+',India'
@@ -106,7 +104,8 @@ def fetch_coordinates(district_dict,demand_state):
     district_dict['lon'] = lon
 
 class map(APIView):
-    
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     def post(self,request):
         demand_state=request.data.get('state')
         json_file_path = settings.BASE_DIR / 'data.json'
@@ -149,18 +148,24 @@ class map(APIView):
         return Response({'data':organised[demand_state]},status=status.HTTP_200_OK) 
 
 class posts(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self, request, pk=None):
-        posts = models.Post.objects.all()
+        posts = models.Post.objects.all().order_by('-upload_time')
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
 
     def post(self, request):
-        username = request.data.get('username')
         description = request.data.get('description')
-        files = request.FILES.get('files')
-        user = User.objects.get(username=username)
+        files = request.FILES.getlist('files')
+        # username=request.data.get('username')
+        user = request.user
+        # user=models.User.objects.get(username=username)
         new_post = models.Post.objects.create(post_user=user, description=description)
         new_post.save()
+        for file in files:
+            post_file = models.PostFile.objects.create(post=new_post, file=file)
+            post_file.save()
         return Response({'Success': 'Post created'})
 
     def delete(self, request, pk):
@@ -168,13 +173,14 @@ class posts(APIView):
         post.delete()
         return Response({'Success': 'Post deleted'})
 
-
-
 class comments(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self, request, pk):
         post1=models.Post.objects.get(post_id=pk)
         comments = models.Comments.objects.filter(post=post1)
         serializer = CommentSerializer(comments, many=True)
+        print(request.user)
         return Response(serializer.data)
     def delete(self,request,pk):
         comment=models.Comments.objects.get(id=pk)
@@ -182,20 +188,19 @@ class comments(APIView):
         return Response({'Success':"Comment successfully deleted"})
     def post(self,request,pk):
         post=models.Post.objects.get(post_id=pk)
-        username=request.data.get('username')
+        user = request.user
         content=request.data.get('content')
         files=request.FILES.get('files')
-        user=User.objects.get(username=username)
         comment=models.Comments.objects.create(comment_user=user,content=content,post=post,files=files)
         comment.save()
-        serializer=CommentSerializer(comment)
-        return Response(serializer.data)
+        return Response({"Success":"Comment added"})
 
 class Likes(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     def post(self,request,pk):
         post=models.Post.objects.get(post_id=pk)
-        username=request.data.get('username')
-        user=User.objects.get(username=username)
+        user = request.user
         likes=models.LikesPost.objects.create(like_user=user,post=post)
         likes.save()
         post.likes+=1
@@ -203,45 +208,43 @@ class Likes(APIView):
         return Response({'likes':post.likes})
     def delete(self,request,pk):
         post = models.Post.objects.get(post_id=pk)
-        username = request.data.get('username')
-        user=User.objects.get(username=username)
+        user = request.user
         likes = models.LikesPost.objects.get(like_user=user,post=post)
         likes.delete()
         post.likes-=1
         post.save()
         return Response({'likes':post.likes})
 
-
 class Bookmark(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self,request):
-        username=request.data.get('username')
-        user=User.objects.get(username=username)
+        user = request.user
         bookmarks=models.BookmarkPost.objects.filter(bookmark_user=user)
         serializer=BookmarkSerializer(bookmarks,many=True)
         return Response(serializer.data)
     def post(self,request,pk):
         post=models.Post.objects.get(post_id=pk)
-        username=request.data.get('username')
-        user=User.objects.get(username=username)
+        user = request.user
         bookmarks=models.BookmarkPost.objects.create(bookmark_user=user,post=post)
         bookmarks.save()
         return Response({'Success':'Successfully bookmarked '})
     def delete(self,request,pk):
         post = models.Post.objects.get(post_id=pk)
-        username = request.data.get('username')
-        user =  User.objects.get(username=username)
+        user=request.user
         bookmarks=models.BookmarkPost.objects.get(bookmark_user=user,post=post)
         bookmarks.delete()
         return Response({'Success':'Successfully deleted'})     
 
 class Community(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self,request,pk=None):
         communities=models.Community.objects.all()
         serializer=CommunitySerializer(communities,many=True)
         return Response(serializer.data)
     def post(self,request):
-        username = request.data.get('username')
-        user =  User.objects.get(username=username)
+        user= request.user
         com_description = request.data.get('com_description')
         com_name= request.data.get('com_name')
         com_image = request.FILES.get('com_image')
@@ -250,9 +253,7 @@ class Community(APIView):
         return Response({'success':'Successfully Created Community'})
         
     def delete(self,request,pk):
-        username=request.data.get('username')
-        user=User.objects.get(username=username)
-        community = models.Community.objects.get(com_id=pk,com_user=user)
+        community = models.Community.objects.get(com_id=pk)
         community.delete()
         return Response({'Succes':'Deleted Community'})
 

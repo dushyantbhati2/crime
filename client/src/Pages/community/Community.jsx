@@ -15,7 +15,6 @@ const Community = () => {
 
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
-  const { userInfo } = useSelector((state) => state.auth);
   const { data: posts, isLoading, isError } = useGetAllPostsQuery();
   const [post, { isLoading: isPostLoading }] = useCreatePostMutation();
 
@@ -26,18 +25,17 @@ const Community = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log( "images:",images)
+    console.log("images:", images);
 
     try {
       const formData = new FormData();
-      formData.append("username", userInfo?.user?.username);
       formData.append("description", description);
       images.forEach((image, index) => {
-        formData.append(`files[${index}]`, image);
+        formData.append(`files`, image);
       });
-  
+
       const res = await post(formData).unwrap();
-      console.log( "formdata:",formData)
+      console.log("formdata:", formData);
 
       console.log(res);
       toast.success("Post sent successfully");
@@ -46,7 +44,6 @@ const Community = () => {
       toast.error("Failed to post.");
     }
   };
-
 
   return (
     <div className="min-h-screen sm:px-8 bg-gray-900 text-white grid sm:grid-cols-10 pt-[50px] ">

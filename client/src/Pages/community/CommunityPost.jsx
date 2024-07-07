@@ -7,6 +7,9 @@ import { TfiComment } from "react-icons/tfi";
 import Comments from "../../Components/comments/Comments";
 import { Link } from "react-router-dom";
 import InfoPopup from "../../Components/comments/Popup";
+import { useLikePostMutation,useDislikePostMutation } from "../../01Redux/Service/Post";
+import { toast } from "react-toastify";
+
 
 function CommunityPost({ post }) {
   const [like, setLike] = useState(false);
@@ -14,6 +17,28 @@ function CommunityPost({ post }) {
   const [mark, setMark] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [files, setFiles] = useState([]);
+
+  const [likePost] = useLikePostMutation();
+  const [dislikePost]= useDislikePostMutation()
+
+  const handleLikePost = async (id) => {
+    try {
+      const res = await likePost(id).unwrap();
+      toast("You liked the post");
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to like the post.");
+    }
+  };
+  const handleDislikePost = async (id) => {
+    try {
+      const res = await dislikePost(id).unwrap();
+      toast("You Disliked the post");
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to Dislike the post.");
+    }
+  };
 
   useEffect(() => {
     if (post && post.files) {
@@ -97,10 +122,10 @@ function CommunityPost({ post }) {
         <div>
           <div className="sm:w-[500px] flex items-center mt-2 justify-between">
             <button
-              onClick={() => setLike(!like)}
+              onClick={() => handleLikePost(post?.post_id)}
               className="bg-gray-900 flex items-center text-white px-2 rounded transition-all duration-1000"
             >
-              {like ? (
+              {post?.likes ? (
                 <IoMdHeartEmpty className="text-2xl transition-transform duration-300 transform scale-100" />
               ) : (
                 <IoMdHeart className="text-rose-600 text-2xl transition-transform duration-300 transform scale-[1.1]" />

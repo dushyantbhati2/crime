@@ -4,7 +4,7 @@ from . import views
 from .views import Profile_detail
 
 urlpatterns = [
-    path('token/', views.LoginView.as_view(), name='login'),
+    path('login/', views.LoginView.as_view(), name='login'),
     path('signup/', views.SignupView.as_view(), name='signup'),
     path('completeProfile/', views.CompleteProfile.as_view(), name='completeProfile'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
@@ -18,6 +18,4 @@ urlpatterns = [
     path('bookmark/',views.Bookmark.as_view(),name = 'Bookmarks'),
     path('community/<uuid:pk>',views.Community.as_view(),name = 'Community'),
     path('community/',views.Community.as_view(),name = 'Community'),
-
-    # path('allposts/<uuid:pk>/delete/', views.deletepost.as_view(), name='deletepost'),
 ]
