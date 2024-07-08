@@ -1,15 +1,36 @@
 import { createApi,fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+
+
+const baseQueryWithAuth = fetchBaseQuery({
+    baseUrl: "http://localhost:8000/api",
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().auth.userInfo?.access; 
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+        console.log(token)
+      }
+      return headers;
+    },
+  });
+
+
+
  export const commentApi = createApi({
 
-     reducerPath: "comment",
+     reducerPath: "commentApi",
 
-     baseQuery: fetchBaseQuery({baseUrl: "http://localhost:8000/api"}),
+     baseQuery: baseQueryWithAuth,
+     tagTypes: ['Comment'], 
     
      endpoints:(builder)=> ({
       
         // view all comments
-        getAllComments : builder.query({query:(id) => `comments/${id}`}),
+        getAllComments : builder.query({query:(id) => `comments/${id}`,
+
+        providesTags: [{ type: 'Comment', id: 'LIST' }],
+    
+    }),
         
         // create comment
 
@@ -18,11 +39,10 @@ import { createApi,fetchBaseQuery } from "@reduxjs/toolkit/query/react";
             query:(id, newComment) =>({
               url : `/comments/${(id)}`,
               method: "POST",
-              headers: {"Content-Type": "application/json"},
               body: newComment
 
             }),
-
+            invalidatesTags: [{ type: 'Comment', id: 'LIST' }],
          // Delete Comment
 
          

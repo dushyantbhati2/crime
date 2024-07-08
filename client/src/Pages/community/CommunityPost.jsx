@@ -10,6 +10,7 @@ import InfoPopup from "../../Components/comments/Popup";
 import { useLikePostMutation, useDislikePostMutation, useGetAllPostsQuery } from "../../01Redux/Service/Post";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import Comments2 from "../../Components/comments/Comments2";
 
 function CommunityPost({ post }) {
   const { userInfo } = useSelector((state) => state.auth);
@@ -104,6 +105,7 @@ function CommunityPost({ post }) {
         isVisible={isVisible}
         hideModal={hideModal}
         confirmPrivacy={confirmPrivacy}
+        id = {post?.post_id}
       />
       <div className="mb-6">
         <Link className="bg-red-500" to={`/post/${post?.id}`}>
@@ -182,7 +184,7 @@ function CommunityPost({ post }) {
               )}
             </button>
           </div>
-          <div className="w-full py-4">{commentBtn && <Comments setCommentBtn={setCommentBtn} />}</div>
+          <div className="w-full py-4">{commentBtn && <Comments2 setCommentBtn={setCommentBtn} post_id = {post?.post_id} />}</div>
         </div>
       </div>
     </>
