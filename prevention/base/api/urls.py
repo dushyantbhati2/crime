@@ -18,4 +18,5 @@ urlpatterns = [
     path('bookmark/',views.Bookmark.as_view(),name = 'Bookmarks'),
     path('community/<uuid:pk>',views.Community.as_view(),name = 'Community'),
     path('community/',views.Community.as_view(),name = 'Community'),
+    path('likes/',views.Likes.as_view(),name='likes'),
 ]

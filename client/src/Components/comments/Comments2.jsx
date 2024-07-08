@@ -13,8 +13,8 @@ const Comments2 = ({ setCommentBtn,id }) => {
     }
   };
 
-  const res = useGetAllCommentsQuery({id});
-  console.log(id);
+  const res = useGetAllCommentsQuery(id);
+  console.log(res);
 
   return (
     <>

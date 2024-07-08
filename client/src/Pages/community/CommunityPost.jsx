@@ -11,6 +11,7 @@ import { useLikePostMutation, useDislikePostMutation, useGetAllPostsQuery } from
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import Comments2 from "../../Components/comments/Comments2";
+import PostSection from "../../Components/comments/PostSection";
 
 function CommunityPost({ post }) {
   const { userInfo } = useSelector((state) => state.auth);
@@ -24,6 +25,7 @@ function CommunityPost({ post }) {
 
   const [likePost] = useLikePostMutation();
   const [dislikePost] = useDislikePostMutation();
+  console.log("communitypost",post?.post_id)
 
   // useEffect(() => {
   //   likedpostList?.data
@@ -33,7 +35,7 @@ function CommunityPost({ post }) {
   //     .map((m) => setLike(true));
       
   // }, [currentUser]);
-
+  
 
   const handleLikePost = async (id) => {
     try {
@@ -108,7 +110,7 @@ function CommunityPost({ post }) {
         id = {post?.post_id}
       />
       <div className="mb-6">
-        <Link className="bg-red-500" to={`/post/${post?.id}`}>
+        <Link className="bg-red-500" to={`/post/${post?.post_id}`}>
           <div className="flex items-center space-x-4">
             <img
               src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
@@ -184,9 +186,9 @@ function CommunityPost({ post }) {
               )}
             </button>
           </div>
-          <div className="w-full py-4">{commentBtn && <Comments2 setCommentBtn={setCommentBtn} post_id = {post?.post_id} />}</div>
+          {/* <Link to="/community/displaycomment" className="w-full py-4">{commentBtn && <PostSection setCommentBtn={setCommentBtn} p_id = {post?.post_id} />}</Link> */}
         </div>
-      </div>
+      </div> 
     </>
   );
 }

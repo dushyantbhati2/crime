@@ -22,7 +22,7 @@ class Post(models.Model):
     # file=models.FileField(upload_to='Posts',null=True,blank=True) 
     def __str__(self):
         return self.post_user.username
-    class Meta:
+    class Meta: 
         ordering = ['-upload_time'] 
     
 class PostFile(models.Model):
@@ -38,8 +38,8 @@ class Comments(models.Model):
     def __str__(self):
         return self.comment_user.username
 class LikesPost(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    like_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE,related_name='post')
+    like_user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='like_user')
 
     def __str__(self):
         return self.like_user.username

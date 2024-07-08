@@ -10,7 +10,7 @@ import PageNotFound from "./Pages/Error/PageNotFound";
 import Layout from "./Pages/Layout/Layout";
 import ChatGpt from "./Pages/ChatGpt/ChatGpt";
 import Community from "./Pages/community/Community";
-import PostSection from "./Components/comments/DisplayComments";
+import PostSection from "./Components/comments/PostSection";
 import Sample from "./Components/Sample.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

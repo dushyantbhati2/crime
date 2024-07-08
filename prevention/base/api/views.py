@@ -2,7 +2,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-from .serializers import ProfileSerializer,PostSerializer,CommentSerializer,BookmarkSerializer,CommunitySerializer
+from .serializers import ProfileSerializer,PostSerializer,CommentSerializer,BookmarkSerializer,CommunitySerializer,LikePostSerializer
 from .serializers import userSerializers
 from ..models import Profile
 from django.shortcuts import get_object_or_404
@@ -198,6 +198,10 @@ class comments(APIView):
 class Likes(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    def get(self,request):
+        liked = models.LikesPost.objects.filter(like_user = request.user)
+        serial=LikePostSerializer(liked,many=True)
+        return Response(serial.data)
     def post(self,request,pk):
         post=models.Post.objects.get(post_id=pk)
         user = request.user
@@ -205,7 +209,7 @@ class Likes(APIView):
         likes.save()
         post.likes+=1
         post.save()
-        return Response({'likes':post.likes})
+        return Response({'likes':post.likes,'user_liked': user.username})
     def delete(self,request,pk):
         post = models.Post.objects.get(post_id=pk)
         user = request.user
@@ -213,7 +217,8 @@ class Likes(APIView):
         likes.delete()
         post.likes-=1
         post.save()
-        return Response({'likes':post.likes})
+        return Response({'likes':post.likes,'liked_user':user.username})
+            
 
 class Bookmark(APIView):
     authentication_classes = [JWTAuthentication]
@@ -228,13 +233,13 @@ class Bookmark(APIView):
         user = request.user
         bookmarks=models.BookmarkPost.objects.create(bookmark_user=user,post=post)
         bookmarks.save()
-        return Response({'Success':'Successfully bookmarked '})
+        return Response({'Success':'Successfully bookmarked ','save_user':user.username})
     def delete(self,request,pk):
         post = models.Post.objects.get(post_id=pk)
         user=request.user
         bookmarks=models.BookmarkPost.objects.get(bookmark_user=user,post=post)
         bookmarks.delete()
-        return Response({'Success':'Successfully deleted'})     
+        return Response({'Success':'Successfully deleted','save_user':user.username})     
 
 class Community(APIView):
     authentication_classes = [JWTAuthentication]

@@ -54,3 +54,9 @@ class CommunitySerializer(ModelSerializer):
         model=Community
         fields='__all__'
         extra_field='com_user'
+
+class LikePostSerializer(ModelSerializer):
+    post=PostSerializer()["post_id"]
+    class Meta:
+        model=models.LikesPost
+        fields=['post']
