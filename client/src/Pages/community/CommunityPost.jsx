@@ -163,12 +163,13 @@ function CommunityPost({ post }) {
               )}
               <span className="mb-1 ml-1">{likeNum}</span>
             </button>
-            <button
+            <Link
+              to={`/post/${post?.post_id}`}
               onClick={() => setCommentBtn(!commentBtn)}
               className="flex items-center text-white px-2 rounded">
               <TfiComment className="text-xl" />
               <span className="mb-1 ml-1">1</span>
-            </button>
+            </Link>
             <button
               onClick={showModal}
               className="flex items-center text-white px-2 rounded"
@@ -186,7 +187,7 @@ function CommunityPost({ post }) {
               )}
             </button>
           </div>
-          {/* <Link to="/community/displaycomment" className="w-full py-4">{commentBtn && <PostSection setCommentBtn={setCommentBtn} p_id = {post?.post_id} />}</Link> */}
+         
         </div>
       </div> 
     </>

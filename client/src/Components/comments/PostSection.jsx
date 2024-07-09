@@ -3,23 +3,24 @@ import { useGetAllCommentsQuery, useCreateCommentMutation, useDeleteCommentMutat
 import LeftSection from "../../Pages/community/LeftSection";
 import RightSection from "../../Pages/community/RightSection";
 import SingleReply from "./SingleReply";
+import { useParams } from "react-router-dom";
 
-const PostSection = ({setCommentBtn,p_id}) => {
-  const { data: comments = [], refetch } = useGetAllCommentsQuery(p_id);
+const PostSection = () => {
+  const { id } = useParams();
+  console.log(id);
+  const { data: comments = [], refetch } = useGetAllCommentsQuery(id);
   const [createComment] = useCreateCommentMutation();
   const [deleteComment] = useDeleteCommentMutation();
   const [newReply, setNewReply] = useState("");
 
-  console.log(p_id);
-  
   const handleReply = async () => {
-    if (newReply.trim()) { 
-      await createComment({ p_id, content: newReply });
+    if (newReply.trim()) {
+      await createComment({ postId: id, content: newReply });
       setNewReply("");
-      refetch(); 
+      refetch();
     }
   };
-  
+
   const handleDelete = async (commentId) => {
     await deleteComment(commentId);
     refetch();
