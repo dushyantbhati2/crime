@@ -26,6 +26,7 @@ function CommunityPost({ post }) {
   const [likePost] = useLikePostMutation();
   const [dislikePost] = useDislikePostMutation();
   console.log("communitypost",post?.post_id)
+  console.log("communitypost",post)
 
   // useEffect(() => {
   //   likedpostList?.data
@@ -131,7 +132,7 @@ function CommunityPost({ post }) {
             >
               <div
                 style={{
-                  backgroundImage: `url(http://localhost:8000${files[currentIndex]?.file})`,
+                  backgroundImage: `url(${files[currentIndex]?.file})`,
                   backgroundRepeat: 'no-repeat',
                   backgroundSize: 'cover',
                   backgroundPosition:'center'

@@ -19,19 +19,26 @@ const PostSection = () => {
   const [newReply, setNewReply] = useState("");
   console.log(comments);
 
-  const handleReply = async() => {
+  const handleReply = async () => {
     console.log(newReply);
     console.log("post section 2", id);
-
+  
     try {
-      await createComment({ postId: id, content: newReply });
-      setNewReply("");
-      toast("reply sent successfully");
+      const formData = new FormData();
+      formData.append("content", newReply);
+      formData.append("postId", id);
+  
+      const res = await createComment({ id, content: formData }).unwrap();
+      console.log("formData:", formData);
+  
+      console.log(res);
+      toast.success("Reply sent successfully");
     } catch (error) {
-      toast.error(error);
-      console.log(error);
+      console.error("Error posting:", error);
+      toast.error("Failed to post.");
     }
   };
+  
 
   const handleDelete = async (commentId) => {
     await deleteComment(commentId);
@@ -85,8 +92,7 @@ const PostSection = () => {
             <div className="flex flex-col space-y-4">
               {comments.map((reply) => (
                 <SingleReply
-                  key={reply.id}
-                  reply={reply.content}
+                  reply={reply}
                   onDelete={() => handleDelete(reply.id)}
                 />
               ))}

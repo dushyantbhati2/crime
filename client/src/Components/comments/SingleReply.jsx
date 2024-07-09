@@ -18,10 +18,10 @@ const SingleReply = ({reply}) => {
                   <div className="">
                     <div className="bg-gray-800 rounded-lg p-3 w-full pr-10">
                       <div className="flex items-center justify-between w-full">
-                        <div className="font-bold">Pavan Kumar</div>
+                        <div className="font-bold">{reply?.comment_user.username}</div>
                         <div className="text-gray-400 text-sm">Jul 3</div>
                       </div>
-                      <div className="mt-1">{reply}</div>
+                      <div className="mt-1">{reply.content}</div>
                     </div>
                     <div className="flex flex-col justify-center space-x-1 mt-1 text-gray-400">
                       <div className="flex items-center mt-2 space-x-4">

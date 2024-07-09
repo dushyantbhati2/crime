@@ -34,9 +34,12 @@ class Comments(models.Model):
     comment_user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='comment_user')
     id = models.UUIDField(default=uuid4, primary_key=True)
     content = models.TextField(blank=True) 
-    files = models.FileField(upload_to='comments_files', blank=True, null=True) 
+    files = models.FileField(upload_to='comments_files', blank=True, null=True)
+    upload_time=models.DateTimeField(default=datetime.now())
     def __str__(self):
         return self.comment_user.username
+    class Meta: 
+        ordering = ['-upload_time'] 
 class LikesPost(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE,related_name='post')
     like_user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='like_user')

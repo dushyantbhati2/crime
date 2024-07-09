@@ -31,9 +31,16 @@ class PostFileSerializer(ModelSerializer):
 class PostSerializer(ModelSerializer):
     post_user = userSerializers()
     files=PostFileSerializer(many=True)
+    liked=serializers.SerializerMethodField()
     class Meta:
         model=models.Post
-        fields=( 'description', 'post_id', 'likes', 'files','post_user','upload_time')
+        fields=( 'description', 'post_id', 'likes', 'files','post_user','upload_time','liked')
+
+    def get_liked(self,obj):
+        request = self.context.get('request', None)
+        if request and request.user.is_authenticated:
+            return models.LikesPost.objects.filter(post=obj,like_user=request.user).exists()
+        return False
 
 class CommentSerializer(serializers.ModelSerializer):
     comment_user = userSerializers()
@@ -54,9 +61,3 @@ class CommunitySerializer(ModelSerializer):
         model=Community
         fields='__all__'
         extra_field='com_user'
-
-class LikePostSerializer(ModelSerializer):
-    post=PostSerializer()["post_id"]
-    class Meta:
-        model=models.LikesPost
-        fields=['post']

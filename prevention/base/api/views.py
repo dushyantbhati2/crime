@@ -2,7 +2,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-from .serializers import ProfileSerializer,PostSerializer,CommentSerializer,BookmarkSerializer,CommunitySerializer,LikePostSerializer
+from .serializers import ProfileSerializer,PostSerializer,CommentSerializer,BookmarkSerializer,CommunitySerializer
 from .serializers import userSerializers
 from ..models import Profile
 from django.shortcuts import get_object_or_404
@@ -152,7 +152,7 @@ class posts(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request, pk=None):
         posts = models.Post.objects.all().order_by('-upload_time')
-        serializer = PostSerializer(posts, many=True)
+        serializer = PostSerializer(posts, many=True,context={'request': request})
         return Response(serializer.data)
 
     def post(self, request):
@@ -178,7 +178,7 @@ class comments(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request, pk):
         post1=models.Post.objects.get(post_id=pk)
-        comments = models.Comments.objects.filter(post=post1)
+        comments = models.Comments.objects.filter(post=post1).order_by('-upload_time')
         serializer = CommentSerializer(comments, many=True)
         print(request.user)
         return Response(serializer.data)
@@ -190,9 +190,13 @@ class comments(APIView):
         post=models.Post.objects.get(post_id=pk)
         user = request.user
         content=request.data.get('content')
-        files=request.FILES.get('files')
-        comment=models.Comments.objects.create(comment_user=user,content=content,post=post,files=files)
-        comment.save()
+        files=request.FILES.get('files',None)
+        if files is None:
+            comment=models.Comments.objects.create(comment_user=user,content=content,post=post)
+            comment.save()
+        else:
+            comment=models.Comments.objects.create(comment_user=user,content=content,post=post,files=files)
+            comment.save()
         return Response({"Success":"Comment added"})
 
 class Likes(APIView):
