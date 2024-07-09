@@ -36,10 +36,10 @@ const baseQueryWithAuth = fetchBaseQuery({
 
         createComment : builder.mutation({
             
-            query:(id, newReply) =>({
+            query:({id, newReply}) =>({
               url : `/comments/${(id)}`,
               method: "POST",
-              body: newReply
+              body: newReply,
 
             }),
             invalidatesTags: [{ type: 'Comment', id: 'LIST' }],

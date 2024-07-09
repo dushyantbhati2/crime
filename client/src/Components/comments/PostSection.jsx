@@ -1,23 +1,35 @@
 import React, { useState } from "react";
-import { useGetAllCommentsQuery, useCreateCommentMutation, useDeleteCommentMutation } from "../../01Redux/Service/Comment";
+import {
+  useGetAllCommentsQuery,
+  useCreateCommentMutation,
+  useDeleteCommentMutation,
+} from "../../01Redux/Service/Comment";
 import LeftSection from "../../Pages/community/LeftSection";
 import RightSection from "../../Pages/community/RightSection";
 import SingleReply from "./SingleReply";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const PostSection = () => {
   const { id } = useParams();
-  console.log(id);
+  console.log("post section", id);
   const { data: comments = [], refetch } = useGetAllCommentsQuery(id);
   const [createComment] = useCreateCommentMutation();
   const [deleteComment] = useDeleteCommentMutation();
   const [newReply, setNewReply] = useState("");
+  console.log(comments);
 
-  const handleReply = async () => {
-    if (newReply.trim()) {
+  const handleReply = async() => {
+    console.log(newReply);
+    console.log("post section 2", id);
+
+    try {
       await createComment({ postId: id, content: newReply });
       setNewReply("");
-      refetch();
+      toast("reply sent successfully");
+    } catch (error) {
+      toast.error(error);
+      console.log(error);
     }
   };
 
@@ -45,8 +57,8 @@ const PostSection = () => {
             </div>
             <div className="mt-2 text-lg">
               "Hi! I'm planning to start{" "}
-              <span className="text-blue-400">#Leetcode</span> sql challenge.
-              If you're interested, let's{" "}
+              <span className="text-blue-400">#Leetcode</span> sql challenge. If
+              you're interested, let's{" "}
               <span className="text-blue-400">#connect</span>!"
             </div>
             <div className="text-blue-400 mt-2">#buildinginpublic</div>
@@ -65,7 +77,7 @@ const PostSection = () => {
               />
               <button
                 className="bg-rose-600 text-white rounded-lg py-2 px-4 hover:bg-rose-800"
-                onClick={handleReply}
+                onClick={() => handleReply()}
               >
                 Reply
               </button>

@@ -8,7 +8,7 @@ from ..models import Profile
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from .. import models
-import requests
+import requests 
 import json
 from django.http import JsonResponse
 from django.conf import settings
@@ -198,10 +198,6 @@ class comments(APIView):
 class Likes(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
-    def get(self,request):
-        liked = models.LikesPost.objects.filter(like_user = request.user)
-        serial=LikePostSerializer(liked,many=True)
-        return Response(serial.data)
     def post(self,request,pk):
         post=models.Post.objects.get(post_id=pk)
         user = request.user
