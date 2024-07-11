@@ -232,11 +232,12 @@ class Likes(APIView):
     def post(self,request,pk):
         post=models.Post.objects.get(post_id=pk)
         user = request.user
+        if models.LikesPost.objects.filter(like_user=user,post=post).exists():
+            return Response({'Error':'User has already liked'},status=status.HTTP_400_BAD_REQUEST)
         likes=models.LikesPost.objects.create(like_user=user,post=post)
-        likes.save()
         post.likes+=1
         post.save()
-        return Response({'likes':post.likes,'user_liked': user.username})
+        return Response({'likes':post.likes})
     def delete(self,request,pk):
         post = models.Post.objects.get(post_id=pk)
         user = request.user
@@ -260,13 +261,13 @@ class Bookmark(APIView):
         user = request.user
         bookmarks=models.BookmarkPost.objects.create(bookmark_user=user,post=post)
         bookmarks.save()
-        return Response({'Success':'Successfully bookmarked ','save_user':user.username})
+        return Response({'Success':'Successfully bookmarked '})
     def delete(self,request,pk):
         post = models.Post.objects.get(post_id=pk)
         user=request.user
         bookmarks=models.BookmarkPost.objects.get(bookmark_user=user,post=post)
         bookmarks.delete()
-        return Response({'Success':'Successfully deleted','save_user':user.username})     
+        return Response({'Success':'Successfully deleted'})     
 
 class Community(APIView):
     authentication_classes = [JWTAuthentication]

@@ -4,50 +4,63 @@ import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
 import { PiPaperPlaneTilt } from "react-icons/pi";
 import { TfiComment } from "react-icons/tfi";
-import Comments from "../../Components/comments/Comments";
 import { Link } from "react-router-dom";
 import InfoPopup from "../../Components/comments/Popup";
-import { useLikePostMutation, useDislikePostMutation, useGetAllPostsQuery, useSavedPostMutation, useUnSavedPostMutation } from "../../01Redux/Service/Post";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import Comments2 from "../../Components/comments/Comments2";
-import PostSection from "../../Components/comments/PostSection";
 import { useGetAllCommentsQuery } from "../../01Redux/Service/Comment";
+import {
+  useLikePostMutation,
+  useDislikePostMutation,
+  useSavedPostMutation,
+  useUnSavedPostMutation,
+  useDeletePostMutation,
+} from "../../01Redux/Service/Post";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 function CommunityPost({ post }) {
+  console.log(post)
   const { userInfo } = useSelector((state) => state.auth);
-
-  const [liked, setLiked] = useState(false);
-  const [saved, setSaved] = useState(false);
-  const [likeNum, setLikeNum] =useState(post?.likes)
+  const [liked, setLiked] = useState(post?.liked || false);
+  const [saved, setSaved] = useState(post?.saved || false);
+  const [likeNum, setLikeNum] = useState(post?.likes || 0);
   const [commentBtn, setCommentBtn] = useState(false);
-  const [mark, setMark] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [files, setFiles] = useState([]);
+  const [popup, setPopup] = useState(false);
+  const [files, setFiles] = useState(post?.files || []);
   const { data: comments } = useGetAllCommentsQuery(post?.post_id);
-
 
   const [likePost] = useLikePostMutation();
   const [dislikePost] = useDislikePostMutation();
   const [savedPost] = useSavedPostMutation();
   const [unSavedPost] = useUnSavedPostMutation();
-  console.log("communitypost",post?.post_id)
-  console.log("communitypost",post)
+  const [deletePost] = useDeletePostMutation();
 
-  // useEffect(() => {
-  //   likedpostList?.data
-  //     .filter(
-  //       (q) => q?.videoId === vid && q?.Viewer === currentUser?.result._id
-  //     )
-  //     .map((m) => setLike(true));
-      
-  // }, [currentUser]);
-  
+  useEffect(() => {
+    if (post) {
+      setLiked(post.liked);
+      setSaved(post.bookmark);
+      setLikeNum(post.likes);
+      setFiles(post.files);
+    }
+  }, [post]);
+
+  const handleDeletePost = async (id) => {
+    try {
+      await deletePost(id).unwrap();
+      toast.success("Post Deleted successfully");
+      setPopup(false);
+    } catch (error) {
+      console.error("Failed to delete the post: ", error);
+      toast.error("Post Deletion failed");
+    }
+  };
 
   const handleLikePost = async (id) => {
+    if (liked) return;
     try {
       const res = await likePost(id).unwrap();
-      setLikeNum(res.likes)
+      setLikeNum(res.likes);
       setLiked(true);
       toast("You liked the post");
     } catch (error) {
@@ -57,10 +70,10 @@ function CommunityPost({ post }) {
   };
 
   const handleDislikePost = async (id) => {
+    if (!liked) return;
     try {
       const res = await dislikePost(id).unwrap();
-      setLikeNum(res.likes)
-
+      setLikeNum(res.likes);
       setLiked(false);
       toast("You disliked the post");
     } catch (error) {
@@ -68,11 +81,36 @@ function CommunityPost({ post }) {
       toast.error("Failed to dislike the post.");
     }
   };
+
   const toggleLike = (id) => {
     if (liked) {
       handleDislikePost(id);
     } else {
       handleLikePost(id);
+    }
+  };
+
+  const handleSavedPost = async (id) => {
+    if (saved) return;
+    try {
+      await savedPost(id).unwrap();
+      setSaved(true);
+      toast("You saved the post");
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to save the post.");
+    }
+  };
+
+  const handleUnsavedPost = async (id) => {
+    if (!saved) return;
+    try {
+      await unSavedPost(id).unwrap();
+      setSaved(false);
+      toast("You unsaved the post");
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to unsave the post.");
     }
   };
 
@@ -83,40 +121,6 @@ function CommunityPost({ post }) {
       handleSavedPost(id);
     }
   };
-
-  const handleSavedPost = async (id) => {
-    try {
-      const res = await savedPost(id).unwrap();
-      setLikeNum(res.likes)
-      setSaved(true);
-      toast("You liked the post");
-    } catch (error) {
-      console.log(error);
-      toast.error("Failed to like the post.");
-    }
-  };
-
-  const handleUnsavedPost = async (id) => {
-    try {
-      const res = await unSavedPost(id).unwrap();
-      setLikeNum(res.likes)
-
-      setSaved(false);
-      toast("You saved the post");
-    } catch (error) {
-      console.log(error);
-      toast.error("Failed to saved the post.");
-    }
-  };
-
-
-
-  useEffect(() => {
-    if (post && post.files) {
-      setFiles(post.files);
-      setLiked(post.liked);  // Assuming post.liked indicates if the post is liked by the current user
-    }
-  }, []);
 
   const showModal = () => setIsVisible(true);
   const hideModal = () => setIsVisible(false);
@@ -139,6 +143,9 @@ function CommunityPost({ post }) {
     setCurrentIndex(newIndex);
   };
 
+  const togglePopup = () => {
+    setPopup(!popup);
+  };
 
   return (
     <>
@@ -146,38 +153,64 @@ function CommunityPost({ post }) {
         isVisible={isVisible}
         hideModal={hideModal}
         confirmPrivacy={confirmPrivacy}
-        id = {post?.post_id}
+        id={post?.post_id}
       />
       <div className="mb-6">
-        <Link className="bg-red-500" to={`/post/${post?.post_id}`}>
-          <div className="flex items-center space-x-4">
-            <img
-              src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
-              alt="User Avatar"
-              className="w-10 h-10 rounded-full object-cover"
-            />
-            <h2 className="text-lg font-semibold mb-2">{post?.post_user?.username}</h2>
+        <div className="">
+          <div className="flex justify-between relative">
+            <div className="flex items-center space-x-4">
+              <img
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
+                alt="User Avatar"
+                className="w-10 h-10 rounded-full object-cover"
+              />
+              <h2 className="text-lg font-semibold mb-2">
+                {post?.post_user?.username}
+              </h2>
+            </div>
+            {userInfo.user.username === post?.post_user?.username && (
+              <BsThreeDotsVertical
+                className="text-xl cursor-pointer"
+                onClick={togglePopup}
+              />
+            )}
+            {userInfo.user.username === post?.post_user?.username && popup && (
+              <div className="absolute z-50 right-4 top-4 py-1 px-3 flex flex-col rounded-md bg-gray-800">
+                <button className="flex text-white hover:bg-gray-700 p-2 rounded">
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDeletePost(post?.post_id)}
+                  className="flex text-rose-600 hover:bg-gray-700 p-2 rounded"
+                >
+                  Delete
+                </button>
+              </div>
+            )}
           </div>
-          <p className="text-gray-400 ml-14">
-            {post?.description}
-          </p>
-        </Link>
+          <div className="ml-14">
+            <Link to={`/post/${post?.post_id}`} className="text-gray-300 ">
+              {post?.description}
+            </Link>
+          </div>
+        </div>
 
-        <div className={ ` ${post?.files.length===0 ? "h-0":"h-[350px] sm:min-h-[200px]"} rounded-md  sm:w-[500px] px-2 relative group mt-4 `}>
+        <div
+          className={` ${
+            post?.files.length === 0 ? "h-0" : "h-[350px] sm:min-h-[200px]"
+          } rounded-md sm:w-[500px] px-2 relative group mt-4`}
+        >
           <div className="h-full w-full">
-            <div
-              className="relative w-full h-full"
-            >
+            <div className="relative w-full h-full">
               <div
                 style={{
                   backgroundImage: `url(${files[currentIndex]?.file})`,
-                  backgroundRepeat: 'no-repeat',
-                  backgroundSize: 'cover',
-                  backgroundPosition:'center'
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
                 }}
                 className="w-full h-full rounded-md object-contain duration-500 absolute top-0 left-0"
-              >
-              </div>
+              ></div>
             </div>
             {/* Left Arrow */}
             <div className="lg:hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 text-white cursor-pointer">
@@ -205,7 +238,8 @@ function CommunityPost({ post }) {
             <Link
               to={`/post/${post?.post_id}`}
               onClick={() => setCommentBtn(!commentBtn)}
-              className="flex items-center text-white px-2 rounded">
+              className="flex items-center text-white px-2 rounded"
+            >
               <TfiComment className="text-xl" />
               <span className="mb-1 ml-1">{comments?.length}</span>
             </Link>
@@ -226,9 +260,8 @@ function CommunityPost({ post }) {
               )}
             </button>
           </div>
-         
         </div>
-      </div> 
+      </div>
     </>
   );
 }

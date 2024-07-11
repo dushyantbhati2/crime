@@ -32,14 +32,21 @@ class PostSerializer(ModelSerializer):
     post_user = userSerializers()
     files=PostFileSerializer(many=True)
     liked=serializers.SerializerMethodField()
+    bookmark=serializers.SerializerMethodField()
     class Meta:
         model=models.Post
-        fields=( 'description', 'post_id', 'likes', 'files','post_user','upload_time','liked')
+        fields=( 'description', 'post_id', 'likes', 'files','post_user','upload_time','liked','bookmark')
 
     def get_liked(self,obj):
         request = self.context.get('request', None)
         if request and request.user.is_authenticated:
             return models.LikesPost.objects.filter(post=obj,like_user=request.user).exists()
+        return False
+    def get_bookmark(self,obj):
+        request=self.context.get('request',None)
+        print(obj)
+        if request and request.user.is_authenticated:
+            return models.BookmarkPost.objects.filter(post=obj,bookmark_user=request.user).exists()
         return False
 
 class CommentSerializer(serializers.ModelSerializer):

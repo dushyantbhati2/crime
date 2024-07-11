@@ -3,10 +3,10 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const baseQueryWithAuth = fetchBaseQuery({
   baseUrl: "http://localhost:8000/api",
   prepareHeaders: (headers, { getState }) => {
-    const token = getState().auth.userInfo?.access; 
+    const token = getState().auth.userInfo?.access;
     if (token) {
-      headers.set('Authorization', `Bearer ${token}`);
-      console.log(token)
+      headers.set("Authorization", `Bearer ${token}`);
+      console.log(token);
     }
     return headers;
   },
@@ -15,7 +15,7 @@ const baseQueryWithAuth = fetchBaseQuery({
 export const postApi = createApi({
   reducerPath: "postApi",
   baseQuery: baseQueryWithAuth,
-  tagTypes: ['Post'], 
+  tagTypes: ["Post"],
   endpoints: (builder) => ({
     // create post
     createPost: builder.mutation({
@@ -24,17 +24,24 @@ export const postApi = createApi({
         method: "POST",
         body: newPost,
       }),
-      invalidatesTags: [{ type: 'Post', id: 'LIST' }],
+      invalidatesTags: [{ type: "Post", id: "LIST" }],
+    }),
+    deletePost: builder.mutation({
+      query: (id) => ({
+        url: `/allposts/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "Post", id: "LIST" }],
     }),
     // get all posts
     getAllPosts: builder.query({
       query: () => `/allposts/`,
-      providesTags: [{ type: 'Post', id: 'LIST' }], 
+      providesTags: [{ type: "Post", id: "LIST" }],
     }),
     likePost: builder.mutation({
       query: (id) => ({
-        url:`/likes/${id}`,
-        method:"POST"
+        url: `/likes/${id}`,
+        method: "POST",
       }),
     }),
     dislikePost: builder.mutation({
@@ -45,8 +52,8 @@ export const postApi = createApi({
     }),
     savedPost: builder.mutation({
       query: (id) => ({
-        url:`/bookmark/${id}`,
-        method:"POST"
+        url: `/bookmark/${id}`,
+        method: "POST",
       }),
     }),
     unSavedPost: builder.mutation({
@@ -58,4 +65,12 @@ export const postApi = createApi({
   }),
 });
 
-export const { useGetAllPostsQuery, useCreatePostMutation, useLikePostMutation, useDislikePostMutation , useSavedPostMutation, useUnSavedPostMutation} = postApi;
+export const {
+  useGetAllPostsQuery,
+  useCreatePostMutation,
+  useDeletePostMutation,
+  useLikePostMutation,
+  useDislikePostMutation,
+  useSavedPostMutation,
+  useUnSavedPostMutation,
+} = postApi;

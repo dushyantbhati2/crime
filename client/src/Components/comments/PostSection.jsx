@@ -9,8 +9,10 @@ import RightSection from "../../Pages/community/RightSection";
 import SingleReply from "./SingleReply";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const PostSection = () => {
+  const { userInfo } = useSelector((state) => state.auth);
   const { id } = useParams();
   console.log("post section", id);
   const { data: comments = [], refetch } = useGetAllCommentsQuery(id);

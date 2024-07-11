@@ -25,7 +25,6 @@ const Community = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("images:", images);
 
     try {
       const formData = new FormData();
