@@ -42,10 +42,12 @@ class Comments(models.Model):
         ordering = ['-upload_time']
 
 class Reply(models.Model):
-    comments = models.ForeignKey(Comments,related_name = 'reply',on_delete=models.CASCADE)
-    user = models.ForeignKey(r, on_delete=models.CASCADE,related_name='reply'
-    reply = models.TextField()comment=models.ForeignKey(Comments,on_delete=models.CASCADE)
-    reply_user=models.ForeignKey(User,on_delete)
+    id=models.UUIDField(default=uuid4,primary_key=True)
+    comment = models.ForeignKey(Comments,on_delete=models.CASCADE)
+    reply_user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='reply_user')
+    content = models.TextField()
+    def __str__(self):
+        return self.reply_user.username
 
 
 class LikesPost(models.Model):

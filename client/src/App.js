@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import CompleteProfile from "./Components/Form/CompleteProfile";
 import Signup from "./Components/Form/Signup";
 import Login from "./Components/Form/Login";
@@ -15,9 +15,17 @@ import Sample from "./Components/Sample.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from "./Components/Form/PrivateRoutes.jsx";
+import { useGetAllPostsQuery } from "./01Redux/Service/Post";
+import { useSelector } from "react-redux";
+
 
 
 function App() {
+  // const { userInfo } = useSelector((state) => state.auth);
+
+
+  const { data: posts, isLoading, isError } = useGetAllPostsQuery();
+
   return (
     <>
     <ToastContainer/>

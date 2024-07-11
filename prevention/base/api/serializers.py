@@ -2,7 +2,7 @@ from rest_framework.serializers import ModelSerializer
 from django.contrib.auth.models import User
 from rest_framework  import serializers
 from base import models
-from ..models import Profile,Comments,BookmarkPost,Community
+from ..models import Profile,Comments,BookmarkPost,Community,Reply
 class userSerializers(ModelSerializer):
     class Meta:
         model=User
@@ -61,3 +61,11 @@ class CommunitySerializer(ModelSerializer):
         model=Community
         fields='__all__'
         extra_field='com_user'
+
+class replySerializer(ModelSerializer):
+    reply_user = userSerializers()
+    class Meta:
+        model = Reply
+        fields='__all__'
+        extra_field='reply_user'
+        

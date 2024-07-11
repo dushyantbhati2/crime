@@ -7,7 +7,7 @@ import { TfiComment } from "react-icons/tfi";
 import Comments from "../../Components/comments/Comments";
 import { Link } from "react-router-dom";
 import InfoPopup from "../../Components/comments/Popup";
-import { useLikePostMutation, useDislikePostMutation, useGetAllPostsQuery } from "../../01Redux/Service/Post";
+import { useLikePostMutation, useDislikePostMutation, useGetAllPostsQuery, useSavedPostMutation, useUnSavedPostMutation } from "../../01Redux/Service/Post";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import Comments2 from "../../Components/comments/Comments2";
@@ -29,6 +29,8 @@ function CommunityPost({ post }) {
 
   const [likePost] = useLikePostMutation();
   const [dislikePost] = useDislikePostMutation();
+  const [savedPost] = useSavedPostMutation();
+  const [unSavedPost] = useUnSavedPostMutation();
   console.log("communitypost",post?.post_id)
   console.log("communitypost",post)
 
@@ -66,8 +68,7 @@ function CommunityPost({ post }) {
       toast.error("Failed to dislike the post.");
     }
   };
-
-  const toggleSave = (id) => {
+  const toggleLike = (id) => {
     if (liked) {
       handleDislikePost(id);
     } else {
@@ -75,11 +76,19 @@ function CommunityPost({ post }) {
     }
   };
 
+  const toggleSave = (id) => {
+    if (saved) {
+      handleUnsavedPost(id);
+    } else {
+      handleSavedPost(id);
+    }
+  };
+
   const handleSavedPost = async (id) => {
     try {
-      const res = await likePost(id).unwrap();
+      const res = await savedPost(id).unwrap();
       setLikeNum(res.likes)
-      setLiked(true);
+      setSaved(true);
       toast("You liked the post");
     } catch (error) {
       console.log(error);
@@ -89,24 +98,18 @@ function CommunityPost({ post }) {
 
   const handleUnsavedPost = async (id) => {
     try {
-      const res = await dislikePost(id).unwrap();
+      const res = await unSavedPost(id).unwrap();
       setLikeNum(res.likes)
 
-      setLiked(false);
-      toast("You disliked the post");
+      setSaved(false);
+      toast("You saved the post");
     } catch (error) {
       console.log(error);
-      toast.error("Failed to dislike the post.");
+      toast.error("Failed to saved the post.");
     }
   };
 
-  const toggleLike = (id) => {
-    if (liked) {
-      handleDislikePost(id);
-    } else {
-      handleLikePost(id);
-    }
-  };
+
 
   useEffect(() => {
     if (post && post.files) {
@@ -136,9 +139,7 @@ function CommunityPost({ post }) {
     setCurrentIndex(newIndex);
   };
 
-  const goToSlide = (slideIndex) => {
-    setCurrentIndex(slideIndex);
-  };
+
   return (
     <>
       <InfoPopup
@@ -162,7 +163,7 @@ function CommunityPost({ post }) {
           </p>
         </Link>
 
-        <div className={ `h-[350px] ${post?.files.length==0 ? "h-0":"h-[350px] sm:min-h-[200px]"} rounded-md  sm:w-[500px] px-2 relative group mt-4 `}>
+        <div className={ ` ${post?.files.length===0 ? "h-0":"h-[350px] sm:min-h-[200px]"} rounded-md  sm:w-[500px] px-2 relative group mt-4 `}>
           <div className="h-full w-full">
             <div
               className="relative w-full h-full"
@@ -215,10 +216,10 @@ function CommunityPost({ post }) {
               <PiPaperPlaneTilt className="text-2xl" />
             </button>
             <button
-              onClick={() => setMark(!mark)}
+              onClick={() => toggleSave(post?.post_id)}
               className="bg-gray-900 flex items-center text-white px-2 rounded transition-all duration-1000"
             >
-              {mark ? (
+              {saved ? (
                 <BsBookmarkFill className="text-lg transition-transform duration-300 transform scale-110" />
               ) : (
                 <BsBookmark className="text-white text-lg transition-transform duration-300 transform scale-100" />
