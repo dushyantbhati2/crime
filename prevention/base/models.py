@@ -7,7 +7,7 @@ from datetime import datetime
 
 class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='profile')
-    gender=models.CharField(max_length=100)
+    gender=models.CharField(max_length=100,blank=True)
     occupation=models.CharField(max_length=100,blank=True)
     
     def __str__(self):
@@ -39,7 +39,15 @@ class Comments(models.Model):
     def __str__(self):
         return self.comment_user.username
     class Meta: 
-        ordering = ['-upload_time'] 
+        ordering = ['-upload_time']
+
+class Reply(models.Model):
+    comments = models.ForeignKey(Comments,related_name = 'reply',on_delete=models.CASCADE)
+    user = models.ForeignKey(r, on_delete=models.CASCADE,related_name='reply'
+    reply = models.TextField()comment=models.ForeignKey(Comments,on_delete=models.CASCADE)
+    reply_user=models.ForeignKey(User,on_delete)
+
+
 class LikesPost(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE,related_name='post')
     like_user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='like_user')
@@ -93,4 +101,4 @@ class Camp_files(models.Model):
     def __str__(self):
         return self.camp.camp_name
     
-    
+

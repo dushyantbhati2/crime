@@ -64,6 +64,7 @@ const Community = () => {
               <input
                 type="text"
                 value={description}
+                required
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="What's on your mind?"
                 className="flex-grow bg-gray-800 text-white placeholder-gray-500 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"

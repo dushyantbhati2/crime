@@ -12,16 +12,20 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import Comments2 from "../../Components/comments/Comments2";
 import PostSection from "../../Components/comments/PostSection";
+import { useGetAllCommentsQuery } from "../../01Redux/Service/Comment";
 
 function CommunityPost({ post }) {
   const { userInfo } = useSelector((state) => state.auth);
 
   const [liked, setLiked] = useState(false);
+  const [saved, setSaved] = useState(false);
   const [likeNum, setLikeNum] =useState(post?.likes)
   const [commentBtn, setCommentBtn] = useState(false);
   const [mark, setMark] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [files, setFiles] = useState([]);
+  const { data: comments } = useGetAllCommentsQuery(post?.post_id);
+
 
   const [likePost] = useLikePostMutation();
   const [dislikePost] = useDislikePostMutation();
@@ -63,6 +67,39 @@ function CommunityPost({ post }) {
     }
   };
 
+  const toggleSave = (id) => {
+    if (liked) {
+      handleDislikePost(id);
+    } else {
+      handleLikePost(id);
+    }
+  };
+
+  const handleSavedPost = async (id) => {
+    try {
+      const res = await likePost(id).unwrap();
+      setLikeNum(res.likes)
+      setLiked(true);
+      toast("You liked the post");
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to like the post.");
+    }
+  };
+
+  const handleUnsavedPost = async (id) => {
+    try {
+      const res = await dislikePost(id).unwrap();
+      setLikeNum(res.likes)
+
+      setLiked(false);
+      toast("You disliked the post");
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to dislike the post.");
+    }
+  };
+
   const toggleLike = (id) => {
     if (liked) {
       handleDislikePost(id);
@@ -76,7 +113,7 @@ function CommunityPost({ post }) {
       setFiles(post.files);
       setLiked(post.liked);  // Assuming post.liked indicates if the post is liked by the current user
     }
-  }, [post]);
+  }, []);
 
   const showModal = () => setIsVisible(true);
   const hideModal = () => setIsVisible(false);
@@ -125,7 +162,7 @@ function CommunityPost({ post }) {
           </p>
         </Link>
 
-        <div className="h-[350px] rounded-md sm:min-h-[200px] sm:w-[500px] px-2 relative group mt-4 ">
+        <div className={ `h-[350px] ${post?.files.length==0 ? "h-0":"h-[350px] sm:min-h-[200px]"} rounded-md  sm:w-[500px] px-2 relative group mt-4 `}>
           <div className="h-full w-full">
             <div
               className="relative w-full h-full"
@@ -169,7 +206,7 @@ function CommunityPost({ post }) {
               onClick={() => setCommentBtn(!commentBtn)}
               className="flex items-center text-white px-2 rounded">
               <TfiComment className="text-xl" />
-              <span className="mb-1 ml-1">1</span>
+              <span className="mb-1 ml-1">{comments?.length}</span>
             </Link>
             <button
               onClick={showModal}

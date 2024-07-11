@@ -43,6 +43,18 @@ export const postApi = createApi({
         method: "DELETE",
       }),
     }),
+    savedPost: builder.mutation({
+      query: (id) => ({
+        url:`/bookmark/${id}`,
+        method:"POST"
+      }),
+    }),
+    unSavedPost: builder.mutation({
+      query: (id) => ({
+        url: `/bookmark/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 

@@ -6,7 +6,7 @@ from .views import Profile_detail
 urlpatterns = [
     path('login/', views.LoginView.as_view(), name='login'),
     path('signup/', views.SignupView.as_view(), name='signup'),
-    path('completeProfile/', views.CompleteProfile.as_view(), name='completeProfile'),
+    # path('completeProfile/', views.CompleteProfile.as_view(), name='completeProfile'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('profile/<str:pk>', Profile_detail.as_view(), name='profile_detail'),
     path('map/', views.map.as_view(), name='map'),

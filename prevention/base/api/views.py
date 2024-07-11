@@ -59,6 +59,8 @@ class SignupView(APIView):
             new_user=User.objects.create_user(username=username,email=email)
             new_user.set_password(password)
             new_user.save()
+            new_user_profile=models.Profile.objects.create(user=new_user)
+            new_user_profile.save()
             
             # new_user_profile=models.Profile.objects.create(user=new_user,gender=gender,occupation=occupation)
             # new_user_profile.save()
@@ -83,17 +85,6 @@ class TokenRefreshView(APIView):
         access_token=str(token.access_token)
         return Response({'access_token': access_token}, status=status.HTTP_200_OK)
 
-class CompleteProfile(APIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
-    def post(self,request):
-        
-        gender=request.data.get('gender')
-        occupation=request.data.get('occupation')
-        new_user=request.user
-        new_user_profile=models.Profile.objects.create(user=new_user,gender=gender,occupation=occupation)
-        new_user_profile.save()
-        return Response({'Sucess':'Sucess'})
 
 def fetch_coordinates(district_dict,demand_state):
     district = district_dict['district'] + ','+demand_state+',India'
@@ -198,6 +189,11 @@ class comments(APIView):
             comment=models.Comments.objects.create(comment_user=user,content=content,post=post,files=files)
             comment.save()
         return Response({"Success":"Comment added"})
+
+class Reply(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self,request,)
 
 class Likes(APIView):
     authentication_classes = [JWTAuthentication]
