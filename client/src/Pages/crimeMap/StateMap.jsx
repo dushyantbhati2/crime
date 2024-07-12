@@ -1,8 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import { MapContainer, TileLayer, Circle } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import axios from "../../axios/axiosDefaults.js"
-
+import axios from 'axios'
 
 
 

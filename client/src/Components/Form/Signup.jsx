@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import image2 from "../../assets/black signup2.jpeg.jpg";
 import TooglePassword from "./TooglePassword";
-import axios from "../../axios/axiosDefaults.js";
 import { useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../../01Redux/Service/auth.js";
 

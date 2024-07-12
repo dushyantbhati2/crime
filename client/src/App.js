@@ -1,5 +1,4 @@
 import React,{useEffect} from "react";
-import CompleteProfile from "./Components/Form/CompleteProfile";
 import Signup from "./Components/Form/Signup";
 import Login from "./Components/Form/Login";
 import CrimeMap from "./Pages/crimeMap/CrimeMap";
@@ -33,8 +32,7 @@ function App() {
       <Routes>
       <Route path="/" element={<Layout />}>
                 <Route path="/signup" element={<Signup />} />
-          <Route path="/complete-profile" element={<CompleteProfile />} />
-          <Route path="/login" element={<Login />} />
+X          <Route path="/login" element={<Login />} />
          
           {/* Public Routes */}
 

@@ -3,7 +3,6 @@ import Input from "../input_Button/Input";
 import { Link, useLocation } from "react-router-dom";
 import image2 from "../../assets/black signup final.jpeg";
 import TooglePassword from "./TooglePassword";
-import axios from "../../axios/axiosDefaults.js";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../01Redux/Service/auth.js";
 import { toast } from "react-toastify";

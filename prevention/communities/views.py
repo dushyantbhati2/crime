@@ -1,28 +1,37 @@
-from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from . import models
+from .serializers import CommunitySerializer,CommentSerializer,BookmarkSerializer,ReplySerializer,PostSerializer
+from django.shortcuts import get_object_or_404
 # Create your views here.
 
 class Community(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self,request,pk=None):
-        communities=models.Community.objects.all()
-        serializer=CommunitySerializer(communities,many=True)
-        return Response(serializer.data)
+        if pk is None:
+            communities=models.Community.objects.all()
+            serializer=CommunitySerializer(communities,many=True)
+            return Response(serializer.data)
+        else:
+            com=get_object_or_404(models.Community,com_id=pk)
+            serializer=CommentSerializer(com)
+            return Response(serializer.data)
     def post(self,request):
-        user= request.user
-        com_description = request.data.get('com_description')
-        com_name= request.data.get('com_name')
-        com_image = request.FILES.get('com_image')
-        community = models.Community.objects.create(com_user=user,com_name=com_name,com_description=com_description,com_image=com_image)
-        community.save()
-        return Response({'success':'Successfully Created Community'})
+        data = {
+            'com_name': request.data.get('com_name'),
+            'com_description': request.data.get('com_description'),
+            'com_image': request.FILES.get('com_image')
+        }
+        
+        serializer = CommunitySerializer(data=data)
+        if serializer.is_valid():
+            community = serializer.save(com_user=request.user)
+            return Response({'success': 'Successfully Created Community'}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
     def delete(self,request,pk):
         community = models.Community.objects.get(com_id=pk)

@@ -1,5 +1,4 @@
 from rest_framework.serializers import ModelSerializer
-from django.contrib.auth.models import User
 from rest_framework  import serializers
 from . import models 
 from authentication.serializers import userSerializers
@@ -16,7 +15,7 @@ class PostSerializer(ModelSerializer):
     bookmark=serializers.SerializerMethodField()
     class Meta:
         model=models.Post
-        fields=( 'description', 'post_id', 'likes', 'files','post_user','upload_time','liked','bookmark')
+        fields=('description','post_id','likes','files','post_user','upload_time','liked','bookmark')
 
     def get_liked(self,obj):
         request = self.context.get('request', None)
@@ -34,25 +33,25 @@ class CommentSerializer(serializers.ModelSerializer):
     comment_user = userSerializers()
     class Meta:
         model = models.Comments
-        fields = ['id', 'comment_user', 'content', 'files'] 
+        fields = ('id', 'comment_user', 'content', 'files')
 
 class BookmarkSerializer(ModelSerializer):
     bookmark_user=userSerializers()
     class Meta:
-        model=BookmarkPost
+        model=models.BookmarkPost
         fields='__all__'
         extra_field='bookmark_user'
 
 class CommunitySerializer(ModelSerializer):
     com_user=userSerializers()
     class Meta:
-        model=Community
+        model=models.Community
         fields='__all__'
         extra_field='com_user'
 
-class replySerializer(ModelSerializer):
+class ReplySerializer(ModelSerializer):
     reply_user = userSerializers()
     class Meta:
-        model = Reply
+        model = models.Reply
         fields='__all__'
         extra_field='reply_user'
