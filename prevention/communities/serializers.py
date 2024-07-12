@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework  import serializers
 from . import models 
-from authentication.serializers import userSerializers
+from user.serializers import userSerializers
 
 class PostFileSerializer(ModelSerializer):
     class Meta:
@@ -29,11 +29,19 @@ class PostSerializer(ModelSerializer):
             return models.BookmarkPost.objects.filter(post=obj,bookmark_user=request.user).exists()
         return False
 
+    def create(self, validated_data,context):
+        files_data = validated_data.pop('files')
+        post_user = self.context['request'].user
+        post = Post.objects.create(post_user=post_user, **validated_data)
+        for file_data in files_data:
+            PostFile.objects.create(post=post, **file_data)
+        return post
+
 class CommentSerializer(serializers.ModelSerializer):
     comment_user = userSerializers()
     class Meta:
         model = models.Comments
-        fields = ('id', 'comment_user', 'content', 'files')
+        fields=('comment_user', 'content', 'files')
 
 class BookmarkSerializer(ModelSerializer):
     bookmark_user=userSerializers()
@@ -42,12 +50,17 @@ class BookmarkSerializer(ModelSerializer):
         fields='__all__'
         extra_field='bookmark_user'
 
-class CommunitySerializer(ModelSerializer):
+class CommunitySerializer(ModelSerializer): 
     com_user=userSerializers()
     class Meta:
         model=models.Community
         fields='__all__'
         extra_field='com_user'
+
+    def validate_com_name(self, value):
+        if models.Community.objects.filter(com_name=value).exists():
+            raise serializers.ValidationError("Community name already exists.")
+        return value
 
 class ReplySerializer(ModelSerializer):
     reply_user = userSerializers()

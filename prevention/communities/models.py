@@ -53,7 +53,7 @@ class BookmarkPost(models.Model):
     bookmark_user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='bookmark_user')
     def __str__(self):
         return self.bookmark_user.username
-
+ 
 class Community(models.Model):
     com_user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='com_user')
     com_id=models.UUIDField(default=uuid4, primary_key=True)

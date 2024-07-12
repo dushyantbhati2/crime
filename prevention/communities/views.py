@@ -29,35 +29,49 @@ class Community(APIView):
         
         serializer = CommunitySerializer(data=data)
         if serializer.is_valid():
-            community = serializer.save(com_user=request.user)
+            serializer.save(com_user=request.user)
             return Response({'success': 'Successfully Created Community'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
     def delete(self,request,pk):
-        community = models.Community.objects.get(com_id=pk)
-        community.delete()
-        return Response({'Succes':'Deleted Community'})
+        community = get_object_or_404(models.Community,com_id=pk)
+        if community.com_user != request.user:
+            return Response({'Error':'You dont have permission to delete this community'},status=status.HTTP_403_FORBIDDEN)
+        try:
+            community.delete()
+            return Response({'Succes':'Deleted Community'},status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'Error': f'An error occurred: {str(e)}'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class posts(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self, request, pk=None):
-        posts = models.Post.objects.all().order_by('-upload_time')
-        serializer = PostSerializer(posts, many=True,context={'request': request})
-        return Response(serializer.data)
+        if pk is None:
+            try:
+                posts = models.Post.objects.all().order_by('-upload_time')
+                serializer = PostSerializer(posts, many=True,context={'request': request})
+                return Response(serializer.data,status=status.HTTP_200_OK)
+            except Exception as e:
+                return Response({'Error':f'An error occurred: {str(e)}'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            try:
+                post=get_object_or_404(models.Post,post_id=pk)
+                serializer=PostSerializer(post,context={'request':request})
+                return Response(serializer.data,status=status.HTTP_200_OK)
+            except Exception as e:
+                return Response({'Error':f'An error occurred: {str(e)}'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def post(self, request):
-        description = request.data.get('description')
-        files = request.FILES.getlist('files')
-        # username=request.data.get('username')
-        user = request.user
-        # user=models.User.objects.get(username=username)
-        new_post = models.Post.objects.create(post_user=user, description=description)
-        new_post.save()
-        for file in files:
-            post_file = models.PostFile.objects.create(post=new_post, file=file)
-            post_file.save()
-        return Response({'Success': 'Post created'})
+        data={
+            'description' : request.data.get('description'),
+            'files' : [{'file': file} for file in request.FILES.getlist('files')],
+        }
+        serializer=PostSerializer(data=data,context={'request':request})
+        if serializer.is_valid():
+            serializer.save(post_user=request.user)
+            return Response({'Success': 'Post created'},status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
         post = models.Post.objects.get(post_id=pk)
