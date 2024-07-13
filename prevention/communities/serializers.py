@@ -9,7 +9,7 @@ class PostFileSerializer(ModelSerializer):
         fields=('file',)
 
 class PostSerializer(ModelSerializer):
-    post_user = userSerializers()
+    post_user = userSerializers(read_only=True)
     files=PostFileSerializer(many=True)
     liked=serializers.SerializerMethodField()
     bookmark=serializers.SerializerMethodField()
@@ -29,12 +29,14 @@ class PostSerializer(ModelSerializer):
             return models.BookmarkPost.objects.filter(post=obj,bookmark_user=request.user).exists()
         return False
 
-    def create(self, validated_data,context):
+    def create(self, validated_data):
+        print(validated_data)
         files_data = validated_data.pop('files')
         post_user = self.context['request'].user
-        post = Post.objects.create(post_user=post_user, **validated_data)
+        print(validated_data)
+        post = models.Post.objects.create(post_user=post_user, **validated_data)
         for file_data in files_data:
-            PostFile.objects.create(post=post, **file_data)
+            models.PostFile.objects.create(post=post, **file_data)
         return post
 
 class CommentSerializer(serializers.ModelSerializer):

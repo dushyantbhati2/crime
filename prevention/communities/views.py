@@ -69,7 +69,7 @@ class posts(APIView):
         }
         serializer=PostSerializer(data=data,context={'request':request})
         if serializer.is_valid():
-            serializer.save(post_user=request.user)
+            serializer.save()
             return Response({'Success': 'Post created'},status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
