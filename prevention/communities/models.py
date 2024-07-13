@@ -6,7 +6,7 @@ from datetime import datetime
 
 class Post(models.Model): 
     post_user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='post_user')
-    description=models.TextField(blank=True)
+    description=models.TextField()
     post_id=models.UUIDField(default=uuid4,primary_key=True)
     likes=models.IntegerField(default=0)
     upload_time=models.DateTimeField(default=datetime.now)

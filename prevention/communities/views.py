@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from . import models
 from .serializers import CommunitySerializer,CommentSerializer,BookmarkSerializer,ReplySerializer,PostSerializer
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404,get_list_or_404
 # Create your views here.
 
 class Community(APIView):
@@ -69,94 +69,136 @@ class posts(APIView):
         }
         serializer=PostSerializer(data=data,context={'request':request})
         if serializer.is_valid():
-            serializer.save()
-            return Response({'Success': 'Post created'},status=status.HTTP_201_CREATED)
+            try:
+                serializer.save()
+                return Response({'Success': 'Post created'},status=status.HTTP_201_CREATED)
+            except Exception as e:
+                return Response({'Error':f'An error occurred: {str(e)}'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
-        post = models.Post.objects.get(post_id=pk)
-        post.delete()
-        return Response({'Success': 'Post deleted'})
+        try:
+            post = get_object_or_404(models.Post,post_id=pk)
+            post.delete()
+            return Response({'Success': 'Post deleted'},status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'Error':f'An error occurred: {str(e)}'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class Likes(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     def post(self,request,pk):
-        post=models.Post.objects.get(post_id=pk)
-        user = request.user
-        if models.LikesPost.objects.filter(like_user=user,post=post).exists():
-            return Response({'Error':'User has already liked'},status=status.HTTP_400_BAD_REQUEST)
-        likes=models.LikesPost.objects.create(like_user=user,post=post)
-        post.likes+=1
-        post.save()
-        return Response({'likes':post.likes})
+        try:
+            post=get_object_or_404(models.Post,post_id=pk)
+            user = request.user
+            if models.LikesPost.objects.filter(like_user=user,post=post).exists():
+                return Response({'Error':'User has already liked'},status=status.HTTP_400_BAD_REQUEST)
+            likes=models.LikesPost.objects.create(like_user=user,post=post)
+            post.likes+=1
+            post.save()
+            return Response({'likes':post.likes},status=status.HTTP_201_CREATED)
+        except Exception as e:
+                return Response({'Error':f'An error occurred: {str(e)}'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     def delete(self,request,pk):
-        post = models.Post.objects.get(post_id=pk)
-        user = request.user
-        likes = models.LikesPost.objects.get(like_user=user,post=post)
-        likes.delete()
-        post.likes-=1
-        post.save()
-        return Response({'likes':post.likes,'liked_user':user.username})
- 
+        try:
+            post = get_object_or_404(models.Post,post_id=pk)
+            user = request.user
+            likes = get_object_or_404(models.LikesPost,like_user=user,post=post)
+            likes.delete()
+            post.likes-=1
+            post.save()
+            return Response({'likes':post.likes},status=status.HTTP_200_OK)
+        except Exception as e:
+                return Response({'Error':f'An error occurred: {str(e)}'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 class comments(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self, request, pk):
-        post1=models.Post.objects.get(post_id=pk)
-        comments = models.Comments.objects.filter(post=post1).order_by('-upload_time')
-        serializer = CommentSerializer(comments, many=True)
-        print(request.user)
-        return Response(serializer.data)
+        try:
+            post1=get_object_or_404(models.Post,post_id=pk)
+            comments = models.Comments.objects.filter(post=post1).order_by('-upload_time')
+            if not comments.exists():
+                return Response({'Error': 'There are no comments'}, status=status.HTTP_204_NO_CONTENT)
+            serializer = CommentSerializer(comments, many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            return Response({'Error':f'An error occurred: {str(e)}'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     def delete(self,request,pk):
-        comment=models.Comments.objects.get(id=pk)
-        comment.delete()
-        return Response({'Success':"Comment successfully deleted"})
+        try:
+            comment=get_object_or_404(models.Comments,id=pk)
+            comment.delete()
+            return Response({'Success':"Comment successfully deleted"},status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'Error':f'An error occurred: {str(e)}'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     def post(self,request,pk):
-        post=models.Post.objects.get(post_id=pk)
-        user = request.user
-        content=request.data.get('content')
-        files=request.FILES.get('files',None)
-        if files is None:
-            comment=models.Comments.objects.create(comment_user=user,content=content,post=post)
-            comment.save()
-        else:
-            comment=models.Comments.objects.create(comment_user=user,content=content,post=post,files=files)
-            comment.save()
-        return Response({"Success":"Comment added"})
+        post=get_object_or_404(models.Post,post_id=pk)
+        serializer=CommentSerializer(data=request.data,context={'request':request,'post':post})
+        if serializer.is_valid():
+            try:
+                serializer.save()
+                return Response({'Success':'Comment Created'},status=status.HTTP_201_CREATED)
+            except Exception as e:
+                return Response({'Error':f'An error occurred: {str(e)}'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 class Reply(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self,request,pk):
-        comment=models.Comments.objects.get(id=pk);
-        replies=models.Reply.objects.filter(comment=comment)
-        serial=replySerializer(replies,many=True)
-        return Response(serial.data)
-    
-    def post(self,request,pk=None):
         try:
-            if pk is None:
-                return Response({'Error':'Comment id not passed in url'},status=status.HTTP_400_BAD_REQUEST)
-            content=request.data.get('content')
-            if content is None:
-                return Response({'Error':'Description of comment is required'},status=status.HTTP_400_BAD_REQUEST)
-            user=request.user
-            comment=models.Comments.objects.filter(id=pk).first()
-            if comment is None:
-                return Response({'Error':'Error fetching the comment'},status=status.HTTP_403_FORBIDDEN)
-            
-            new_reply=models.Reply.objects.create(comment=comment,reply_user=user,content=content)
-
-            return Response({'Sucess':'Reply sucessfully created'},status=status.HTTP_201_CREATED)
-        except:
-            return Response({'Error':'Error during creating reply'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            comment=get_object_or_404(models.Comments,id=pk);
+            replies=models.Reply.objects.filter(comment=comment)
+            serial=ReplySerializer(replies,many=True)
+            return Response(serial.data)
+        except Exception as e:
+            return Response({'Error':f'An error occurred: {str(e)}'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+    def post(self,request,pk):
+        comment=get_object_or_404(models.Comments,id=pk)
+        serializer=ReplySerializer(data=request.data,context={'request':request,'comment':comment})
+        if serializer.is_valid():
+            try:
+                serializer.save()
+                return Response({'Sucess':'Reply sucessfully created'},status=status.HTTP_201_CREATED)
+            except:
+                return Response({'Error':'Error during creating reply'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
     def delete(self,request,reply_id):
         try:
-            reply=models.Reply.objects.get(id=reply_id)
+            reply=get_object_or_404(models.Reply,id=reply_id)
             reply.delete()
             return Response({'Sucess':'Reply succesfully deleted'},status=status.HTTP_200_OK)
         except:
             return Response({'Error':'Something went wrong while deleting'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
+class Bookmark(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self,request):
+        try:
+            user = request.user
+            bookmarks=get_list_or_404(models.Bookmark,bookmark_user=user)
+            serializer=BookmarkSerializer(bookmarks,many=True)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'Error':f'An error occurred: {str(e)}'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    def post(self,request,pk):
+        try:
+            post=get_object_or_404(models.Post,post_id=pk)
+            user = request.user
+            bookmarks=models.BookmarkPost.objects.create(bookmark_user=user,post=post)
+            bookmarks.save()
+            return Response({'Success':'Successfully bookmarked'},status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({'Error':f'An error occurred: {str(e)}'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    def delete(self,request,pk):
+        try:
+            post = get_object_or_404(models.Post,post_id=pk)
+            user=request.user
+            bookmarks=get_object_or_404(models.BookmarkPost,bookmark_user=user,post=post)
+            bookmarks.delete()
+            return Response({'Success':'Successfully deleted'})
+        except Exception as e:
+            return Response({'Error':f'An error occurred: {str(e)}'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)

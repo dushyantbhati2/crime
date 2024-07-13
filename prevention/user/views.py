@@ -8,6 +8,7 @@ from rest_framework import status
 from .serializers import userSerializers
 from django.contrib.auth import authenticate
 from profiles.models import Profile
+from utlis import auth
 # Create your views here.
 
 class LoginView(APIView):
@@ -22,10 +23,10 @@ class LoginView(APIView):
             user=get_object_or_404(User,email=username)
             user=authenticate(username=user.username,password=password,request=request)
             if user is not None:
-                refresh=RefreshToken.for_user(user)
+                tokens=auth.get_tokens_for_user(user)
                 user.save()
                 serializer=userSerializers(user)
-                return Response({'refresh':str(refresh),'access':str(refresh.access_token),'user':serializer.data},status=status.HTTP_202_ACCEPTED)
+                return Response({'refresh':tokens['refresh'],'access':tokens['access'],'user':serializer.data},status=status.HTTP_202_ACCEPTED)
             else:
                 return Response({'error':'Invalid credentials'},status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:

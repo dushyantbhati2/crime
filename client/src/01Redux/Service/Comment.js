@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const baseQueryWithAuth = fetchBaseQuery({
-  baseUrl: "http://localhost:8000/api",
+  baseUrl: "http://localhost:8000/api/v1/community",
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.userInfo?.access;
     if (token) {
@@ -21,7 +21,7 @@ export const commentApi = createApi({
   endpoints: (builder) => ({
     // view all comments
     getAllComments: builder.query({
-      query: (id) => `comments/${id}`,
+      query: (id) => `/comments/${id}`,
 
       providesTags: [{ type: "Comment", id: "LIST" }],
     }),

@@ -1,48 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
-import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
-import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
-import { PiPaperPlaneTilt } from "react-icons/pi";
-import { TfiComment } from "react-icons/tfi";
+import {
+  BsChevronCompactLeft,
+  BsChevronCompactRight,
+  BsX,
+} from "react-icons/bs";
 import { Link } from "react-router-dom";
 import InfoPopup from "../../Components/comments/Popup";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { useGetAllCommentsQuery } from "../../01Redux/Service/Comment";
-import {
-  useLikePostMutation,
-  useDislikePostMutation,
-  useSavedPostMutation,
-  useUnSavedPostMutation,
-  useDeletePostMutation,
-} from "../../01Redux/Service/Post";
+import { useDeletePostMutation } from "../../01Redux/Service/Post";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import LikeSavedCommentBtns from "../../Components/comments/LikeSavedCommentBtns";
 
 function CommunityPost({ post }) {
-  console.log(post)
   const { userInfo } = useSelector((state) => state.auth);
-  const [liked, setLiked] = useState(post?.liked || false);
-  const [saved, setSaved] = useState(post?.saved || false);
-  const [likeNum, setLikeNum] = useState(post?.likes || 0);
-  const [commentBtn, setCommentBtn] = useState(false);
+
   const [isVisible, setIsVisible] = useState(false);
   const [popup, setPopup] = useState(false);
-  const [files, setFiles] = useState(post?.files || []);
-  const { data: comments } = useGetAllCommentsQuery(post?.post_id);
+  const [files, setFiles] = useState([]);
 
-  const [likePost] = useLikePostMutation();
-  const [dislikePost] = useDislikePostMutation();
-  const [savedPost] = useSavedPostMutation();
-  const [unSavedPost] = useUnSavedPostMutation();
   const [deletePost] = useDeletePostMutation();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [carouselVisible, setCarouselVisible] = useState(false);
 
   useEffect(() => {
-    if (post) {
-      setLiked(post.liked);
-      setSaved(post.bookmark);
-      setLikeNum(post.likes);
-      setFiles(post.files);
-    }
+    // Update files state when post changes
+    setFiles(post?.files || []);
   }, [post]);
 
   const handleDeletePost = async (id) => {
@@ -56,80 +39,12 @@ function CommunityPost({ post }) {
     }
   };
 
-  const handleLikePost = async (id) => {
-    if (liked) return;
-    try {
-      const res = await likePost(id).unwrap();
-      setLikeNum(res.likes);
-      setLiked(true);
-      toast("You liked the post");
-    } catch (error) {
-      console.log(error);
-      toast.error("Failed to like the post.");
-    }
-  };
-
-  const handleDislikePost = async (id) => {
-    if (!liked) return;
-    try {
-      const res = await dislikePost(id).unwrap();
-      setLikeNum(res.likes);
-      setLiked(false);
-      toast("You disliked the post");
-    } catch (error) {
-      console.log(error);
-      toast.error("Failed to dislike the post.");
-    }
-  };
-
-  const toggleLike = (id) => {
-    if (liked) {
-      handleDislikePost(id);
-    } else {
-      handleLikePost(id);
-    }
-  };
-
-  const handleSavedPost = async (id) => {
-    if (saved) return;
-    try {
-      await savedPost(id).unwrap();
-      setSaved(true);
-      toast("You saved the post");
-    } catch (error) {
-      console.log(error);
-      toast.error("Failed to save the post.");
-    }
-  };
-
-  const handleUnsavedPost = async (id) => {
-    if (!saved) return;
-    try {
-      await unSavedPost(id).unwrap();
-      setSaved(false);
-      toast("You unsaved the post");
-    } catch (error) {
-      console.log(error);
-      toast.error("Failed to unsave the post.");
-    }
-  };
-
-  const toggleSave = (id) => {
-    if (saved) {
-      handleUnsavedPost(id);
-    } else {
-      handleSavedPost(id);
-    }
-  };
-
   const showModal = () => setIsVisible(true);
   const hideModal = () => setIsVisible(false);
   const confirmPrivacy = () => {
     alert("Privacy accepted");
     hideModal();
   };
-
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   const prevSlide = () => {
     const isFirstSlide = currentIndex === 0;
@@ -145,6 +60,15 @@ function CommunityPost({ post }) {
 
   const togglePopup = () => {
     setPopup(!popup);
+  };
+
+  const handleImageClick = (index) => {
+    setCurrentIndex(index);
+    setCarouselVisible(true);
+  };
+
+  const handleCloseCarousel = () => {
+    setCarouselVisible(false);
   };
 
   return (
@@ -195,13 +119,72 @@ function CommunityPost({ post }) {
           </div>
         </div>
 
-        <div
-          className={` ${
-            post?.files.length === 0 ? "h-0" : "h-[350px] sm:min-h-[200px]"
-          } rounded-md sm:w-[500px] px-2 relative group mt-4`}
-        >
-          <div className="h-full w-full">
-            <div className="relative w-full h-full">
+        {files.length !==0 && <div className="flex w-[90%] h-96 flex-wrap gap-1 mt-4">
+          {files.slice(0, 4).map((file, index) =>
+            (() => {
+              if (files.length === 3 ||files.length === 4) {
+                return (
+                  <div
+                    key={index}
+                    className="w-[35%]  bg-cover bg-center rounded-md cursor-pointer"
+                    style={{ backgroundImage: `url(${file.file})` }}
+                    onClick={() => handleImageClick(index)}
+                  ></div>
+                );
+              } 
+              else if (files.length == 1) {
+                return (
+                  <div
+                    key={index}
+                    className="w-[50%] h-full  rounded-md cursor-pointer"
+                    style={{
+                      backgroundImage: `url(${file.file})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                    onClick={() => handleImageClick(index)}
+                  ></div>
+                );
+              } 
+              else if (files.length == 1) {
+                return (
+                  <div
+                    key={index}
+                    className="w-[50%] h-full  rounded-md cursor-pointer"
+                    style={{
+                      backgroundImage: `url(${file.file})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                    onClick={() => handleImageClick(index)}
+                  ></div>
+                );
+              } 
+              else if (files.length == 2) {
+                return (
+                  <div
+                    key={index}
+                    className="w-[35%] h-full  rounded-md cursor-pointer"
+                    style={{
+                      backgroundImage: `url(${file.file})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                    onClick={() => handleImageClick(index)}
+                  ></div>
+                );
+              } 
+              
+              else {
+                return null;
+              }
+            })()
+          )}
+        </div>}
+
+        {carouselVisible && (
+          <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
+            <div className="relative w-full max-w-3xl">
               <div
                 style={{
                   backgroundImage: `url(${files[currentIndex]?.file})`,
@@ -209,57 +192,26 @@ function CommunityPost({ post }) {
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
-                className="w-full h-full rounded-md object-contain duration-500 absolute top-0 left-0"
+                className="w-full h-[500px] rounded-md object-contain duration-500"
               ></div>
-            </div>
-            {/* Left Arrow */}
-            <div className="lg:hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 text-white cursor-pointer">
-              <BsChevronCompactLeft onClick={prevSlide} size={30} />
-            </div>
-            {/* Right Arrow */}
-            <div className="lg:hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 text-white cursor-pointer">
-              <BsChevronCompactRight onClick={nextSlide} size={30} />
+              <div
+                className="absolute top-4 right-4 text-white cursor-pointer"
+                onClick={handleCloseCarousel}
+              >
+                <BsX size={30} />
+              </div>
+              <div className="absolute top-[50%] left-5 text-2xl rounded-full p-2 text-white cursor-pointer">
+                <BsChevronCompactLeft onClick={prevSlide} size={30} />
+              </div>
+              <div className="absolute top-[50%] right-5 text-2xl rounded-full p-2 text-white cursor-pointer">
+                <BsChevronCompactRight onClick={nextSlide} size={30} />
+              </div>
             </div>
           </div>
-        </div>
+        )}
+
         <div>
-          <div className="sm:w-[500px] flex items-center mt-2 justify-between">
-            <button
-              onClick={() => toggleLike(post?.post_id)}
-              className="bg-gray-900 flex items-center text-white px-2 rounded transition-all duration-1000"
-            >
-              {liked ? (
-                <IoMdHeart className="text-rose-600 text-2xl transition-transform duration-300 transform scale-[1.1]" />
-              ) : (
-                <IoMdHeartEmpty className="text-2xl transition-transform duration-300 transform scale-100" />
-              )}
-              <span className="mb-1 ml-1">{likeNum}</span>
-            </button>
-            <Link
-              to={`/post/${post?.post_id}`}
-              onClick={() => setCommentBtn(!commentBtn)}
-              className="flex items-center text-white px-2 rounded"
-            >
-              <TfiComment className="text-xl" />
-              <span className="mb-1 ml-1">{comments?.length}</span>
-            </Link>
-            <button
-              onClick={showModal}
-              className="flex items-center text-white px-2 rounded"
-            >
-              <PiPaperPlaneTilt className="text-2xl" />
-            </button>
-            <button
-              onClick={() => toggleSave(post?.post_id)}
-              className="bg-gray-900 flex items-center text-white px-2 rounded transition-all duration-1000"
-            >
-              {saved ? (
-                <BsBookmarkFill className="text-lg transition-transform duration-300 transform scale-110" />
-              ) : (
-                <BsBookmark className="text-white text-lg transition-transform duration-300 transform scale-100" />
-              )}
-            </button>
-          </div>
+          <LikeSavedCommentBtns showModal={showModal} post={post} />
         </div>
       </div>
     </>

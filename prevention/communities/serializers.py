@@ -40,17 +40,23 @@ class PostSerializer(ModelSerializer):
         return post
 
 class CommentSerializer(serializers.ModelSerializer):
-    comment_user = userSerializers()
+    comment_user = userSerializers(read_only=True)
     class Meta:
         model = models.Comments
         fields=('comment_user', 'content', 'files')
 
+    def create(self,validated_data):
+        comment_user=self.context['request'].user
+        post = self.context['post']
+        return models.Comments.objects.create(comment_user=comment_user,post=post,**validated_data)
+
 class BookmarkSerializer(ModelSerializer):
-    bookmark_user=userSerializers()
+    bookmark_user=userSerializers(read_only=True)
     class Meta:
         model=models.BookmarkPost
         fields='__all__'
         extra_field='bookmark_user'
+    
 
 class CommunitySerializer(ModelSerializer): 
     com_user=userSerializers()
@@ -65,8 +71,13 @@ class CommunitySerializer(ModelSerializer):
         return value
 
 class ReplySerializer(ModelSerializer):
-    reply_user = userSerializers()
+    reply_user = userSerializers(read_only=True)
     class Meta:
         model = models.Reply
         fields='__all__'
         extra_field='reply_user'
+
+    def create(self,validated_data):
+        reply_user=self.context['request'].user
+        comment=self.context['comment']
+        return models.Reply.objects.create(reply_user=reply_user,comment=comment,**validated_data)

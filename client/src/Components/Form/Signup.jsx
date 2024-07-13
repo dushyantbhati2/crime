@@ -44,7 +44,7 @@ const Signup = () => {
           'cnfpassword': confirmPassword
         }).unwrap();
         // dispatch(setCredentials({ ...res }));
-        navigate("/complete-profile")
+        navigate("/")
         toast.success("User successfully registered");
       } catch (err) {
         console.log(err);
