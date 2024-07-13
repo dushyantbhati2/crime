@@ -112,77 +112,75 @@ function CommunityPost({ post }) {
               </div>
             )}
           </div>
-          <div className="ml-14">
-            <Link to={`/post/${post?.post_id}`} className="text-gray-300 ">
-              {post?.description}
-            </Link>
-          </div>
+          <Link to={`/post/${post?.post_id}`} className="text-gray-300 ml-14">
+            <div className="">{post?.description}</div>
+          </Link>
         </div>
 
-        {files.length !==0 && <div className="flex w-[90%] h-96 flex-wrap gap-1 mt-4">
-          {files.slice(0, 4).map((file, index) =>
-            (() => {
-              if (files.length === 3 ||files.length === 4) {
-                return (
-                  <div
-                    key={index}
-                    className="w-[35%]  bg-cover bg-center rounded-md cursor-pointer"
-                    style={{ backgroundImage: `url(${file.file})` }}
-                    onClick={() => handleImageClick(index)}
-                  ></div>
-                );
-              } 
-              else if (files.length == 1) {
-                return (
-                  <div
-                    key={index}
-                    className="w-[50%] h-full  rounded-md cursor-pointer"
-                    style={{
-                      backgroundImage: `url(${file.file})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                    onClick={() => handleImageClick(index)}
-                  ></div>
-                );
-              } 
-              else if (files.length == 1) {
-                return (
-                  <div
-                    key={index}
-                    className="w-[50%] h-full  rounded-md cursor-pointer"
-                    style={{
-                      backgroundImage: `url(${file.file})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                    onClick={() => handleImageClick(index)}
-                  ></div>
-                );
-              } 
-              else if (files.length == 2) {
-                return (
-                  <div
-                    key={index}
-                    className="w-[35%] h-full  rounded-md cursor-pointer"
-                    style={{
-                      backgroundImage: `url(${file.file})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                    onClick={() => handleImageClick(index)}
-                  ></div>
-                );
-              } 
-              
-              else {
-                return null;
-              }
-            })()
-          )}
-        </div>}
+        {files.length !== 0 && (
+          <Link
+            to={`/post/${post?.post_id}`}
+            className="flex w-[90%] h-96 flex-wrap gap-1 mt-4"
+          >
+            {files.slice(0, 4).map((file, index) =>
+              (() => {
+                if (files.length === 3 || files.length === 4) {
+                  return (
+                    <div
+                      key={index}
+                      className="w-[35%]  bg-cover bg-center rounded-md cursor-pointer"
+                      style={{ backgroundImage: `url(${file.file})` }}
+                      onClick={() => handleImageClick(index)}
+                    ></div>
+                  );
+                } else if (files.length === 1) {
+                  return (
+                    <div
+                      key={index}
+                      className="w-[50%] h-full  rounded-md cursor-pointer"
+                      style={{
+                        backgroundImage: `url(${file.file})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }}
+                      onClick={() => handleImageClick(index)}
+                    ></div>
+                  );
+                } else if (files.length === 1) {
+                  return (
+                    <div
+                      key={index}
+                      className="w-[50%] h-full  rounded-md cursor-pointer"
+                      style={{
+                        backgroundImage: `url(${file.file})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }}
+                      onClick={() => handleImageClick(index)}
+                    ></div>
+                  );
+                } else if (files.length === 2) {
+                  return (
+                    <div
+                      key={index}
+                      className="w-[35%] h-full  rounded-md cursor-pointer"
+                      style={{
+                        backgroundImage: `url(${file.file})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }}
+                      onClick={() => handleImageClick(index)}
+                    ></div>
+                  );
+                } else {
+                  return null;
+                }
+              })()
+            )}
+          </Link>
+        )}
 
-        {carouselVisible && (
+        {/* {carouselVisible && (
           <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
             <div className="relative w-full max-w-3xl">
               <div
@@ -208,7 +206,7 @@ function CommunityPost({ post }) {
               </div>
             </div>
           </div>
-        )}
+        )} */}
 
         <div>
           <LikeSavedCommentBtns showModal={showModal} post={post} />

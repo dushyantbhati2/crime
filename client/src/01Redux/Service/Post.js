@@ -6,7 +6,6 @@ const baseQueryWithAuth = fetchBaseQuery({
     const token = getState().auth.userInfo?.access;
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);
-      console.log(token);
     }
     return headers;
   },
@@ -21,6 +20,9 @@ export const postApi = createApi({
     getAllPosts: builder.query({
       query: () => `/allposts/`,
       providesTags: [{ type: "Post", id: "LIST" }],
+    }),
+    getSinglePost: builder.query({
+      query: (id) => `/allposts/${id}`,
     }),
     // create post
     createPost: builder.mutation({
@@ -52,10 +54,11 @@ export const postApi = createApi({
             const postToUpdate = draftPosts.find((post) => post.id === id);
             if (postToUpdate) {
               postToUpdate.Liked = true; // Update the property name as per your post object structure
+              postToUpdate.likes += 1;
             }
           })
         );
-    
+
         try {
           await queryFulfilled;
         } catch (error) {
@@ -78,6 +81,23 @@ export const postApi = createApi({
         method: "POST",
       }),
       invalidatesTags: [{ type: "Post", id: "LIST" }],
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          postApi.util.updateQueryData("getAllPosts", undefined, (draftPosts) => {
+            const postToUpdate = draftPosts.find((post) => post.id === id);
+            if (postToUpdate) {
+              postToUpdate.bookmark = true; // Update the property name as per your post object structure
+              
+            }
+          })
+        );
+
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          patchResult.undo();
+        }
+      },
     }),
 
     unSavedPost: builder.mutation({
@@ -92,6 +112,7 @@ export const postApi = createApi({
 
 export const {
   useGetAllPostsQuery,
+  useGetSinglePostQuery,
   useCreatePostMutation,
   useDeletePostMutation,
   useLikePostMutation,

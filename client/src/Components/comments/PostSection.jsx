@@ -1,4 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import moment from "moment";
+import {
+  BsChevronCompactLeft,
+  BsChevronCompactRight,
+  BsX,
+} from "react-icons/bs";
+
 import {
   useGetAllCommentsQuery,
   useCreateCommentMutation,
@@ -10,11 +17,52 @@ import SingleReply from "./SingleReply";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { useGetSinglePostQuery } from "../../01Redux/Service/Post";
 
 const PostSection = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const { id } = useParams();
   console.log("post section", id);
+  const { data: post, isLoading } = useGetSinglePostQuery(id);
+  const isoDateString = post?.upload_time;
+  const parsedDate = moment(isoDateString);
+  const uploadedDate = parsedDate.format("D MMMM, YYYY");
+  const uploadedTime = parsedDate.format("h:mm A");
+  const [popup, setPopup] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [carouselVisible, setCarouselVisible] = useState(false);
+  const [files, setFiles] = useState([]);
+
+  useEffect(() => {
+    // Update files state when post changes
+    setFiles(post?.files || []);
+  }, [post]);
+
+  const prevSlide = () => {
+    const isFirstSlide = currentIndex === 0;
+    const newIndex = isFirstSlide ? files.length - 1 : currentIndex - 1;
+    setCurrentIndex(newIndex);
+  };
+
+  const nextSlide = () => {
+    const isLastSlide = currentIndex === files.length - 1;
+    const newIndex = isLastSlide ? 0 : currentIndex + 1;
+    setCurrentIndex(newIndex);
+  };
+
+  const togglePopup = () => {
+    setPopup(!popup);
+  };
+
+  const handleImageClick = (index) => {
+    setCurrentIndex(index);
+    setCarouselVisible(true);
+  };
+
+  const handleCloseCarousel = () => {
+    setCarouselVisible(false);
+  };
+
   const { data: comments = [], refetch } = useGetAllCommentsQuery(id);
   const [createComment] = useCreateCommentMutation();
   const [deleteComment] = useDeleteCommentMutation();
@@ -22,17 +70,18 @@ const PostSection = () => {
   console.log(comments);
 
   const handleReply = async () => {
+    
     console.log(newReply);
     console.log("post section 2", id);
-  
+
     try {
       const formData = new FormData();
       formData.append("content", newReply);
       formData.append("postId", id);
-  
+
       const res = await createComment({ id, content: formData }).unwrap();
-      console.log("formData:", formData);
-  
+      // console.log("formData:", formData);
+      setNewReply("")
       console.log(res);
       toast.success("Reply sent successfully");
     } catch (error) {
@@ -40,7 +89,6 @@ const PostSection = () => {
       toast.error("Failed to post.");
     }
   };
-  
 
   const handleDelete = async (commentId) => {
     await deleteComment(commentId);
@@ -57,23 +105,106 @@ const PostSection = () => {
               <img
                 src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
                 alt="User avatar"
-                className="w-10 h-10 rounded-full mr-4 object-cover"
+                className="w-10 h-10 rounded-full mr-2 object-cover"
               />
               <div>
-                <div className="font-bold">Dushyant</div>
-                <div className="text-gray-400">@deekshant24</div>
+                <div className="font-bold text-gray-100 font-muli">
+                  {post?.post_user?.username}
+                </div>
               </div>
             </div>
-            <div className="mt-2 text-lg">
-              "Hi! I'm planning to start{" "}
-              <span className="text-blue-400">#Leetcode</span> sql challenge. If
-              you're interested, let's{" "}
-              <span className="text-blue-400">#connect</span>!"
-            </div>
-            <div className="text-blue-400 mt-2">#buildinginpublic</div>
+            <div className="mt-2 text-lg">{post?.description}</div>
+            {/* <div className="text-blue-400 mt-2">#buildinginpublic</div> */}
             <div className="flex mt-2 text-gray-400">
-              <div>10:56 PM · Jul 2, 2024 · 57.2K Views</div>
+              <div>{`${uploadedTime} · ${uploadedDate} · 57.`}2K Views</div>
             </div>
+            {files.length !== 0 && (
+              <div className="flex w-[90%] h-80 flex-wrap gap-1 mt-4">
+                {files.slice(0, 4).map((file, index) =>
+                  (() => {
+                    if (files.length === 3 || files.length === 4) {
+                      return (
+                        <div
+                          key={index}
+                          className="w-[35%]  bg-cover bg-center rounded-md cursor-pointer"
+                          style={{ backgroundImage: `url(${file.file})` }}
+                          onClick={() => handleImageClick(index)}
+                        ></div>
+                      );
+                    } else if (files.length === 1) {
+                      return (
+                        <div
+                          key={index}
+                          className="w-[50%] h-full  rounded-md cursor-pointer"
+                          style={{
+                            backgroundImage: `url(${file.file})`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                          }}
+                          onClick={() => handleImageClick(index)}
+                        ></div>
+                      );
+                    } else if (files.length === 1) {
+                      return (
+                        <div
+                          key={index}
+                          className="w-[100px] h-full  rounded-md cursor-pointer"
+                          style={{
+                            backgroundImage: `url(${file.file})`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                          }}
+                          onClick={() => handleImageClick(index)}
+                        ></div>
+                      );
+                    } else if (files.length === 2) {
+                      return (
+                        <div
+                          key={index}
+                          className="w-[45%] h-full  rounded-md cursor-pointer"
+                          style={{
+                            backgroundImage: `url(${file.file})`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                          }}
+                          onClick={() => handleImageClick(index)}
+                        ></div>
+                      );
+                    } else {
+                      return null;
+                    }
+                  })()
+                )}
+              </div>
+            )}
+
+            {carouselVisible && (
+              <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
+                <div className="relative w-full max-w-3xl">
+                  <div
+                    style={{
+                      backgroundImage: `url(${files[currentIndex]?.file})`,
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "contain",
+                      backgroundPosition: "center",
+                    }}
+                    className="w-full h-[500px] rounded-md object-contain duration-500"
+                  ></div>
+                  <div
+                    className="absolute top-1 right-1 hover:bg-black/60 text-white bg-black/30 rounded-full cursor-pointer"
+                    onClick={handleCloseCarousel}
+                  >
+                    <BsX size={30} />
+                  </div>
+                  <div className="absolute top-[50%] hover:bg-black/60 text-white bg-black/30 rounded-full left-5 text-2xl  p-2  cursor-pointer">
+                    <BsChevronCompactLeft onClick={prevSlide} size={30} />
+                  </div>
+                  <div className="absolute top-[50%] hover:bg-black/60 text-white bg-black/30 rounded-full right-5 text-2xl  p-2  cursor-pointer">
+                    <BsChevronCompactRight onClick={nextSlide} size={30} />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
           <div className="border-t border-gray-700 pt-4">
             <div className="flex mb-4">

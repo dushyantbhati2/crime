@@ -4,7 +4,7 @@ import { PiFacebookLogoDuotone, PiWhatsappLogoDuotone, PiLinkedinLogoDuotone, Pi
 // import PostComponent from '../SharePost/Postshare.jsx';
 
 const InfoPopup = ({ hideModal, isVisible, id }) => {
-  const postUrl = `http://localhost:3000/api/allposts/${id}`;
+  const postUrl = `http://localhost:3000/post/${id}`;
   const postTitle = 'Check out this post!';
 
   const shareOnFacebook = () => {
