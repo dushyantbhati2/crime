@@ -18,6 +18,8 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useGetSinglePostQuery } from "../../01Redux/Service/Post";
+import LikeSavedCommentBtns from "./LikeSavedCommentBtns";
+import InfoPopup from "./Popup";
 
 const PostSection = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -31,8 +33,15 @@ const PostSection = () => {
   const [popup, setPopup] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [carouselVisible, setCarouselVisible] = useState(false);
-  const [files, setFiles] = useState([]);
+  const [isVisible, setIsVisible] = useState(false);
 
+  const [files, setFiles] = useState([]);
+  const showModal = () => setIsVisible(true);
+  const hideModal = () => setIsVisible(false);
+  const confirmPrivacy = () => {
+    alert("Privacy accepted");
+    hideModal();
+  };
   useEffect(() => {
     // Update files state when post changes
     setFiles(post?.files || []);
@@ -95,7 +104,13 @@ const PostSection = () => {
     refetch();
   };
 
-  return (
+  return (<>
+    <InfoPopup
+    isVisible={isVisible}
+    hideModal={hideModal}
+    confirmPrivacy={confirmPrivacy}
+    id={post?.post_id}
+  />
     <div className="min-h-screen sm:px-8 bg-gray-900 text-white grid sm:grid-cols-10 pt-[50px]">
       <LeftSection />
       <div className="w-full sm:col-span-6 justify-center my-3 p-6 overflow-y-auto no-scrollbar h-[calc(100vh-70px)]">
@@ -205,6 +220,10 @@ const PostSection = () => {
                 </div>
               </div>
             )}
+
+            <div className="">
+              <LikeSavedCommentBtns post={post} showModal={showModal}/>
+            </div>
           </div>
           <div className="border-t border-gray-700 pt-4">
             <div className="flex mb-4">
@@ -235,7 +254,7 @@ const PostSection = () => {
       </div>
       <RightSection />
     </div>
-  );
+  </>);
 };
 
 export default PostSection;

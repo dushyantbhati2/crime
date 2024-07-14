@@ -121,7 +121,7 @@ class comments(APIView):
             comments = models.Comments.objects.filter(post=post1).order_by('-upload_time')
             if not comments.exists():
                 return Response({'Error': 'There are no comments'}, status=status.HTTP_204_NO_CONTENT)
-            serializer = CommentSerializer(comments, many=True)
+            serializer = CommentSerializer(comments, many=True,context={'request':request})
             return Response(serializer.data)
         except Exception as e:
             return Response({'Error':f'An error occurred: {str(e)}'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -150,7 +150,7 @@ class Reply(APIView):
         try:
             comment=get_object_or_404(models.Comments,id=pk);
             replies=models.Reply.objects.filter(comment=comment)
-            serial=ReplySerializer(replies,many=True)
+            serial=ReplySerializer(replies,many=True,context={'request':request})
             return Response(serial.data)
         except Exception as e:
             return Response({'Error':f'An error occurred: {str(e)}'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -172,7 +172,48 @@ class Reply(APIView):
             return Response({'Sucess':'Reply succesfully deleted'},status=status.HTTP_200_OK)
         except:
             return Response({'Error':'Something went wrong while deleting'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
+
+class CommentLike(APIView):
+    def post(self,request,reply_id):
+        try:
+            comment=None
+            reply=None
+            try:
+                comment=get_object_or_404(models.Comments,id=reply_id)
+            except:
+                reply=get_object_or_404(models.Reply,id=reply_id)
+            
+            if comment:
+                like, created = models.CommentAndReplyLike.objects.get_or_create(
+                    comment=comment,
+                    user=request.user
+                )
+            elif reply:
+                like, created = models.CommentAndReplyLike.objects.get_or_create(
+                    Reply=reply,
+                    user=request.user
+                )
+
+            if not created:
+                if comment:
+                    comment.likes-=1
+                    comment.save()
+                else:
+                    reply.likes-=1
+                    reply.save()
+                like.delete()
+                return Response({'Success': 'DisLiked'}, status=status.HTTP_200_OK)
+            else:
+                if comment:
+                    comment.likes+=1
+                    comment.save()
+                else:
+                    reply.likes+=1
+                    reply.save()
+                return Response({'Success': 'Liked'}, status=status.HTTP_201_CREATED)
+        except:
+            return Response({'Error':'Something went wrong while deleting'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 class Bookmark(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
@@ -196,7 +237,7 @@ class Bookmark(APIView):
     def delete(self,request,pk):
         try:
             post = get_object_or_404(models.Post,post_id=pk)
-            user=request.user
+            user=request.user   
             bookmarks=get_object_or_404(models.BookmarkPost,bookmark_user=user,post=post)
             bookmarks.delete()
             return Response({'Success':'Successfully deleted'})

@@ -45,7 +45,7 @@ const Login = () => {
     try {
 
       const res = await login({
-        email: email,
+        username: email,
         password: password,
       }).unwrap()
 
@@ -103,8 +103,8 @@ const Login = () => {
           onChange={(e) => setEmail(e.target.value)}
           id="email"
           type="text"
-          placeholder="Email"
-          name="Email"
+          placeholder="Email or Username"
+          name="Email or Username"
           htmlFor="email"
         />
         <Input

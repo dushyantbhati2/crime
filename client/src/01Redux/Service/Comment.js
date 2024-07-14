@@ -35,12 +35,13 @@ export const commentApi = createApi({
       }),
       invalidatesTags: [{ type: "Comment", id: "LIST" }],
     }),
-
+    
     deleteComment: builder.mutation({
       query: (id) => ({
         url: `/comments/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: [{ type: "Comment", id: "LIST" }],
     }),
   }),
 });

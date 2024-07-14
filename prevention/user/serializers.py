@@ -5,7 +5,7 @@ from rest_framework  import serializers
 class userSerializers(ModelSerializer):
     class Meta:
         model=User
-        fields=['id','username','email','password']
+        fields=['username','email','password']
         extra_kwargs={'password':{'write_only':True}}
 
     
@@ -17,3 +17,4 @@ class userSerializers(ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+

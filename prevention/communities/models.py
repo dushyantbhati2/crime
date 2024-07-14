@@ -27,6 +27,8 @@ class Comments(models.Model):
     content = models.TextField(blank=True) 
     files = models.FileField(upload_to='comments_files', blank=True, null=True)
     upload_time=models.DateTimeField(default=datetime.now())
+    likes=models.IntegerField(default=0)
+
     def __str__(self):
         return self.comment_user.username
     class Meta: 
@@ -37,9 +39,16 @@ class Reply(models.Model):
     comment = models.ForeignKey(Comments,on_delete=models.CASCADE)
     reply_user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='reply_user')
     content = models.TextField()
+    likes=models.IntegerField(default=0)
     def __str__(self):
         return self.reply_user.username
 
+class CommentAndReplyLike(models.Model):
+    comment=models.ForeignKey(Comments,on_delete=models.CASCADE,null=True, blank=True)
+    Reply=models.ForeignKey(Reply,on_delete=models.CASCADE,null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.user.username
 
 class LikesPost(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE,related_name='post')

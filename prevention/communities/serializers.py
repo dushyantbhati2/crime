@@ -41,9 +41,14 @@ class PostSerializer(ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     comment_user = userSerializers(read_only=True)
+    liked=serializers.SerializerMethodField()
     class Meta:
         model = models.Comments
-        fields=('comment_user', 'content', 'files')
+        fields=('id','comment_user', 'content', 'files','likes','liked')
+
+    def get_liked(self,obj):
+        user=self.context['request'].user
+        return models.CommentAndReplyLike.objects.filter(comment=obj,user=user).exists()
 
     def create(self,validated_data):
         comment_user=self.context['request'].user
@@ -56,8 +61,7 @@ class BookmarkSerializer(ModelSerializer):
         model=models.BookmarkPost
         fields='__all__'
         extra_field='bookmark_user'
-    
-
+   
 class CommunitySerializer(ModelSerializer): 
     com_user=userSerializers()
     class Meta:

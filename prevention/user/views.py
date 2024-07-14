@@ -1,12 +1,8 @@
-
-from django.shortcuts import get_object_or_404
-from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework import status
 from .serializers import userSerializers
-from django.contrib.auth import authenticate
 from profiles.models import Profile
 from utlis import auth
 # Create your views here.
@@ -16,12 +12,11 @@ class LoginView(APIView):
     permission_classes = []
     def post(self,request):
         try:
-            username=request.data.get('email')
+            username=request.data.get('username') 
             password=request.data.get('password')
             if(not username or not password):
                return Response({'Error':'all fields are required'},status=status.HTTP_400_BAD_REQUEST)
-            user=get_object_or_404(User,email=username)
-            user=authenticate(username=user.username,password=password,request=request)
+            user=auth.authenticate_user(username,password)
             if user is not None:
                 tokens=auth.get_tokens_for_user(user)
                 user.save()
@@ -64,3 +59,4 @@ class SignupView(APIView):
                 return Response({'Success':'User Signuped Successfully'},status=status.HTTP_201_CREATED)
         except Exception as e:
             return Response({'Error':f'Something Went while Signing up {e}'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
