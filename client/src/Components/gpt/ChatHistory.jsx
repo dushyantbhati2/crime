@@ -3,8 +3,8 @@ import React from 'react'
 const Chathistory = () => {
   return (
     <div>
-        
-      
+
+
     </div>
   )
 }

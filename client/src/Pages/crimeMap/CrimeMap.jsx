@@ -7,7 +7,7 @@ import StateMap from "./StateMap";
 import CountryMap from "./CountryMap";
 
 function CrimeMap() {
-  const [selectedOption, setSelectedOption] = useState("state"); 
+  const [selectedOption, setSelectedOption] = useState("state");
 
   return (
     <div className="w-full h-screen font-Poppins">

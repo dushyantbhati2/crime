@@ -24,7 +24,7 @@ module.exports = {
         'tertiary' :"#e5e5e5",
         'textDark':"#1f2937",
         'textWhite':"#f3f4f6"
-        
+
       },
       animation: {
         'slide-down': 'slide-down 0.8s ease-out forwards',
@@ -50,5 +50,5 @@ module.exports = {
   plugins: [
     require('daisyui'),
   ],
-  
+
 }

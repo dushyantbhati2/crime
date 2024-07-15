@@ -17,7 +17,7 @@
 }
 .instagram:hover{
     cursor: pointer;
-    color:white;    
+    color:white;
     transition: all 0.3s;
     border-color:#dc2743;
     background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888, #7d1fa2);;
@@ -29,10 +29,10 @@
 
 .github:hover{
     cursor: pointer;
-    color:white; 
+    color:white;
     transition: all 0.3s;
     border-color: #24292e;
-    background-color: #24292e; 
+    background-color: #24292e;
 }
 .twitter{
     color: rgb(0, 0, 0);
@@ -40,9 +40,9 @@
 }
 
 .twitter:hover {
-    color:white; 
+    color:white;
     cursor: pointer;
     transition: all 0.3s;
     border-color:#0d8de5;
-    background-color: #0d8de5; 
+    background-color: #0d8de5;
 }

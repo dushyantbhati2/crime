@@ -46,7 +46,7 @@ function CommunityPost({ post }) {
     hideModal();
   };
 
- 
+
 
   const togglePopup = () => {
     setPopup(!popup);

@@ -9,9 +9,9 @@ export default function Home() {
   return (
    <div className="bg-community">
     <MainCard/>
-    <Cards/>    
+    <Cards/>
    </div>
 
-  
+
   );
 }

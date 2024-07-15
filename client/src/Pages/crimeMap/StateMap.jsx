@@ -5,7 +5,7 @@ import axios from 'axios'
 
 
 
- 
+
 const StateMap = () => {
   const [mapData, setMapData] = useState([]);
   const [mapZoom, setMapZoom] = useState(7);
@@ -17,7 +17,7 @@ const StateMap = () => {
     try {
       const response = await axios.post('map/', {
         "state": "Andhra Pradesh",
-        
+
       });
       const data =await response.data
       console.log(typeof data)
@@ -26,16 +26,16 @@ const StateMap = () => {
       console.log(data.data)
 
       setMapData(data.data)
-      
-      
-  
+
+
+
     } catch (error) {
       console.error(error);
     }
   }
 
    return (
-    
+
     <>
       <button
         className='z-50 bg-zinc-800 py-2 px-6 text-lg rounded fixed top-20 left-4 text-white'
@@ -60,7 +60,7 @@ const StateMap = () => {
           url='https://api.maptiler.com/maps/basic-v2/256/{z}/{x}/{y}.png?key=4qF7jNT2GrtuZtRr3scK'
           attribution='<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
         />
-        
+
         {mapData.map((item, index) => (
           <Circle
             key={index}
@@ -69,11 +69,10 @@ const StateMap = () => {
             pathOptions={{ color: item.color }} // Use the color from the fetched data
           />
         ))}
-        
+
       </MapContainer>
     </>
   );
 };
 
 export default StateMap;
-

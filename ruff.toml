@@ -1,0 +1,19 @@
+# E501: Line too long
+ignore = ["E501","BLE001","F841","E722"]
+# Enable autofix for all violations.
+fix = true
+# Specify the directories to include.
+# Exclude specific files or directories.
+exclude = ["migrations", "__pycache__","venv",".env"]
+
+line-length = 88
+
+target-version = "py38"  # minimum target version
+
+# E: pycodestyle errors
+# F: Pyflakes
+# I: isort
+# T20: flake8-print
+# BLE: flake8-blind-except
+# C4: flake8-comprehensions
+select = ["E", "F", "I", "T20", "BLE", "C4"]

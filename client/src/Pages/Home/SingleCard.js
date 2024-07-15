@@ -9,4 +9,3 @@ export const syncPointer = ({ x: pointerX, y: pointerY }) => {
     document.documentElement.style.setProperty('--yp', yp);
   };
   document.body.addEventListener('pointermove', syncPointer);
-  

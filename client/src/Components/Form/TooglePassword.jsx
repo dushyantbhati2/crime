@@ -8,7 +8,7 @@ import { FaRegEyeSlash } from "react-icons/fa6";
 const TooglePassword = () => {
     const [visiblePassword, setVisiblePassword] = React.useState(false);
     const [visibleConfirmPassword, setVisibleConfirmPassword] = React.useState(false);
-  
+
     const togglePasswordVisibility = (field) => {
       if (field === 'password') {
         setVisiblePassword(!visiblePassword);
@@ -16,13 +16,13 @@ const TooglePassword = () => {
         setVisibleConfirmPassword(!visibleConfirmPassword);
       }
     };
-  
+
     const passwordType = visiblePassword ? "text" : "password";
     const confirmPasswordType = visibleConfirmPassword ? "text" : "password";
-  
+
     const visiblePasswordIcon = visiblePassword ? <IoEyeOutline/> : <FaRegEyeSlash/>;
     const visibleConfirmPasswordIcon = visibleConfirmPassword ? <IoEyeOutline/> : <FaRegEyeSlash/>;
-  
+
     return [
       passwordType,
       confirmPasswordType,
@@ -31,6 +31,5 @@ const TooglePassword = () => {
       togglePasswordVisibility,
     ];
   };
-  
+
   export default TooglePassword;
-  

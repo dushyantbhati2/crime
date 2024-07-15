@@ -17,7 +17,7 @@ const Sidebar = () => {
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } md:transform-none transition-transform duration-300`}
       >
-        
+
         <ul className=" px-1 text-base  gap-6  h-[320px] flex flex-col items-center mt-4">
             <li className="hover:bg-[#F0F0F0] hover:rounded-lg hover:scale-105 hover:ease-out duration-100 p-2">
               <Link to="/">Home</Link>

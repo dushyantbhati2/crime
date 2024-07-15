@@ -87,7 +87,7 @@ export const postApi = createApi({
             const postToUpdate = draftPosts.find((post) => post.id === id);
             if (postToUpdate) {
               postToUpdate.bookmark = true; // Update the property name as per your post object structure
-              
+
             }
           })
         );

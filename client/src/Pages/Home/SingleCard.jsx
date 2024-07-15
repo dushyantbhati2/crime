@@ -28,7 +28,7 @@ const SingleCard = ({ heading, des, link, img, classname, classnameimg }) => {
           <div className="flex justify-center lg:justify-start">
             <Link
               to={link}
-              
+
             ><a href="#"className="button">
                <span>Explore</span>
               </a>

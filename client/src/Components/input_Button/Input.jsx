@@ -19,9 +19,9 @@ const Input = ({type,id,name,placeholder,htmlFor,onChange,icon, changeVisibility
               required
             />
             <span onClick={changeVisibility} className='absolute top-3 right-4 text-xl  flex items-center'>{icon}</span>
-          
+
             </div>
-            
+
           </div>
   )
 }

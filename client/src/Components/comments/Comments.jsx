@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useGetAllCommentsQuery } from "../../01Redux/Service/Comment"; 
+import { useGetAllCommentsQuery } from "../../01Redux/Service/Comment";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 const Comments = ({setCommentBtn,post_id,id}) => {

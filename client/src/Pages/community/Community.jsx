@@ -19,14 +19,14 @@ const Community = () => {
     if (files.length > 4) {
       alert(`You can only upload a maximum of ${4} files.`);
     }
-  
+
     else{
       setImages(files);
     }
   };
 
 
- 
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();

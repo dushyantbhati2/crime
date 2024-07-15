@@ -33,7 +33,7 @@ function App() {
       <Route path="/" element={<Layout />}>
                 <Route path="/signup" element={<Signup />} />
 X          <Route path="/login" element={<Login />} />
-         
+
           {/* Public Routes */}
 
           <Route path="" element={<PrivateRoute/>}>

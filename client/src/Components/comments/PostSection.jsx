@@ -79,7 +79,7 @@ const PostSection = () => {
   console.log(comments);
 
   const handleReply = async () => {
-    
+
     console.log(newReply);
     console.log("post section 2", id);
 

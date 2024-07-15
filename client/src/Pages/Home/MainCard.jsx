@@ -18,7 +18,7 @@ const MainCard = () => {
           </div>
         </div>
         <div className="  w-full sm:w-1/2  flex justify-center lg:justify-end ">
-        
+
             <img src={sideImage} alt="" />
         </div>
       </div>
