@@ -11,7 +11,7 @@ def get_tokens_for_user(user):
         "access": str(refresh.access_token),
     }
 
-
+ 
 def authenticate_user(username, password):
     try:
         if "@" in username:

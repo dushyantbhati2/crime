@@ -100,6 +100,6 @@ class Community(models.Model):
     com_description = models.CharField(max_length=400)
     com_followers = models.IntegerField(default=0)
     com_image = models.ImageField(upload_to="com_images", blank=True)
-
+ 
     def __str__(self):
         return self.com_name

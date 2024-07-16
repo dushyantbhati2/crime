@@ -1,8 +1,8 @@
 import os
 from datetime import timedelta
 from pathlib import Path
-
 from django.conf import settings
+
 
 SECRET_KEY = NotImplemented
 DEBUG = False
@@ -59,23 +59,23 @@ WSGI_APPLICATION = "prevention.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE':'django.db.backends.postgresql',
-        'NAME':'railway',
-        'USER':'postgres',
-        'PASSWORD':'SUjJqtjmonqgDsklGHCnBycpxcdwjkzP',
-        'HOST':'viaduct.proxy.rlwy.net',
-        'PORT':'15749',
-    }
-}
-
 # DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": '../../db.sqlite3',
+#     'default': {
+#         'ENGINE':'django.db.backends.postgresql',
+#         'NAME':'railway',
+#         'USER':'postgres',
+#         'PASSWORD':'SUjJqtjmonqgDsklGHCnBycpxcdwjkzP',
+#         'HOST':'viaduct.proxy.rlwy.net',
+#         'PORT':'15749',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -130,12 +130,13 @@ REST_FRAMEWORK = {
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
+LOCAL_SETTINGS_PATH = 'local/settings.dev.py'
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=120),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
     "ALGORITHM": "HS256",
-    "SIGNING_KEY": settings.SECRET_KEY,
+    "SIGNING_KEY": LOCAL_SETTINGS_PATH,
     "AUTH_HEADER_TYPES": ("Bearer",),
 }

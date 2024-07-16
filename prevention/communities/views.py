@@ -23,7 +23,7 @@ class Community(APIView):
 
     def get(self, request, pk=None):
         if pk is None:
-            communities = models.Community.objects.all()
+            communities = models.Community.objects.select_related('com_user').all()
             serializer = CommunitySerializer(communities, many=True)
             return Response(serializer.data)
         else:
@@ -71,7 +71,7 @@ class posts(APIView):
     def get(self, request, pk=None):
         if pk is None:
             try:
-                posts = models.Post.objects.all().order_by("-upload_time")
+                posts = models.Post.objects.select_related('post_user').all().order_by("-upload_time")
                 serializer = PostSerializer(
                     posts, many=True, context={"request": request}
                 )
@@ -170,7 +170,7 @@ class comments(APIView):
     def get(self, request, pk):
         try:
             post1 = get_object_or_404(models.Post, post_id=pk)
-            comments = models.Comments.objects.filter(post=post1).order_by(
+            comments = models.Comments.objects.select_related('comment_user').filter(post=post1).order_by(
                 "-upload_time"
             )
             if not comments.exists():
@@ -227,7 +227,7 @@ class Reply(APIView):
     def get(self, request, pk):
         try:
             comment = get_object_or_404(models.Comments, id=pk)
-            replies = models.Reply.objects.filter(comment=comment)
+            replies = models.Reply.objects.prefetch_related('reply_user').filter(comment=comment)
             serial = ReplySerializer(replies, many=True, context={"request": request})
             return Response(serial.data)
         except Exception as e:
@@ -293,7 +293,7 @@ class CommentLike(APIView):
                     comment.save()
                 else:
                     reply.likes -= 1
-                    reply.save()
+                    reply.save() 
                 like.delete()
                 return Response({"Success": "DisLiked"}, status=status.HTTP_200_OK)
             else:
