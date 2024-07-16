@@ -3,7 +3,7 @@ from profiles.models import Profile
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from utlis import auth
+from utils import auth
 
 from .serializers import userSerializers
 
