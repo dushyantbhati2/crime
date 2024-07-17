@@ -1,10 +1,11 @@
 import React, { useRef, useState } from "react";
 import CommunityPost from "./CommunityPost";
-import { FaImage } from "react-icons/fa6";
+import { FaImage, FaBars } from "react-icons/fa";
 import { MdOutlineAttachFile, MdEmojiEmotions } from "react-icons/md";
 import LeftSection from "./LeftSection";
-import { useCreatePostMutation, useGetAllPostsQuery } from "../../01Redux/Service/Post";
 import RightSection from "./RightSection";
+import SRightSection from "./SRightSection";
+import { useCreatePostMutation, useGetAllPostsQuery } from "../../01Redux/Service/Post";
 import { toast } from "react-toastify";
 
 const Community = () => {
@@ -13,20 +14,16 @@ const Community = () => {
   const [images, setImages] = useState([]);
   const { data: posts, isLoading, isError, refetch } = useGetAllPostsQuery();
   const [post, { isLoading: isPostLoading }] = useCreatePostMutation();
+  const [showSpecialSection, setShowSpecialSection] = useState(false); 
 
   const handleImagesChange = (e) => {
     const files = Array.from(e.target.files);
     if (files.length > 4) {
-      alert(`You can only upload a maximum of ${4} files.`);
-    }
-
-    else{
+      alert(You can only upload a maximum of ${4} files.);
+    } else {
       setImages(files);
     }
   };
-
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +36,7 @@ const Community = () => {
 
       await post(formData).unwrap();
       toast.success("Post sent successfully");
-      refetch();  // Refetch the posts to update the list with the new post
+      refetch(); // Refetch the posts to update the list with the new post
     } catch (error) {
       console.error("Error posting:", error);
       toast.error("Failed to post.");
@@ -47,8 +44,19 @@ const Community = () => {
   };
 
   return (
-    <div className="min-h-screen sm:px-8 bg-gray-900 text-white grid sm:grid-cols-10 pt-[50px]">
-      <LeftSection />
+    <div className="min-h-screen sm:px-8 bg-gray-900 text-white grid sm:grid-cols-10 pt-[50px] relative">
+      <button
+        className="sm:hidden fixed top-4 left-4 bg-[#be123c] text-white p-2 rounded-full"
+        onClick={() => setShowSpecialSection(!showSpecialSection)}
+      >
+        <FaBars className="relative top-10"/>
+      </button>
+      <div className={${showSpecialSection ? 'block' : 'hidden'} sm:hidden absolute left-0 top-0 w-full bg-gray-900 z-10}>
+        <SRightSection />
+      </div>
+      <div className="hidden sm:block sm:col-span-2">
+        <LeftSection />
+      </div>
       <main className="col-span-6 my-3 p-6 overflow-y-auto no-scrollbar h-[calc(100vh-70px)]">
         {isLoading && <div>Loading...</div>}
         <header className="flex mb-6 -ml-3">
@@ -105,7 +113,9 @@ const Community = () => {
           ))}
         </section>
       </main>
-      <RightSection />
+      <div className="hidden sm:block sm:col-span-2">
+        <RightSection />
+      </div>
     </div>
   );
 };
