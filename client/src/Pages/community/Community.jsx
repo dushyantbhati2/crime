@@ -19,7 +19,7 @@ const Community = () => {
   const handleImagesChange = (e) => {
     const files = Array.from(e.target.files);
     if (files.length > 4) {
-      alert(You can only upload a maximum of ${4} files.);
+      alert(`You can only upload a maximum of ${4} files.`);
     } else {
       setImages(files);
     }
@@ -51,7 +51,7 @@ const Community = () => {
       >
         <FaBars className="relative top-10"/>
       </button>
-      <div className={${showSpecialSection ? 'block' : 'hidden'} sm:hidden absolute left-0 top-0 w-full bg-gray-900 z-10}>
+      <div className={`${showSpecialSection ? 'block' : 'hidden'} sm:hidden absolute left-0 top-0 w-full bg-gray-900 z-10`}>
         <SRightSection />
       </div>
       <div className="hidden sm:block sm:col-span-2">
