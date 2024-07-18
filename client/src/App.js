@@ -16,7 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from "./Components/Form/PrivateRoutes.jsx";
 import { useGetAllPostsQuery } from "./01Redux/Service/Post";
 import { useSelector } from "react-redux";
-
+import Collaboration from "./Pages/Collaboration/Collaboration.jsx";
 
 
 function App() {
@@ -45,6 +45,7 @@ X          <Route path="/login" element={<Login />} />
           <Route path="/community" element={<Community />} />
           <Route path="/post/:id" element={<PostSection />} />
           <Route path="/sample" element={<Sample/>} />
+          <Route path="/collab" element={<Collaboration/>}/>
           </Route>
 
           {/* 404 Route */}
