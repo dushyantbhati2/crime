@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
 import { PiPaperPlaneTilt } from "react-icons/pi";
@@ -8,10 +8,10 @@ import { toast } from "react-toastify";
 import { useGetAllCommentsQuery } from "../../01Redux/Service/Comment";
 
 import {
-    useLikePostMutation,
-    useDislikePostMutation,
-    useSavedPostMutation,
-    useUnSavedPostMutation,
+  useLikePostMutation,
+  useDislikePostMutation,
+  useSavedPostMutation,
+  useUnSavedPostMutation,
 } from "../../01Redux/Service/Post";
 
 const LikeSavedCommentBtns = ({ post, showModal }) => {
@@ -108,10 +108,10 @@ const LikeSavedCommentBtns = ({ post, showModal }) => {
   };
 
   return (
-    <div className="sm:w-[500px] flex items-center mt-2 justify-between">
+    <div className="w-[90%] lg:w-[500px] flex items-center mt-4 justify-between">
       <button
         onClick={() => toggleLike(post?.post_id)}
-        className="bg-gray-900 flex items-center text-white px-2 rounded transition-all duration-1000"
+        className="bg-gray-900 flex items-center text-white  rounded transition-all duration-1000"
       >
         {liked ? (
           <IoMdHeart className="text-rose-600 text-2xl transition-transform duration-300 transform scale-[1.1]" />
@@ -122,20 +122,20 @@ const LikeSavedCommentBtns = ({ post, showModal }) => {
       </button>
       <Link
         to={`/post/${post?.post_id}`}
-        className="flex items-center text-white px-2 rounded"
+        className="flex items-center text-white  rounded"
       >
         <TfiComment className="text-xl" />
         <span className="mb-1 ml-1">{comments?.length}</span>
       </Link>
       <button
         onClick={showModal}
-        className="flex items-center text-white px-2 rounded"
+        className="flex items-center text-white  rounded"
       >
         <PiPaperPlaneTilt className="text-2xl" />
       </button>
       <button
         onClick={() => toggleSave(post?.post_id)}
-        className="bg-gray-900 flex items-center text-white px-2 rounded transition-all duration-1000"
+        className="bg-gray-900 flex items-center text-white  rounded transition-all duration-1000"
       >
         {saved ? (
           <BsBookmarkFill className="text-lg transition-transform duration-300 transform scale-110" />

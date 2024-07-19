@@ -4,12 +4,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../01Redux/features/authFeature";
 import { postApi } from "../../01Redux/Service/Post";
+import { AiOutlineMenu } from "react-icons/ai";
+import LeftSection from "../../Pages/community/LeftSection";
 
 const Header3 = () => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [show, setShow] = useState(true);
+  const [menu, setMenu] = useState(false);
 
   let lastScrollY = window.scrollY;
 
@@ -21,6 +24,7 @@ const Header3 = () => {
     }
     lastScrollY = window.scrollY;
   };
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -28,29 +32,42 @@ const Header3 = () => {
     };
   }, [lastScrollY]);
 
-  const onLogout = () => {
-    if (userInfo) {
-      dispatch(logout());
-      dispatch(postApi.util.resetApiState());
-
-    } else navigate("/login");
-  };
-
   return (
     <header
-      className={`bg-sky-500 border-b  border-gray-600 shadow z-50   font-heading h-[70px] flex fixed top-0 w-full transition-transform duration-300 ${
-        show ? "translate-y-0" : "-translate-y-full"
+      className={`md:bg-sky-500 bg-gray-900 md:border-b border-gray-600 shadow z-50 font-heading h-[70px] flex fixed top-0 w-full md:transition-transform md:duration-300 ${
+        show ? "md:translate-y-0" : "md:-translate-y-full"
       }`}
     >
-      <div className="container mx-auto flex justify-between items-center py-2 px-4 ">
-        <div className="flex items-center border border-black overflow-hidden rounded-full h-12 w-12">
+      <div className="container mx-auto flex justify-between items-center py-2 px-4">
+        <div className="flex items-center gap-4 md:hidden">
+          {userInfo && (
+            <AiOutlineMenu
+              onClick={() => setMenu(!menu)}
+              className="text-white h-5 w-5"
+            />
+          )}{" "}
+          {userInfo && menu && (
+            <div onClick={()=>setMenu(false)} className="fixed text-sm top-[70px] left-0 w-[260px] h-full bg-gray-800 text-white px-4 z-50">
+              <LeftSection />
+            </div>
+          )}
+          <div className="items-center border border-black overflow-hidden rounded-full h-10 w-10">
+            <img
+              src={Logo}
+              alt="Logo"
+              className="h-full w-full scale-125 rounded-full"
+            />
+          </div>
+        </div>
+
+        <div className="hidden md:flex items-center border border-black overflow-hidden rounded-full h-12 w-12">
           <img
             src={Logo}
             alt="Logo"
             className="h-12 scale-[1.12] rounded-full w-12"
           />
         </div>
-        <nav className="flex items-center space-x-10 text-lg">
+        <nav className="hidden md:flex items-center space-x-10 text-lg">
           <div className="relative group">
             <Link to="/" className="inline-flex items-center text-white">
               Home
@@ -66,39 +83,11 @@ const Header3 = () => {
             >
               Community
             </Link>
-            {/* <div className="absolute left-0 hidden mt-1 w-48 bg-white shadow-lg rounded group-hover:block">
-              <a
-                href="#"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                Option 1
-              </a>
-              <a
-                href="#"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                Option 2
-              </a>
-            </div> */}
           </div>
           <div className="relative group">
             <button className="inline-flex items-center text-white">
               About
             </button>
-            {/* <div className="absolute left-0 hidden mt-1 w-48 bg-white shadow-lg rounded group-hover:block">
-              <a
-                href="#"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                Option 1
-              </a>
-              <a
-                href="#"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                Option 2
-              </a>
-            </div> */}
           </div>
           <div className="relative group">
             <button className="inline-flex items-center text-white">
@@ -106,12 +95,36 @@ const Header3 = () => {
             </button>
           </div>
           <button
-            onClick={() => onLogout()}
-            className="inline-flex items-center text-base px-5 py-2 rounded-full text-white hover:shadow-lg bg-gray-900"
+            className={`inline-flex ${
+              userInfo==null &&
+              " px-5 py-2 rounded-full text-white hover:shadow-lg bg-gray-900"
+            } items-center text-base`}
           >
-            {userInfo ? "Logout" : "Login"}
+            {userInfo ? (
+              <img
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
+                alt="User Avatar"
+                className="w-10 h-10 rounded-full object-cover"
+              />
+            ) : (
+              "Login"
+            )}
           </button>
         </nav>
+
+        <button
+          className={`inline-flex md:hidden items-center text-base px-5 py-2 rounded-full text-white hover:shadow-lg bg-gray-900`}
+        >
+          {userInfo ? (
+            <img
+              src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
+              alt="User Avatar"
+              className="w-10 h-10 rounded-full object-cover"
+            />
+          ) : (
+            "Login"
+          )}
+        </button>
       </div>
     </header>
   );

@@ -1,49 +1,81 @@
-import React from 'react'
+import React from "react";
 
 const RightSection = () => {
   return (
-    <aside className="w-[250px] sm:col-span-2 h-[530px] bg-gray-800 p-4 my-10 rounded-3xl relative left-5  ">
-        <div className="font-semibold">Parental events</div>
-        <ul className="mt-4 pb-2 border-b border-gray-500/50">
-          <li className="my-2">
-            <a href="#">Parental gathering</a>
-          </li>
-          <li className="my-2">
-            <a href="#">Parental decision-making</a>
-          </li>
-          <li className="my-2">
-            <a href="#">Parental music event</a>
-          </li>
-          <li className="my-2">
-            <a href="#">Parental stand-up</a>
-          </li>
-        </ul>
-        <div className="font-semibold mt-4">Parenting Workshops</div>
-        <ul className="my-6 pb-2 border-b border-gray-500/50">
-          <li className="my-2">
-            <a href="#">Interactive Sessions</a>
-          </li>
-          <li className="my-2">
-            <a href="#">Parent Name</a>
-          </li>
-          <li className="my-2">
-            <a href="#">Community Support</a>
-          </li>
-        </ul>
-        <div className="font-semibold mt-4">Parenting Resources</div>
-        <ul className="my-4 border-b border-gray-500/50">
-          <li className="my-2">
-            <a href="#">Supportive Community</a>
-          </li>
-          <li className="my-2">
-            <a href="#">Parenting Milestones</a>
-          </li>
-          <li className="my-2">
-            <a href="#">Parenting Challenges</a>
-          </li>
-        </ul>
-      </aside>
-  )
-}
+    <aside>
+      <div className="flex items-center justify-between">
+        <div className="font-semibold text-gray-200 ">Suggested for you</div>
+        <div className="text-sm font-medium text-gray-100">See all</div>
+      </div>
+      <ul className="mt-4 pb-2 flex flex-col gap-4 border-b border-gray-500/50">
+        <div className="flex items-center justify-between space-x-2">
+          <div className="flex items-center space-x-2">
+            <img
+              src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
+              alt="User Avatar"
+              className="w-8 h-8 rounded-full object-cover"
+            />
+            <h2 className=" font-semibold text-sm mb-2">
+              {"Crime Prevention"}
+            </h2>
+          </div>
+          <div className=" font-semibold text-sm mb-2 text-rose-500">Follow</div>
+        </div>
+        <div className="flex items-center justify-between space-x-2">
+          <div className="flex items-center space-x-2">
+            <img
+              src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
+              alt="User Avatar"
+              className="w-8 h-8 rounded-full object-cover"
+            />
+            <h2 className=" font-semibold text-sm mb-2">
+              {"Crime Prevention"}
+            </h2>
+          </div>
+          <div className=" font-semibold text-sm mb-2 text-rose-500">Follow</div>
+        </div>
+        <div className="flex items-center justify-between space-x-2">
+          <div className="flex items-center space-x-2">
+            <img
+              src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
+              alt="User Avatar"
+              className="w-8 h-8 rounded-full object-cover"
+            />
+            <h2 className=" font-semibold text-sm mb-2">
+              {"Crime Prevention"}
+            </h2>
+          </div>
+          <div className=" font-semibold text-sm mb-2 text-rose-500">Follow</div>
+        </div>
+        <div className="flex items-center justify-between space-x-2">
+          <div className="flex items-center space-x-2">
+            <img
+              src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
+              alt="User Avatar"
+              className="w-8 h-8 rounded-full object-cover"
+            />
+            <h2 className=" font-semibold text-sm mb-2">
+              {"Crime Prevention"}
+            </h2>
+          </div>
+          <div className=" font-semibold text-sm mb-2 text-rose-500">Follow</div>
+        </div>
+      </ul>
 
-export default RightSection
+      <div className="font-semibold mt-4">Parenting Resources</div>
+      <ul className="my-4 border-b border-gray-500/50">
+        <li className="my-2">
+          <a href="#">Supportive Community</a>
+        </li>
+        <li className="my-2">
+          <a href="#">Parenting Milestones</a>
+        </li>
+        <li className="my-2">
+          <a href="#">Parenting Challenges</a>
+        </li>
+      </ul>
+    </aside>
+  );
+};
+
+export default RightSection;

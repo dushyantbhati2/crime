@@ -110,7 +110,7 @@ function CommunityPost({ post }) {
         {files.length !== 0 && (
           <Link
             to={`/post/${post?.post_id}`}
-            className="flex w-[90%] h-96 flex-wrap gap-1 mt-4"
+            className="flex w-full sm:full  lg:w-[80%] xl:w-[70%] h-64 md:h-80 lg:h-96 flex-wrap gap-1 mt-4"
           >
             {files.slice(0, 4).map((file, index) =>
               (() => {
@@ -118,7 +118,7 @@ function CommunityPost({ post }) {
                   return (
                     <div
                       key={index}
-                      className="w-[35%]  bg-cover bg-center rounded-md cursor-pointer"
+                      className=" w-[40%] md:w-[45%] xl:w-[35%]  bg-cover bg-center rounded-md cursor-pointer"
                       style={{ backgroundImage: `url(${file.file})` }}
                       onClick={() => handleImageClick(index)}
                     ></div>
@@ -127,7 +127,7 @@ function CommunityPost({ post }) {
                   return (
                     <div
                       key={index}
-                      className="w-[50%] h-full  rounded-md cursor-pointer"
+                      className=" w-[70%] sm:w-[75%] lg:w-[70%] xl:w-[50%] h-full  rounded-md cursor-pointer"
                       style={{
                         backgroundImage: `url(${file.file})`,
                         backgroundSize: "cover",
@@ -136,24 +136,12 @@ function CommunityPost({ post }) {
                       onClick={() => handleImageClick(index)}
                     ></div>
                   );
-                } else if (files.length === 1) {
-                  return (
-                    <div
-                      key={index}
-                      className="w-[50%] h-full  rounded-md cursor-pointer"
-                      style={{
-                        backgroundImage: `url(${file.file})`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                      }}
-                      onClick={() => handleImageClick(index)}
-                    ></div>
-                  );
+                
                 } else if (files.length === 2) {
                   return (
                     <div
                       key={index}
-                      className="w-[35%] h-full  rounded-md cursor-pointer"
+                      className="w-[45%] h-full  rounded-md cursor-pointer"
                       style={{
                         backgroundImage: `url(${file.file})`,
                         backgroundSize: "cover",
@@ -170,33 +158,7 @@ function CommunityPost({ post }) {
           </Link>
         )}
 
-        {/* {carouselVisible && (
-          <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
-            <div className="relative w-full max-w-3xl">
-              <div
-                style={{
-                  backgroundImage: `url(${files[currentIndex]?.file})`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-                className="w-full h-[500px] rounded-md object-contain duration-500"
-              ></div>
-              <div
-                className="absolute top-4 right-4 text-white cursor-pointer"
-                onClick={handleCloseCarousel}
-              >
-                <BsX size={30} />
-              </div>
-              <div className="absolute top-[50%] left-5 text-2xl rounded-full p-2 text-white cursor-pointer">
-                <BsChevronCompactLeft onClick={prevSlide} size={30} />
-              </div>
-              <div className="absolute top-[50%] right-5 text-2xl rounded-full p-2 text-white cursor-pointer">
-                <BsChevronCompactRight onClick={nextSlide} size={30} />
-              </div>
-            </div>
-          </div>
-        )} */}
+       
 
         <div>
           <LikeSavedCommentBtns showModal={showModal} post={post} />

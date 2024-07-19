@@ -111,9 +111,12 @@ const PostSection = () => {
     confirmPrivacy={confirmPrivacy}
     id={post?.post_id}
   />
-    <div className="min-h-screen sm:px-8 bg-gray-900 text-white grid sm:grid-cols-10 pt-[50px]">
-      <LeftSection />
-      <div className="w-full sm:col-span-6 justify-center my-3 p-6 overflow-y-auto no-scrollbar h-[calc(100vh-70px)]">
+   <div className="min-h-screen sm:px-8 bg-gray-900 w-full text-white flex pt-[30px] md:pt-[50px]">
+      <div className="w-[260px] hidden sm:block h-auto lg:h-[630px] overflow-hidden my-10 bg-gray-800 rounded-xl text-lg text-white p-4">
+        <LeftSection />
+      </div>
+      <div className="flex-1 justify-center my-3 py-6 px-4 sm:px-10 overflow-y-auto no-scrollbar h-[calc(100vh-70px)]">
+      
         <div className="w-full max-w-2xl bg-gray-900 text-white rounded-lg p-6">
           <div className="mb-4">
             <div className="flex items-center">
@@ -134,62 +137,50 @@ const PostSection = () => {
               <div>{`${uploadedTime} · ${uploadedDate} · 57.`}2K Views</div>
             </div>
             {files.length !== 0 && (
-              <div className="flex w-[90%] h-80 flex-wrap gap-1 mt-4">
-                {files.slice(0, 4).map((file, index) =>
-                  (() => {
-                    if (files.length === 3 || files.length === 4) {
-                      return (
-                        <div
-                          key={index}
-                          className="w-[35%]  bg-cover bg-center rounded-md cursor-pointer"
-                          style={{ backgroundImage: `url(${file.file})` }}
-                          onClick={() => handleImageClick(index)}
-                        ></div>
-                      );
-                    } else if (files.length === 1) {
-                      return (
-                        <div
-                          key={index}
-                          className="w-[50%] h-full  rounded-md cursor-pointer"
-                          style={{
-                            backgroundImage: `url(${file.file})`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                          }}
-                          onClick={() => handleImageClick(index)}
-                        ></div>
-                      );
-                    } else if (files.length === 1) {
-                      return (
-                        <div
-                          key={index}
-                          className="w-[100px] h-full  rounded-md cursor-pointer"
-                          style={{
-                            backgroundImage: `url(${file.file})`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                          }}
-                          onClick={() => handleImageClick(index)}
-                        ></div>
-                      );
-                    } else if (files.length === 2) {
-                      return (
-                        <div
-                          key={index}
-                          className="w-[45%] h-full  rounded-md cursor-pointer"
-                          style={{
-                            backgroundImage: `url(${file.file})`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                          }}
-                          onClick={() => handleImageClick(index)}
-                        ></div>
-                      );
-                    } else {
-                      return null;
-                    }
-                  })()
-                )}
+              <div className="flex w-full sm:full  lg:w-[80%] xl:w-[70%] h-64 md:h-80 lg:h-96 flex-wrap gap-1 mt-4">
+              {files.slice(0, 4).map((file, index) =>
+              (() => {
+                if (files.length === 3 || files.length === 4) {
+                  return (
+                    <div
+                      key={index}
+                      className=" w-[40%] md:w-[45%] xl:w-[35%]  bg-cover bg-center rounded-md cursor-pointer"
+                      style={{ backgroundImage: `url(${file.file})` }}
+                      onClick={() => handleImageClick(index)}
+                    ></div>
+                  );
+                } else if (files.length === 1) {
+                  return (
+                    <div
+                      key={index}
+                      className=" w-[70%] sm:w-[75%] lg:w-[70%] xl:w-[50%] h-full  rounded-md cursor-pointer"
+                      style={{
+                        backgroundImage: `url(${file.file})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }}
+                      onClick={() => handleImageClick(index)}
+                    ></div>
+                  );
+                
+                } else if (files.length === 2) {
+                  return (
+                    <div
+                      key={index}
+                      className="w-[45%] h-full  rounded-md cursor-pointer"
+                      style={{
+                        backgroundImage: `url(${file.file})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }}
+                      onClick={() => handleImageClick(index)}
+                    ></div>
+                  );
+                } else {
+                  return null;
+                }
+              })()
+            )}
               </div>
             )}
 
@@ -251,8 +242,11 @@ const PostSection = () => {
             </div>
           </div>
         </div>
+      
       </div>
-      <RightSection />
+      <div className="w-full lg:w-[250px] h-auto lg:h-[530px] bg-gray-800 p-4 my-10 rounded-3xl hidden xl:block">
+        <RightSection />
+      </div>
     </div>
   </>);
 };
