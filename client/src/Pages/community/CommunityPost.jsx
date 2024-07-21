@@ -1,9 +1,4 @@
 import React, { useState, useEffect } from "react";
-import {
-  BsChevronCompactLeft,
-  BsChevronCompactRight,
-  BsX,
-} from "react-icons/bs";
 import { Link } from "react-router-dom";
 import InfoPopup from "../../Components/comments/Popup";
 import { toast } from "react-toastify";
@@ -11,18 +6,20 @@ import { useSelector } from "react-redux";
 import { useDeletePostMutation } from "../../01Redux/Service/Post";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import LikeSavedCommentBtns from "../../Components/comments/LikeSavedCommentBtns";
+import moment from "moment";
 
 function CommunityPost({ post }) {
   const { userInfo } = useSelector((state) => state.auth);
-
   const [isVisible, setIsVisible] = useState(false);
   const [popup, setPopup] = useState(false);
   const [files, setFiles] = useState([]);
 
   const [deletePost] = useDeletePostMutation();
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [carouselVisible, setCarouselVisible] = useState(false);
 
+  const isoDateString = post?.upload_time;
+  const parsedDate = moment(isoDateString);
+  const uploadedDate = parsedDate.format("D MMMM, YYYY");
+  const uploadedTime = parsedDate.format("h:mm A");
   useEffect(() => {
     // Update files state when post changes
     setFiles(post?.files || []);
@@ -52,14 +49,9 @@ function CommunityPost({ post }) {
     setPopup(!popup);
   };
 
-  const handleImageClick = (index) => {
-    setCurrentIndex(index);
-    setCarouselVisible(true);
-  };
+ 
 
-  const handleCloseCarousel = () => {
-    setCarouselVisible(false);
-  };
+ 
 
   return (
     <>
@@ -72,7 +64,7 @@ function CommunityPost({ post }) {
       <div className="mb-6">
         <div className="">
           <div className="flex justify-between relative">
-            <div className="flex items-center space-x-4">
+            <Link to={`/community/${post?.post_user?.username}`} className="flex items-center space-x-4">
               <img
                 src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
                 alt="User Avatar"
@@ -81,8 +73,12 @@ function CommunityPost({ post }) {
               <h2 className="text-lg font-semibold mb-2">
                 {post?.post_user?.username}
               </h2>
+            </Link>
+           <div className="flex gap-2 items-center">
+           <div className=" text-gray-400">
+              <div>{`${uploadedDate}`}</div>
             </div>
-            {userInfo.user.username === post?.post_user?.username && (
+           {userInfo.user.username === post?.post_user?.username && (
               <BsThreeDotsVertical
                 className="text-xl cursor-pointer"
                 onClick={togglePopup}
@@ -101,6 +97,7 @@ function CommunityPost({ post }) {
                 </button>
               </div>
             )}
+           </div>
           </div>
           <Link to={`/post/${post?.post_id}`} className="text-gray-300 ml-14">
             <div className="">{post?.description}</div>
@@ -120,7 +117,6 @@ function CommunityPost({ post }) {
                       key={index}
                       className=" w-[40%] md:w-[45%] xl:w-[35%]  bg-cover bg-center rounded-md cursor-pointer"
                       style={{ backgroundImage: `url(${file.file})` }}
-                      onClick={() => handleImageClick(index)}
                     ></div>
                   );
                 } else if (files.length === 1) {
@@ -133,7 +129,6 @@ function CommunityPost({ post }) {
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                       }}
-                      onClick={() => handleImageClick(index)}
                     ></div>
                   );
                 
@@ -147,7 +142,6 @@ function CommunityPost({ post }) {
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                       }}
-                      onClick={() => handleImageClick(index)}
                     ></div>
                   );
                 } else {

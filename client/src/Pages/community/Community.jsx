@@ -1,7 +1,7 @@
 import React from "react";
 
 import RightSection from "./RightSection";
-import MainSection from "./MainSection";
+import MainSection from "./mainSection";
 import LeftSection from "./LeftSection";
 
 const Community = () => {
@@ -13,7 +13,7 @@ const Community = () => {
       <div className="flex-1 justify-center my-3 py-6 px-4 sm:px-10 overflow-y-auto no-scrollbar h-[calc(100vh-70px)]">
         <MainSection />
       </div>
-      <div className="w-full lg:w-[250px] h-auto lg:h-[530px] bg-gray-800 p-4 my-10 rounded-3xl hidden xl:block">
+      <div className="w-full lg:w-[260px] h-auto lg:h-[630px] bg-gray-800 text-lg p-4 my-10 rounded-3xl hidden xl:block">
         <RightSection />
       </div>
     </div>

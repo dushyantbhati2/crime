@@ -47,7 +47,7 @@ const Header3 = () => {
             />
           )}{" "}
           {userInfo && menu && (
-            <div onClick={()=>setMenu(false)} className="fixed text-sm top-[70px] left-0 w-[260px] h-full bg-gray-800 text-white px-4 z-50">
+            <div onClick={()=>setMenu(false)} className="fixed text-base font-muli top-[70px] left-0 w-[280px] h-full bg-gray-800 text-white px-4 z-50">
               <LeftSection />
             </div>
           )}
