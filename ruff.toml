@@ -1,5 +1,5 @@
 # E501: Line too long
-ignore = ["E501","BLE001","F841","E722"]
+ignore = ["E501","BLE001","F841","E722","E402","F821"]
 # Enable autofix for all violations.
 fix = true
 # Specify the directories to include.

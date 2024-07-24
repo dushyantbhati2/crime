@@ -1,16 +1,10 @@
-from rest_framework.serializers import ModelSerializer
-from rest_framework import serializers
-from .models import Profile
 from communities.models import Post
-from django.contrib.auth.models import User
+from communities.serializers import PostSerializer
+from rest_framework import serializers
 from user.serializers import userSerializers
-class PostSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Post
-        fields = (
-            "description",
-            "post_id",
-        )
+
+from .models import Profile
+
 
 class ProfileSerializer(serializers.ModelSerializer):
     user = userSerializers()
@@ -26,5 +20,5 @@ class ProfileSerializer(serializers.ModelSerializer):
         )
 
     def get_posts(self, obj):
-        user_posts = Post.objects.filter(post_user=obj.user)
+        user_posts = Post.objects.select_related("post_user").filter(post_user=obj.user)
         return PostSerializer(user_posts, many=True).data

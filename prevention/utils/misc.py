@@ -1,23 +1,25 @@
 import yaml
 from django.conf import settings
-from django.db import transaction
 
 
 def yaml_coerce(value):
     if isinstance(value, str):
-        return yaml.load('dummy: ' + value, Loader=yaml.SafeLoader)['dummy']
+        return yaml.load("dummy: " + value, Loader=yaml.SafeLoader)["dummy"]
 
     return value
 
+
 import os
-from django.conf import settings
+
 
 def get_secret_key():
     return settings.SECRET_KEY
 
+
 def create_directory(path):
     if not os.path.exists(path):
         os.makedirs(path)
+
 
 def get_env_variable(var_name, default=None):
     return os.environ.get(var_name, default)

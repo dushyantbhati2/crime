@@ -14,7 +14,7 @@ class LoginView(APIView):
     authentication_classes = []
     permission_classes = []
 
-    def post(self, request,format=None): 
+    def post(self, request, format=None):
         try:
             username = request.data.get("username")
             password = request.data.get("password")

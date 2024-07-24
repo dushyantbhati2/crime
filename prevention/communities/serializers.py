@@ -62,7 +62,7 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Comments
         fields = ("id", "comment_user", "content", "files", "likes", "liked")
-
+ 
     def get_liked(self, obj):
         user = self.context["request"].user
         return models.CommentAndReplyLike.objects.filter(
@@ -105,7 +105,7 @@ class ReplySerializer(ModelSerializer):
 
     class Meta:
         model = models.Reply
-        fields = "__all__"
+        fields = "__all__" 
         extra_field = "reply_user"
 
     def create(self, validated_data):
@@ -114,3 +114,4 @@ class ReplySerializer(ModelSerializer):
         return models.Reply.objects.create(
             reply_user=reply_user, comment=comment, **validated_data
         )
+

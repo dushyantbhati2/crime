@@ -19,7 +19,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-print(settings.SECRET_KEY)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -27,6 +26,7 @@ urlpatterns = [
     path("api/v1/auth/", include("user.urls")),
     path("api/v1/profiles/", include("profiles.urls")),
     path("api/v1/community/", include("communities.urls")),
+    path("api/v1/camps/", include("camps.urls")),
 ]
 urlpatterns = urlpatterns + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT

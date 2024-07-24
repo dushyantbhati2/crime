@@ -1,13 +1,10 @@
 import os
 from datetime import timedelta
-from pathlib import Path
-from django.conf import settings
-
 
 SECRET_KEY = NotImplemented
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -22,6 +19,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "rest_framework_simplejwt",
+    "camps",
 ]
 
 MIDDLEWARE = [
@@ -71,9 +69,9 @@ WSGI_APPLICATION = "prevention.wsgi.application"
 # }
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
 
@@ -130,7 +128,7 @@ REST_FRAMEWORK = {
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-LOCAL_SETTINGS_PATH = 'local/settings.dev.py'
+LOCAL_SETTINGS_PATH = "local/settings.dev.py"
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=120),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),

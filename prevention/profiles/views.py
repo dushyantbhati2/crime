@@ -9,24 +9,26 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import Profile
 from .serializers import ProfileSerializer
 
+
 class ProfileDetail(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
- 
+
     def get(self, request, pk):
         try:
             user = get_object_or_404(User, username=pk)
             profile = get_object_or_404(Profile, user=user)
-            serializer = ProfileSerializer(profile, context={'request': request})
+            serializer = ProfileSerializer(profile)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response(
                 {"Error": f"An error occurred: {str(e)}"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
-    def post(self,request,pk):
+
+    def put(self, request, pk):
         try:
-            user = get_object_or_404(User,username = pk)
+            user = get_object_or_404(User, username=pk)
             profile = get_object_or_404(Profile, user=user)
             serializer = ProfileSerializer(profile, data=request.data, partial=True)
             if serializer.is_valid():
@@ -37,4 +39,4 @@ class ProfileDetail(APIView):
             return Response(
                 {"Error": f"An error occurred: {str(e)}"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            )    
+            )
