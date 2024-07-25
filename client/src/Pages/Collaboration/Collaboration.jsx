@@ -2,6 +2,7 @@ import React from 'react'
 import img from "../../assets/4529196 1.png"
 import img2 from "../../assets/demonstration_5389914 1.png"
 import img3 from "../../assets/smiling-businessman-face-portrait-wearing-suit 1.png"
+import TestimonialsCard from './TestimonialsCard'
 function Collaboration() {
   return (
     <>
@@ -32,7 +33,7 @@ function Collaboration() {
             UPCOMING
           </button>
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid lg:grid-cols-2 gap-4 sm:grid-cols-1 ">
           {Array(4).fill().map((_, index) => (
             <div key={index} className="bg-white rounded-2xl w-[600px] p-4 shadow-lg flex gap-10 ">
                 <div>
@@ -67,16 +68,9 @@ function Collaboration() {
       <div className="bg-gray-900 rounded-lg p-6 mt-8">
         <h2 className="text-center text-white text-3xl font-bold mb-6">Testimonials</h2>
         <h3 className="text-center text-white text-xl mb-6">Read What Other Has To Say</h3>
-        <div className="grid grid-cols-4 justify-around">
+        <div className="lg:grid grid-cols-4 justify-around ">
           {Array(4).fill().map((_, index) => (
-            <div key={index} className="bg-gray-100 rounded-2xl p-4  h-[300px] w-[300px] shadow-lg">
-              <div className="flex justify-center mb-4">
-                <img src={img3}  className="rounded-full w-24 h-24 "/>
-              </div>
-              <p className="text-sm text-center text-black font-faint">
-                "Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit, Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua. Ut Enim Ad Minim Veniam, Quis"
-              </p>
-            </div>
+            <TestimonialsCard/>
           ))}
         </div>
       </div>

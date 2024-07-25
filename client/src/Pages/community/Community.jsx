@@ -1,7 +1,7 @@
 import React from "react";
 
 import RightSection from "./RightSection";
-import MainSection from "./mainSection";
+import MainSection from "./MainSection";
 import LeftSection from "./LeftSection";
 
 const Community = () => {
