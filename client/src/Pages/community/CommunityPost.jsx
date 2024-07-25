@@ -24,7 +24,6 @@ function CommunityPost({ post }) {
     // Update files state when post changes
     setFiles(post?.files || []);
   }, [post]);
-
   const handleDeletePost = async (id) => {
     try {
       await deletePost(id).unwrap();

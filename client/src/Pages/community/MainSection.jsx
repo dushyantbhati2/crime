@@ -2,9 +2,7 @@ import React, { useRef, useState } from "react";
 import CommunityPost from "./CommunityPost";
 import { FaImage } from "react-icons/fa6";
 import { MdOutlineAttachFile, MdEmojiEmotions } from "react-icons/md";
-import LeftSection from "./LeftSection";
 import { useCreatePostMutation, useGetAllPostsQuery } from "../../01Redux/Service/Post";
-import RightSection from "./RightSection";
 import { toast } from "react-toastify";
 
 
@@ -13,6 +11,7 @@ const MainSection = () => {
     const desc = useRef(null);
     const [images, setImages] = useState([]);
     const { data: posts, isLoading, isError, refetch } = useGetAllPostsQuery();
+
     const [post, { isLoading: isPostLoading }] = useCreatePostMutation();
   
     const handleImagesChange = (e) => {

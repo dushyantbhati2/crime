@@ -144,7 +144,7 @@ const PostSection = () => {
                   return (
                     <div
                       key={index}
-                      className=" w-[40%] md:w-[45%] xl:w-[35%]  bg-cover bg-center rounded-md cursor-pointer"
+                      className=" w-[40%] md:w-[45%]   bg-cover bg-center rounded-md cursor-pointer"
                       style={{ backgroundImage: `url(${file.file})` }}
                       onClick={() => handleImageClick(index)}
                     ></div>
@@ -235,6 +235,7 @@ const PostSection = () => {
             <div className="flex flex-col space-y-4">
               {comments?.map((reply) => (
                 <SingleReply
+                key={reply?.id}
                   reply={reply}
                   onDelete={() => handleDelete(reply.id)}
                 />
