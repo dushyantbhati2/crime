@@ -10,6 +10,7 @@ from .serializers import (
     BookmarkSerializer,
     CommentSerializer,
     CommunitySerializer,
+    FollowSerializer,
     PostSerializer,
     ReplySerializer,
 )
@@ -371,3 +372,13 @@ class Bookmark(APIView):
                 {"Error": f"An error occurred: {str(e)}"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
+
+class FollowView(APIView):
+    def get(self,request):
+        try:
+            following=get_list_or_404(models.Follow,follower=request.user)
+            serializer=FollowSerializer(following,many=True)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"Error":str(e)},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    # def post(self,request,pk):

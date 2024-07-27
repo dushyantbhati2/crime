@@ -6,10 +6,10 @@ from . import models
 
 
 class PostFileSerializer(ModelSerializer):
+
     class Meta:
         model = models.PostFile
         fields = ("file",)
-
 
 class PostSerializer(ModelSerializer):
     post_user = userSerializers(read_only=True)
@@ -26,7 +26,7 @@ class PostSerializer(ModelSerializer):
             "files",
             "post_user",
             "upload_time",
-            "liked",
+            "liked", 
             "bookmark",
         )
 
@@ -115,3 +115,9 @@ class ReplySerializer(ModelSerializer):
             reply_user=reply_user, comment=comment, **validated_data
         )
 
+class FollowSerializer(ModelSerializer):
+    follower=userSerializers()
+    following=userSerializers()
+    class Meta:
+        model=models.Follow
+        fields=["follower","following"]

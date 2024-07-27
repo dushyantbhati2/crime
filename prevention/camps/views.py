@@ -9,7 +9,7 @@ from . import models, serializers
 
 class camp(APIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes  = [IsAuthenticated]
 
     def get(self, request):
         try:

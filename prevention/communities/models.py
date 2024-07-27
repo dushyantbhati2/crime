@@ -6,7 +6,6 @@ from django.db import models
 
 # Create your models here.
 
-
 class Post(models.Model):
     post_user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="post_user"
@@ -22,7 +21,7 @@ class Post(models.Model):
 
     class Meta:
         ordering = ["-upload_time"]
-
+ 
 
 class PostFile(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="files")
@@ -104,3 +103,9 @@ class Community(models.Model):
     def __str__(self):
         return self.com_name
 
+class Follow(models.Model):
+    following=models.ForeignKey(User,on_delete=models.CASCADE,related_name="following")
+    follower=models.ForeignKey(User,on_delete=models.CASCADE,related_name="follower")
+
+    def __str__(self):
+        return self.following.username
