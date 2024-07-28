@@ -16,4 +16,5 @@ urlpatterns = [
     path("", views.Community.as_view(), name="Community"),
     path("likes/", views.Likes.as_view(), name="likes"),
     path("following/", views.FollowView.as_view()),
+    path("following/<str:pk>/", views.FollowView.as_view()),
 ]

@@ -15,7 +15,7 @@ class Camps(models.Model):
     camp_type=models.CharField(max_length=20)
     description=models.CharField(max_length=1000)
     created_by=models.ForeignKey(User,on_delete=models.CASCADE,related_name="created_by")
-    date=models.DateField(default=timezone.now)
+    date=models.DateField()
     location= models.CharField(max_length=200)
     meet_link=models.URLField(blank=True)
     camp_theme=models.CharField(max_length=20)

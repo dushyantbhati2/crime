@@ -372,7 +372,7 @@ class Bookmark(APIView):
                 {"Error": f"An error occurred: {str(e)}"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
-
+ 
 class FollowView(APIView):
     def get(self,request):
         try:
@@ -381,4 +381,20 @@ class FollowView(APIView):
             return Response(serializer.data,status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"Error":str(e)},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    # def post(self,request,pk):
+    def post(self,request,pk):
+        try:
+            following=get_object_or_404(models.User,username=pk)
+            
+            follow=models.Follow.objects.create(following=following,follower=request.user)
+            follow.save()
+            return Response({"Success":"Followed successfuly"},status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({"Error":str(e)},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    def delete(self,request,pk):
+        try:
+            following=get_object_or_404(models.User,username=pk)
+            Unfollow=models.Follow.objects.filter(following=following)
+            Unfollow.delete()
+            return Response({"Success":"Unfollowed successfully"},status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"Error":str(e)},status=status.HTTP_500_INTERNAL_SERVER_ERROR)

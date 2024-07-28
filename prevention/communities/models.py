@@ -108,4 +108,4 @@ class Follow(models.Model):
     follower=models.ForeignKey(User,on_delete=models.CASCADE,related_name="follower")
 
     def __str__(self):
-        return self.following.username
+        return self.following.username 

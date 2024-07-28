@@ -107,7 +107,7 @@ class ReplySerializer(ModelSerializer):
         model = models.Reply
         fields = "__all__" 
         extra_field = "reply_user"
-
+ 
     def create(self, validated_data):
         reply_user = self.context["request"].user
         comment = self.context["comment"]
