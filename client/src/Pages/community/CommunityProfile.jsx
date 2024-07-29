@@ -1,5 +1,5 @@
-import React from "react";
-import { RiGroupLine } from "react-icons/ri";
+import React from 'react'
+import { RiGroupLine } from 'react-icons/ri'
 
 const CommunityProfile = () => {
   return (
@@ -23,7 +23,8 @@ const CommunityProfile = () => {
           </div>
         </div>
         <p className="text-gray-900 py-2 sm:text-lg">
-          Connect, share, and collaborate with neighbors to prevent crime and enhance safety... <span className="text-blue-800">more</span>
+          Connect, share, and collaborate with neighbors to prevent crime and
+          enhance safety... <span className="text-blue-800">more</span>
         </p>
         <div className="card-actions font-medium flex items-center gap-2 sm:text-lg py-2">
           <RiGroupLine className="h-6 w-6" />
@@ -31,7 +32,7 @@ const CommunityProfile = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CommunityProfile;
+export default CommunityProfile

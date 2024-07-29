@@ -1,15 +1,14 @@
-import React from "react";
-import CommunityPost from "../CommunityPost";
-import { useGetAllPostsQuery } from "../../../01Redux/Service/Post";
-import { useGetUserDetailsQuery } from "../../../01Redux/Service/profile";
-import { useParams } from "react-router-dom";
+import React from 'react'
+import CommunityPost from '../CommunityPost'
+import { useGetAllPostsQuery } from '../../../01Redux/Service/Post'
+import { useGetUserDetailsQuery } from '../../../01Redux/Service/profile'
+import { useParams } from 'react-router-dom'
 
 const ProfileDetailSection = () => {
-  const {username}=useParams()
+  const { username } = useParams()
   console.log(username)
-  const {data:profile}= useGetUserDetailsQuery(username)
+  const { data: profile } = useGetUserDetailsQuery(username)
   console.log(profile)
-
 
   return (
     <div className="flex flex-col w-full">
@@ -51,11 +50,14 @@ const ProfileDetailSection = () => {
         {profile?.posts?.map((post, index) => (
           <CommunityPost key={index} post={post} />
         ))}
-              {profile?.posts?.length==null &&<h1 className="text-3xl text-gray-200 text-center m-auto">No posts available</h1>}
-
+        {profile?.posts?.length == null && (
+          <h1 className="text-3xl text-gray-200 text-center m-auto">
+            No posts available
+          </h1>
+        )}
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default ProfileDetailSection;
+export default ProfileDetailSection

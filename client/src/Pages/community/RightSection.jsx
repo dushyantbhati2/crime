@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 const RightSection = () => {
   return (
@@ -16,10 +16,12 @@ const RightSection = () => {
               className="w-9 h-9 rounded-full object-cover"
             />
             <h2 className=" font-medium text-base leading-5 mb-2">
-              {"Crime Prevention"}
+              {'Crime Prevention'}
             </h2>
           </div>
-          <div className=" font-semibold text-sm mb-2 bg-rose-600 px-4 py-2 rounded-full">Follow</div>
+          <div className=" font-semibold text-sm mb-2 bg-rose-600 px-4 py-2 rounded-full">
+            Follow
+          </div>
         </div>
         <div className="flex items-center justify-between space-x-2">
           <div className="flex items-center space-x-2">
@@ -29,10 +31,12 @@ const RightSection = () => {
               className="w-9 h-9 rounded-full object-cover"
             />
             <h2 className=" font-medium text-base leading-5 mb-2">
-              {"Crime Prevention"}
+              {'Crime Prevention'}
             </h2>
           </div>
-          <div className=" font-semibold text-sm mb-2 bg-rose-600 px-4 py-2 rounded-full">Follow</div>
+          <div className=" font-semibold text-sm mb-2 bg-rose-600 px-4 py-2 rounded-full">
+            Follow
+          </div>
         </div>
         <div className="flex items-center justify-between space-x-2">
           <div className="flex items-center space-x-2">
@@ -42,10 +46,12 @@ const RightSection = () => {
               className="w-9 h-9 rounded-full object-cover"
             />
             <h2 className=" font-medium text-base leading-5 mb-2">
-              {"Crime Prevention"}
+              {'Crime Prevention'}
             </h2>
           </div>
-          <div className=" font-semibold text-sm mb-2 bg-rose-600 px-4 py-2 rounded-full">Follow</div>
+          <div className=" font-semibold text-sm mb-2 bg-rose-600 px-4 py-2 rounded-full">
+            Follow
+          </div>
         </div>
         <div className="flex items-center justify-between space-x-2">
           <div className="flex items-center space-x-2">
@@ -55,10 +61,12 @@ const RightSection = () => {
               className="w-9 h-9 rounded-full object-cover"
             />
             <h2 className=" font-medium text-base leading-5 mb-2">
-              {"Crime Prevention"}
+              {'Crime Prevention'}
             </h2>
           </div>
-          <div className=" font-semibold text-sm mb-2 bg-rose-600 px-4 py-2 rounded-full">Follow</div>
+          <div className=" font-semibold text-sm mb-2 bg-rose-600 px-4 py-2 rounded-full">
+            Follow
+          </div>
         </div>
         <div className="flex items-center justify-between space-x-2">
           <div className="flex items-center space-x-2">
@@ -68,12 +76,13 @@ const RightSection = () => {
               className="w-9 h-9 rounded-full object-cover"
             />
             <h2 className=" font-medium text-base leading-5 mb-2">
-              {"Crime Prevention"}
+              {'Crime Prevention'}
             </h2>
           </div>
-          <div className=" font-semibold text-sm mb-2 bg-rose-600 px-4 py-2 rounded-full">Follow</div>
+          <div className=" font-semibold text-sm mb-2 bg-rose-600 px-4 py-2 rounded-full">
+            Follow
+          </div>
         </div>
-      
       </ul>
 
       <div className="font-semibold mt-4">Parenting Resources</div>
@@ -89,7 +98,7 @@ const RightSection = () => {
         </li>
       </ul>
     </aside>
-  );
-};
+  )
+}
 
-export default RightSection;
+export default RightSection
