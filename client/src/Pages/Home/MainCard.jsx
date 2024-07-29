@@ -1,5 +1,5 @@
-import React from "react";
-import sideImage from '../../assets/communitySide.png'
+import React from 'react';
+import sideImage from '../../assets/communitySide.png';
 const MainCard = () => {
   return (
     <>
@@ -9,7 +9,8 @@ const MainCard = () => {
             Join community, Empower Together
           </h1>
           <p className="text-base lg:text-lg text-gray-100 font-text">
-          Collaborate with your community to prevent crime and create a safer environment for all.
+            Collaborate with your community to prevent crime and create a safer
+            environment for all.
           </p>
           <div className="flex justify-center lg:justify-start">
             <button className="bg-white text-zinc-800 font-semibold px-7 py-3 rounded-lg hover:scale-105 transition-transform duration-150">
@@ -18,8 +19,7 @@ const MainCard = () => {
           </div>
         </div>
         <div className="  w-full sm:w-1/2  flex justify-center lg:justify-end ">
-
-            <img src={sideImage} alt="" />
+          <img src={sideImage} alt="" />
         </div>
       </div>
     </>

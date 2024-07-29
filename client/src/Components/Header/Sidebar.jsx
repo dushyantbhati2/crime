@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
-import { RxCross2 } from 'react-icons/rx'
-import { IoMenuSharp } from 'react-icons/io5'
+import React, { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { RxCross2 } from 'react-icons/rx';
+import { IoMenuSharp } from 'react-icons/io5';
 
 const Sidebar = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen)
-  }
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   return (
     <div className="relative md:sticky md:top-0 md:h-screen md:hidden">
@@ -54,7 +54,7 @@ const Sidebar = () => {
         )}
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

@@ -14,11 +14,7 @@ const PrivateRoute = () => {
 
   const isAuthenticated = auth.isAuthenticated;
 
-  return isAuthenticated ? (
-    <Outlet/>
-  ) : (
-    <Navigate to="/login" replace />
-  );
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
 };
 
 export default PrivateRoute;

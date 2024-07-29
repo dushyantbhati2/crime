@@ -1,12 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const Chathistory = () => {
-  return (
-    <div>
+  return <div></div>;
+};
 
-
-    </div>
-  )
-}
-
-export default Chathistory
+export default Chathistory;

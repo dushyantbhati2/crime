@@ -1,54 +1,51 @@
-import React from "react";
-import sideImage from "../../assets/communitySide.png";
-import img1 from "../../assets/imgforhome1.jpg"
-import img2 from "../../assets/imgforhome2.jpg"
-import img3 from "../../assets/imgforhome3.jpg"
-import gif1 from "../../assets/gif/map3.gif"
-import gif2 from "../../assets/gif/map.gif"
+import React from 'react';
+import sideImage from '../../assets/communitySide.png';
+import img1 from '../../assets/imgforhome1.jpg';
+import img2 from '../../assets/imgforhome2.jpg';
+import img3 from '../../assets/imgforhome3.jpg';
+import gif1 from '../../assets/gif/map3.gif';
+import gif2 from '../../assets/gif/map.gif';
 
-import SingleCard from "./SingleCard.jsx";
+import SingleCard from './SingleCard.jsx';
 const Cards = () => {
   return (
     <>
       <div className="flex flex-col space-y-8">
-      <SingleCard
-        heading=" Join community, Empower Together"
-        des="Collaborate with your community to prevent crime and create a safer environment for all."
-        link="/community"
-        img={sideImage}
-        classname=	""
-        classnameimg="justify-end"
-
-      />
-      <SingleCard
-        heading="Track crime in real-time"
-        des="Discover our safety features.
+        <SingleCard
+          heading=" Join community, Empower Together"
+          des="Collaborate with your community to prevent crime and create a safer environment for all."
+          link="/community"
+          img={sideImage}
+          classname=""
+          classnameimg="justify-end"
+        />
+        <SingleCard
+          heading="Track crime in real-time"
+          des="Discover our safety features.
 "
-        link="/community"
-        img={gif1}
-        classname="lg:flex-row-reverse justify-center"
-        classnameimg="justify-start"
-      />
-      <SingleCard
-        heading="Intuitive and user-friendly design"
-        des="We offer a variety of safety services, including live crime tracking, community collaboration, and emergency assistance.
+          link="/community"
+          img={gif1}
+          classname="lg:flex-row-reverse justify-center"
+          classnameimg="justify-start"
+        />
+        <SingleCard
+          heading="Intuitive and user-friendly design"
+          des="We offer a variety of safety services, including live crime tracking, community collaboration, and emergency assistance.
 "
-        link="/community"
-        img={gif2}
-        classname=	""
-        classnameimg="justify-end"
-
-      />
-      <SingleCard
-        heading="Customized solutions for all"
-        des="Whether you're an individual or a community organization, we have safety measures to suit your needs. We tailor our services to ensure maximum protection.
+          link="/community"
+          img={gif2}
+          classname=""
+          classnameimg="justify-end"
+        />
+        <SingleCard
+          heading="Customized solutions for all"
+          des="Whether you're an individual or a community organization, we have safety measures to suit your needs. We tailor our services to ensure maximum protection.
 "
-        link="/community"
-        img={img3}
-        classname="lg:flex-row-reverse "
-        classnameimg="justify-start"
-
-      />
+          link="/community"
+          img={img3}
+          classname="lg:flex-row-reverse "
+          classnameimg="justify-start"
+        />
       </div>
     </>
   );

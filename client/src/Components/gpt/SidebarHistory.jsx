@@ -1,7 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { RxOpenInNewWindow } from "react-icons/rx";
-import History from "./History";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { RxOpenInNewWindow } from 'react-icons/rx';
+import History from './History';
 
 const Sidebar = () => {
   return (
@@ -13,8 +13,8 @@ const Sidebar = () => {
         <span>
           <RxOpenInNewWindow className="h-6 w-6" />
         </span>
-      </div>{" "}
-  <History/>
+      </div>{' '}
+      <History />
       <footer className="p-2 flex items-center gap-2 absolute bottom-20">
         <div className="img">
           <img

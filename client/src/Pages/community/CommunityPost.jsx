@@ -1,50 +1,50 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import InfoPopup from '../../Components/comments/Popup'
-import { toast } from 'react-toastify'
-import { useSelector } from 'react-redux'
-import { useDeletePostMutation } from '../../01Redux/Service/Post'
-import { BsThreeDotsVertical } from 'react-icons/bs'
-import LikeSavedCommentBtns from '../../Components/comments/LikeSavedCommentBtns'
-import moment from 'moment'
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import InfoPopup from '../../Components/comments/Popup';
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import { useDeletePostMutation } from '../../01Redux/Service/Post';
+import { BsThreeDotsVertical } from 'react-icons/bs';
+import LikeSavedCommentBtns from '../../Components/comments/LikeSavedCommentBtns';
+import moment from 'moment';
 
 function CommunityPost({ post }) {
-  const { userInfo } = useSelector((state) => state.auth)
-  const [isVisible, setIsVisible] = useState(false)
-  const [popup, setPopup] = useState(false)
-  const [files, setFiles] = useState([])
+  const { userInfo } = useSelector((state) => state.auth);
+  const [isVisible, setIsVisible] = useState(false);
+  const [popup, setPopup] = useState(false);
+  const [files, setFiles] = useState([]);
 
-  const [deletePost] = useDeletePostMutation()
+  const [deletePost] = useDeletePostMutation();
 
-  const isoDateString = post?.upload_time
-  const parsedDate = moment(isoDateString)
-  const uploadedDate = parsedDate.format('D MMMM, YYYY')
-  const uploadedTime = parsedDate.format('h:mm A')
+  const isoDateString = post?.upload_time;
+  const parsedDate = moment(isoDateString);
+  const uploadedDate = parsedDate.format('D MMMM, YYYY');
+  const uploadedTime = parsedDate.format('h:mm A');
   useEffect(() => {
     // Update files state when post changes
-    setFiles(post?.files || [])
-  }, [post])
+    setFiles(post?.files || []);
+  }, [post]);
   const handleDeletePost = async (id) => {
     try {
-      await deletePost(id).unwrap()
-      toast.success('Post Deleted successfully')
-      setPopup(false)
+      await deletePost(id).unwrap();
+      toast.success('Post Deleted successfully');
+      setPopup(false);
     } catch (error) {
-      console.error('Failed to delete the post: ', error)
-      toast.error('Post Deletion failed')
+      console.error('Failed to delete the post: ', error);
+      toast.error('Post Deletion failed');
     }
-  }
+  };
 
-  const showModal = () => setIsVisible(true)
-  const hideModal = () => setIsVisible(false)
+  const showModal = () => setIsVisible(true);
+  const hideModal = () => setIsVisible(false);
   const confirmPrivacy = () => {
-    alert('Privacy accepted')
-    hideModal()
-  }
+    alert('Privacy accepted');
+    hideModal();
+  };
 
   const togglePopup = () => {
-    setPopup(!popup)
-  }
+    setPopup(!popup);
+  };
 
   return (
     <>
@@ -115,7 +115,7 @@ function CommunityPost({ post }) {
                       className=" w-[40%] md:w-[45%] xl:w-[35%]  bg-cover bg-center rounded-md cursor-pointer"
                       style={{ backgroundImage: `url(${file.file})` }}
                     ></div>
-                  )
+                  );
                 } else if (files.length === 1) {
                   return (
                     <div
@@ -127,7 +127,7 @@ function CommunityPost({ post }) {
                         backgroundPosition: 'center',
                       }}
                     ></div>
-                  )
+                  );
                 } else if (files.length === 2) {
                   return (
                     <div
@@ -139,11 +139,11 @@ function CommunityPost({ post }) {
                         backgroundPosition: 'center',
                       }}
                     ></div>
-                  )
+                  );
                 } else {
-                  return null
+                  return null;
                 }
-              })(),
+              })()
             )}
           </Link>
         )}
@@ -153,7 +153,7 @@ function CommunityPost({ post }) {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default CommunityPost
+export default CommunityPost;

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import Logo from "../../assets/black signup1.jpeg.jpg";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../01Redux/features/authFeature";
-import { postApi } from "../../01Redux/Service/Post";
-import { AiOutlineMenu } from "react-icons/ai";
-import LeftSection from "../../Pages/community/LeftSection";
+import React, { useEffect, useState } from 'react';
+import Logo from '../../assets/black signup1.jpeg.jpg';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../01Redux/features/authFeature';
+import { postApi } from '../../01Redux/Service/Post';
+import { AiOutlineMenu } from 'react-icons/ai';
+import LeftSection from '../../Pages/community/LeftSection';
 
 const Header3 = () => {
   const dispatch = useDispatch();
@@ -26,16 +26,16 @@ const Header3 = () => {
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [lastScrollY]);
 
   return (
     <header
       className={`md:bg-sky-500 bg-gray-900 md:border-b border-gray-600 shadow z-50 font-heading h-[70px] flex fixed top-0 w-full md:transition-transform md:duration-300 ${
-        show ? "md:translate-y-0" : "md:-translate-y-full"
+        show ? 'md:translate-y-0' : 'md:-translate-y-full'
       }`}
     >
       <div className="container mx-auto flex justify-between items-center py-2 px-4">
@@ -45,9 +45,12 @@ const Header3 = () => {
               onClick={() => setMenu(!menu)}
               className="text-white h-5 w-5"
             />
-          )}{" "}
+          )}{' '}
           {userInfo && menu && (
-            <div onClick={()=>setMenu(false)} className="fixed text-base font-muli top-[70px] left-0 w-[280px] h-full bg-gray-800 text-white px-4 z-50">
+            <div
+              onClick={() => setMenu(false)}
+              className="fixed text-base font-muli top-[70px] left-0 w-[280px] h-full bg-gray-800 text-white px-4 z-50"
+            >
               <LeftSection />
             </div>
           )}
@@ -78,7 +81,7 @@ const Header3 = () => {
           </div>
           <div className="relative group">
             <Link
-              to={"/community"}
+              to={'/community'}
               className="inline-flex items-center text-white"
             >
               Community
@@ -96,8 +99,8 @@ const Header3 = () => {
           </div>
           <button
             className={`inline-flex ${
-              userInfo==null &&
-              " px-5 py-2 rounded-full text-white hover:shadow-lg bg-gray-900"
+              userInfo == null &&
+              ' px-5 py-2 rounded-full text-white hover:shadow-lg bg-gray-900'
             } items-center text-base`}
           >
             {userInfo ? (
@@ -107,7 +110,7 @@ const Header3 = () => {
                 className="w-10 h-10 rounded-full object-cover"
               />
             ) : (
-              "Login"
+              'Login'
             )}
           </button>
         </nav>
@@ -122,7 +125,7 @@ const Header3 = () => {
               className="w-10 h-10 rounded-full object-cover"
             />
           ) : (
-            "Login"
+            'Login'
           )}
         </button>
       </div>

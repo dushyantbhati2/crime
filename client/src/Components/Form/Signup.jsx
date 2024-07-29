@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from "react";
-import Input from "../input_Button/Input";
-import { toast } from "react-toastify";
+import React, { useEffect, useState } from 'react';
+import Input from '../input_Button/Input';
+import { toast } from 'react-toastify';
 
-import { Link } from "react-router-dom";
-import image2 from "../../assets/black signup2.jpeg.jpg";
-import TooglePassword from "./TooglePassword";
-import { useNavigate } from "react-router-dom";
-import { useRegisterMutation } from "../../01Redux/Service/auth.js";
+import { Link } from 'react-router-dom';
+import image2 from '../../assets/black signup2.jpeg.jpg';
+import TooglePassword from './TooglePassword';
+import { useNavigate } from 'react-router-dom';
+import { useRegisterMutation } from '../../01Redux/Service/auth.js';
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
 
-  const navigate = useNavigate()
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const [
     passwordType,
@@ -26,26 +24,25 @@ const Signup = () => {
     togglePasswordVisibility,
   ] = TooglePassword();
 
-  const [ register ,{isLoading}] = useRegisterMutation()
-
+  const [register, { isLoading }] = useRegisterMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email, password)
+    console.log(email, password);
 
     if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
+      toast.error('Passwords do not match');
     } else {
       try {
         const res = await register({
-          'email': email,
-          'username': username,
-          'password': password,
-          'cnfpassword': confirmPassword
+          email: email,
+          username: username,
+          password: password,
+          cnfpassword: confirmPassword,
         }).unwrap();
         // dispatch(setCredentials({ ...res }));
-        navigate("/")
-        toast.success("User successfully registered");
+        navigate('/');
+        toast.success('User successfully registered');
       } catch (err) {
         console.log(err);
         toast.error(err);
@@ -73,12 +70,7 @@ const Signup = () => {
     // } catch (error) {
     //   console.error(error);
     // }
-
-
-
   };
-
-
 
   return (
     <div className="font-Poppins min-h-screen flex items-center justify-center lg:justify-start lg:gap-36 lg:px-12 w-full lg:bg-[#FDFDF5]">
@@ -109,7 +101,7 @@ const Signup = () => {
           htmlFor="username"
         />
         <Input
-          changeVisibility={() => togglePasswordVisibility("password")}
+          changeVisibility={() => togglePasswordVisibility('password')}
           type={passwordType}
           icon={visiblePasswordIcon}
           value={password}
@@ -121,7 +113,7 @@ const Signup = () => {
         />
 
         <Input
-          changeVisibility={() => togglePasswordVisibility("confirmPassword")}
+          changeVisibility={() => togglePasswordVisibility('confirmPassword')}
           type={confirmPasswordType}
           icon={visibleConfirmPasswordIcon}
           value={confirmPassword}
@@ -133,11 +125,8 @@ const Signup = () => {
         />
         <div className="flex items-center py-4">
           <p className="">
-            Already have an Account?{" "}
-            <Link
-              to="/login"
-              className="font- underline text-blue-700"
-            >
+            Already have an Account?{' '}
+            <Link to="/login" className="font- underline text-blue-700">
               Sign In
             </Link>
           </p>
@@ -149,7 +138,6 @@ const Signup = () => {
         >
           Sign Up
         </button>
-
       </form>
     </div>
   );

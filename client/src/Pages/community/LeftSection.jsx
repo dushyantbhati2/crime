@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   FaHome,
   FaMap,
@@ -6,28 +6,28 @@ import {
   FaUserFriends,
   FaRegBookmark,
   FaChartLine,
-} from 'react-icons/fa'
-import { LuActivitySquare } from 'react-icons/lu'
-import { FaRegBell } from 'react-icons/fa6'
+} from 'react-icons/fa';
+import { LuActivitySquare } from 'react-icons/lu';
+import { FaRegBell } from 'react-icons/fa6';
 
-import { MdOutlineExplore, MdOutlineTrackChanges } from 'react-icons/md'
-import { IoMdPeople } from 'react-icons/io'
-import { useDispatch, useSelector } from 'react-redux'
-import { logout } from '../../01Redux/features/authFeature'
-import { postApi } from '../../01Redux/Service/Post'
-import { Link, useNavigate } from 'react-router-dom'
+import { MdOutlineExplore, MdOutlineTrackChanges } from 'react-icons/md';
+import { IoMdPeople } from 'react-icons/io';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../01Redux/features/authFeature';
+import { postApi } from '../../01Redux/Service/Post';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LeftSection = () => {
-  const { userInfo } = useSelector((state) => state.auth)
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const { userInfo } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onLogout = () => {
     if (userInfo) {
-      dispatch(logout())
-      dispatch(postApi.util.resetApiState())
-    } else navigate('/login')
-  }
+      dispatch(logout());
+      dispatch(postApi.util.resetApiState());
+    } else navigate('/login');
+  };
   return (
     <aside className="text-gray-100">
       {/* <div className="text-xl font-bold">Community</div> */}
@@ -131,7 +131,7 @@ const LeftSection = () => {
         </button>
       </div>
     </aside>
-  )
-}
+  );
+};
 
-export default LeftSection
+export default LeftSection;

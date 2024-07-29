@@ -1,14 +1,14 @@
-import React from 'react'
-import CommunityPost from '../CommunityPost'
-import { useGetAllPostsQuery } from '../../../01Redux/Service/Post'
-import { useGetUserDetailsQuery } from '../../../01Redux/Service/profile'
-import { useParams } from 'react-router-dom'
+import React from 'react';
+import CommunityPost from '../CommunityPost';
+import { useGetAllPostsQuery } from '../../../01Redux/Service/Post';
+import { useGetUserDetailsQuery } from '../../../01Redux/Service/profile';
+import { useParams } from 'react-router-dom';
 
 const ProfileDetailSection = () => {
-  const { username } = useParams()
-  console.log(username)
-  const { data: profile } = useGetUserDetailsQuery(username)
-  console.log(profile)
+  const { username } = useParams();
+  console.log(username);
+  const { data: profile } = useGetUserDetailsQuery(username);
+  console.log(profile);
 
   return (
     <div className="flex flex-col w-full">
@@ -57,7 +57,7 @@ const ProfileDetailSection = () => {
         )}
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default ProfileDetailSection
+export default ProfileDetailSection;

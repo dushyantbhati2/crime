@@ -1,8 +1,7 @@
-
 *,
 *:after,
 *:before {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 :root {
@@ -10,17 +9,18 @@
   --y: 0;
   --xp: 0;
   --yp: 0;
-	--hue: calc(0 + (var(--xp) * 500));
-	--bg: #be123c;
-	--size: 100px;
-	--glow: radial-gradient(
-			50% 50% at center,
-			hsl(var(--hue) 80% 85%),
-			hsl(var(--hue) 80% 70%),
-			transparent
-		)
-		calc((var(--x) * 1px) - (var(--size) * 0.5))
-		calc((var(--y) * 1px) - (var(--size) * 0.5)) / var(--size) var(--size) no-repeat fixed;
+  --hue: calc(0 + (var(--xp) * 500));
+  --bg: #be123c;
+  --size: 100px;
+  --glow: radial-gradient(
+      50% 50% at center,
+      hsl(var(--hue) 80% 85%),
+      hsl(var(--hue) 80% 70%),
+      transparent
+    )
+    calc((var(--x) * 1px) - (var(--size) * 0.5))
+    calc((var(--y) * 1px) - (var(--size) * 0.5)) / var(--size) var(--size)
+    no-repeat fixed;
 }
 
 .controls {
@@ -30,26 +30,26 @@
 }
 
 .button {
-	border-radius: 1rem;
-	text-transform: uppercase;
-	font-weight: bold;
-	letter-spacing: 0.1ch;
-	background: var(--bg);
-	border: 4px solid transparent;
-	box-shadow: 0 1px hsl(0 0% 100% / 0.15) inset;
-	cursor: pointer;
-	background:
-		linear-gradient(var(--bg), var(--bg)) padding-box,
-		var(--glow),
-		linear-gradient(black, black) border-box;
-	transition: background-size 0.24s;
+  border-radius: 1rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.1ch;
+  background: var(--bg);
+  border: 4px solid transparent;
+  box-shadow: 0 1px hsl(0 0% 100% / 0.15) inset;
+  cursor: pointer;
+  background:
+    linear-gradient(var(--bg), var(--bg)) padding-box,
+    var(--glow),
+    linear-gradient(black, black) border-box;
+  transition: background-size 0.24s;
   touch-action: none;
   position: relative;
-	padding: 1rem 2rem;
+  padding: 1rem 2rem;
 }
 
 .button::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   box-shadow: 0 1px hsl(0 0% 100% / 0.15) inset;
@@ -59,10 +59,10 @@
 }
 
 .button span {
-	background: var(--glow), rgb(143, 130, 130);
-	-webkit-background-clip: text;
-	        background-clip: text;
-	color: transparent;
+  background: var(--glow), rgb(143, 130, 130);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
   height: 100%;
   width: 100%;
   z-index: 2;
@@ -71,11 +71,11 @@
 }
 
 :root:has(.button:active) {
-	--size: 300px;
+  --size: 300px;
 }
 
 .button::after {
-  content: "";
+  content: '';
   position: absolute;
   inset: -4px;
   filter: blur(20px);

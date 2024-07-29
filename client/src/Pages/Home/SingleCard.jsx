@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "./SingleCard.css"
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './SingleCard.css';
 
 export const syncPointer = ({ x: pointerX, y: pointerY }) => {
   const x = pointerX.toFixed(2);
@@ -22,15 +22,13 @@ const SingleCard = ({ heading, des, link, img, classname, classnameimg }) => {
       >
         <div className="w-full lg:w-1/3 flex flex-col gap-6 text-center lg:text-left">
           <h1 className="text-4xl lg:text-5xl xl:text-6xl font-semibold font-heading">
-            {heading}{" "}
+            {heading}{' '}
           </h1>
           <p className="text-base lg:text-lg text-gray-100 font-text">{des} </p>
           <div className="flex justify-center lg:justify-start">
-            <Link
-              to={link}
-
-            ><a href="#"className="button">
-               <span>Explore</span>
+            <Link to={link}>
+              <a href="#" className="button">
+                <span>Explore</span>
               </a>
             </Link>
           </div>

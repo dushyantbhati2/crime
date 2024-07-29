@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import React from 'react';
+import { Link, NavLink } from 'react-router-dom';
 
 const CommunityCard = () => {
   return (
@@ -32,7 +32,7 @@ const CommunityCard = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CommunityCard
+export default CommunityCard;

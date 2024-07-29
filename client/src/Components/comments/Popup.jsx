@@ -1,6 +1,11 @@
-import React from "react";
-import { RxCross2 } from "react-icons/rx";
-import { PiFacebookLogoDuotone, PiWhatsappLogoDuotone, PiLinkedinLogoDuotone, PiTwitterLogoDuotone } from "react-icons/pi";
+import React from 'react';
+import { RxCross2 } from 'react-icons/rx';
+import {
+  PiFacebookLogoDuotone,
+  PiWhatsappLogoDuotone,
+  PiLinkedinLogoDuotone,
+  PiTwitterLogoDuotone,
+} from 'react-icons/pi';
 // import PostComponent from '../SharePost/Postshare.jsx';
 
 const InfoPopup = ({ hideModal, isVisible, id }) => {
@@ -8,27 +13,38 @@ const InfoPopup = ({ hideModal, isVisible, id }) => {
   const postTitle = 'Check out this post!';
 
   const shareOnFacebook = () => {
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(postUrl)}`);
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(postUrl)}`
+    );
   };
 
   const shareOnLinkedIn = () => {
-    window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(postTitle)}`);
+    window.open(
+      `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(postTitle)}`
+    );
   };
 
   const shareOnWhatsApp = () => {
-    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(postTitle)}%20${encodeURIComponent(postUrl)}`);
+    window.open(
+      `https://api.whatsapp.com/send?text=${encodeURIComponent(postTitle)}%20${encodeURIComponent(postUrl)}`
+    );
   };
 
   const shareOnTwitter = () => {
-    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(postTitle)}&url=${encodeURIComponent(postUrl)}`);
+    window.open(
+      `https://twitter.com/intent/tweet?text=${encodeURIComponent(postTitle)}&url=${encodeURIComponent(postUrl)}`
+    );
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(postUrl).then(() => {
-      alert('Link copied to clipboard');
-    }).catch((error) => {
-      console.error('Error copying text: ', error);
-    });
+    navigator.clipboard
+      .writeText(postUrl)
+      .then(() => {
+        alert('Link copied to clipboard');
+      })
+      .catch((error) => {
+        console.error('Error copying text: ', error);
+      });
   };
 
   return (
@@ -45,16 +61,28 @@ const InfoPopup = ({ hideModal, isVisible, id }) => {
                   <PostComponent postId={id} postContent="Post sharing" />
                 </h3> */}
                 <div className="shareitems flex items-center justify-between">
-                  <div className="flex justify-center items-center cursor-pointer border w-16 h-16 rounded-full" onClick={shareOnFacebook}>
-                  <PiFacebookLogoDuotone className="w-11 h-11" />
+                  <div
+                    className="flex justify-center items-center cursor-pointer border w-16 h-16 rounded-full"
+                    onClick={shareOnFacebook}
+                  >
+                    <PiFacebookLogoDuotone className="w-11 h-11" />
                   </div>
-                  <div className="flex justify-center items-center cursor-pointer border w-16 h-16 rounded-full" onClick={shareOnLinkedIn}>
-                  <PiLinkedinLogoDuotone className="w-11 h-11" />
+                  <div
+                    className="flex justify-center items-center cursor-pointer border w-16 h-16 rounded-full"
+                    onClick={shareOnLinkedIn}
+                  >
+                    <PiLinkedinLogoDuotone className="w-11 h-11" />
                   </div>
-                  <div className="flex justify-center items-center cursor-pointer border w-16 h-16 rounded-full" onClick={shareOnWhatsApp}>
-                  <PiWhatsappLogoDuotone className="w-11 h-11" />
+                  <div
+                    className="flex justify-center items-center cursor-pointer border w-16 h-16 rounded-full"
+                    onClick={shareOnWhatsApp}
+                  >
+                    <PiWhatsappLogoDuotone className="w-11 h-11" />
                   </div>
-                  <div className="flex justify-center items-center cursor-pointer border w-16 h-16 rounded-full" onClick={shareOnTwitter}>
+                  <div
+                    className="flex justify-center items-center cursor-pointer border w-16 h-16 rounded-full"
+                    onClick={shareOnTwitter}
+                  >
                     <PiTwitterLogoDuotone className="w-11 h-11" />
                   </div>
                 </div>

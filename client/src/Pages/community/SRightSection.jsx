@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 function SRightSection() {
-  return <div>SRightSection</div>
+  return <div>SRightSection</div>;
 }
 
-export default SRightSection
+export default SRightSection;

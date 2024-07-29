@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
-import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
-import { PiPaperPlaneTilt } from "react-icons/pi";
-import { TfiComment } from "react-icons/tfi";
-import { toast } from "react-toastify";
-import { useGetAllCommentsQuery } from "../../01Redux/Service/Comment";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io';
+import { BsBookmarkFill, BsBookmark } from 'react-icons/bs';
+import { PiPaperPlaneTilt } from 'react-icons/pi';
+import { TfiComment } from 'react-icons/tfi';
+import { toast } from 'react-toastify';
+import { useGetAllCommentsQuery } from '../../01Redux/Service/Comment';
 
 import {
   useLikePostMutation,
   useDislikePostMutation,
   useSavedPostMutation,
   useUnSavedPostMutation,
-} from "../../01Redux/Service/Post";
+} from '../../01Redux/Service/Post';
 
 const LikeSavedCommentBtns = ({ post, showModal }) => {
   const [liked, setLiked] = useState(post?.liked || false);
@@ -40,12 +40,12 @@ const LikeSavedCommentBtns = ({ post, showModal }) => {
     try {
       const res = await likePost(id).unwrap();
       setLikeNum(res.likes);
-      toast("You liked the post");
+      toast('You liked the post');
     } catch (error) {
       setLiked(false);
       setLikeNum((prev) => prev - 1);
       console.log(error);
-      toast.error("Failed to like the post.");
+      toast.error('Failed to like the post.');
     }
   };
 
@@ -56,12 +56,12 @@ const LikeSavedCommentBtns = ({ post, showModal }) => {
     try {
       const res = await dislikePost(id).unwrap();
       setLikeNum(res.likes);
-      toast("You disliked the post");
+      toast('You disliked the post');
     } catch (error) {
       setLiked(true);
       setLikeNum((prev) => prev + 1);
       console.log(error);
-      toast.error("Failed to dislike the post.");
+      toast.error('Failed to dislike the post.');
     }
   };
 
@@ -78,11 +78,11 @@ const LikeSavedCommentBtns = ({ post, showModal }) => {
     setSaved(true);
     try {
       await savedPost(id).unwrap();
-      toast("You saved the post");
+      toast('You saved the post');
     } catch (error) {
       setSaved(false);
       console.log(error);
-      toast.error("Failed to save the post.");
+      toast.error('Failed to save the post.');
     }
   };
 
@@ -91,11 +91,11 @@ const LikeSavedCommentBtns = ({ post, showModal }) => {
     setSaved(false);
     try {
       await unSavedPost(id).unwrap();
-      toast("You unsaved the post");
+      toast('You unsaved the post');
     } catch (error) {
       setSaved(true);
       console.log(error);
-      toast.error("Failed to unsave the post.");
+      toast.error('Failed to unsave the post.');
     }
   };
 

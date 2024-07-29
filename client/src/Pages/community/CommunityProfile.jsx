@@ -1,5 +1,5 @@
-import React from 'react'
-import { RiGroupLine } from 'react-icons/ri'
+import React from 'react';
+import { RiGroupLine } from 'react-icons/ri';
 
 const CommunityProfile = () => {
   return (
@@ -32,7 +32,7 @@ const CommunityProfile = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CommunityProfile
+export default CommunityProfile;

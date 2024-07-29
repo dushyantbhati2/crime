@@ -1,5 +1,5 @@
-import React from 'react'
-import sideImage from '../../assets/communitySide.png'
+import React from 'react';
+import sideImage from '../../assets/communitySide.png';
 const CommunityHero = () => {
   return (
     <>
@@ -23,7 +23,7 @@ const CommunityHero = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default CommunityHero
+export default CommunityHero;

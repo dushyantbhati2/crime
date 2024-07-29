@@ -1,50 +1,50 @@
-import React, { useRef, useState } from 'react'
-import CommunityPost from './CommunityPost'
-import { FaImage } from 'react-icons/fa6'
-import { MdOutlineAttachFile, MdEmojiEmotions } from 'react-icons/md'
+import React, { useRef, useState } from 'react';
+import CommunityPost from './CommunityPost';
+import { FaImage } from 'react-icons/fa6';
+import { MdOutlineAttachFile, MdEmojiEmotions } from 'react-icons/md';
 import {
   useCreatePostMutation,
   useGetAllPostsQuery,
-} from '../../01Redux/Service/Post'
-import { toast } from 'react-toastify'
+} from '../../01Redux/Service/Post';
+import { toast } from 'react-toastify';
 
 const MainSection = () => {
-  const [description, setDescription] = useState('')
-  const desc = useRef(null)
-  const [images, setImages] = useState([])
-  const { data: posts, isLoading, isError, refetch } = useGetAllPostsQuery()
+  const [description, setDescription] = useState('');
+  const desc = useRef(null);
+  const [images, setImages] = useState([]);
+  const { data: posts, isLoading, isError, refetch } = useGetAllPostsQuery();
 
-  const [post, { isLoading: isPostLoading }] = useCreatePostMutation()
+  const [post, { isLoading: isPostLoading }] = useCreatePostMutation();
 
   const handleImagesChange = (e) => {
-    const files = Array.from(e.target.files)
+    const files = Array.from(e.target.files);
     if (files.length > 4) {
-      alert(`You can only upload a maximum of ${4} files.`)
+      alert(`You can only upload a maximum of ${4} files.`);
     } else {
-      setImages(files)
+      setImages(files);
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      const formData = new FormData()
-      formData.append('description', desc.current.value)
+      const formData = new FormData();
+      formData.append('description', desc.current.value);
       images.forEach((image) => {
-        formData.append('files', image)
-      })
+        formData.append('files', image);
+      });
 
-      await post(formData).unwrap()
-      toast.success('Post sent successfully')
-      refetch()
-      desc.current.value = ''
-      setImages([])
+      await post(formData).unwrap();
+      toast.success('Post sent successfully');
+      refetch();
+      desc.current.value = '';
+      setImages([]);
       // Refetch the posts to update the list with the new post
     } catch (error) {
-      console.error('Error posting:', error)
-      toast.error('Failed to post.')
+      console.error('Error posting:', error);
+      toast.error('Failed to post.');
     }
-  }
+  };
   return (
     <main>
       {isLoading && <div>Loading...</div>}
@@ -102,7 +102,7 @@ const MainSection = () => {
         ))}
       </section>
     </main>
-  )
-}
+  );
+};
 
-export default MainSection
+export default MainSection;

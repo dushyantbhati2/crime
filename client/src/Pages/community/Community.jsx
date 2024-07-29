@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
-import RightSection from './RightSection'
-import MainSection from './MainSection'
-import LeftSection from './LeftSection'
+import RightSection from './RightSection';
+import MainSection from './MainSection';
+import LeftSection from './LeftSection';
 
 const Community = () => {
   return (
@@ -17,7 +17,7 @@ const Community = () => {
         <RightSection />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Community
+export default Community;

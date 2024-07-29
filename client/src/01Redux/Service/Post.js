@@ -1,25 +1,25 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const baseQueryWithAuth = fetchBaseQuery({
-  baseUrl: "http://localhost:8000/api/v1/community",
+  baseUrl: 'http://localhost:8000/api/v1/community',
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.userInfo?.access;
     if (token) {
-      headers.set("Authorization", `Bearer ${token}`);
+      headers.set('Authorization', `Bearer ${token}`);
     }
     return headers;
   },
 });
 
 export const postApi = createApi({
-  reducerPath: "postApi",
+  reducerPath: 'postApi',
   baseQuery: baseQueryWithAuth,
-  tagTypes: ["Post"],
+  tagTypes: ['Post'],
   endpoints: (builder) => ({
     // get all posts
     getAllPosts: builder.query({
       query: () => `/allposts/`,
-      providesTags: [{ type: "Post", id: "LIST" }],
+      providesTags: [{ type: 'Post', id: 'LIST' }],
     }),
     getSinglePost: builder.query({
       query: (id) => `/allposts/${id}`,
@@ -28,35 +28,39 @@ export const postApi = createApi({
     createPost: builder.mutation({
       query: (newPost) => ({
         url: `/allposts/`,
-        method: "POST",
+        method: 'POST',
         body: newPost,
       }),
-      invalidatesTags: [{ type: "Post", id: "LIST" }],
+      invalidatesTags: [{ type: 'Post', id: 'LIST' }],
     }),
 
     deletePost: builder.mutation({
       query: (id) => ({
         url: `/allposts/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: [{ type: "Post", id: "LIST" }],
+      invalidatesTags: [{ type: 'Post', id: 'LIST' }],
     }),
 
     likePost: builder.mutation({
       query: (id) => ({
         url: `/likes/${id}`,
-        method: "POST",
+        method: 'POST',
       }),
-      invalidatesTags: [{ type: "Post", id: "LIST" }],
+      invalidatesTags: [{ type: 'Post', id: 'LIST' }],
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
-          postApi.util.updateQueryData("getAllPosts", undefined, (draftPosts) => {
-            const postToUpdate = draftPosts.find((post) => post.id === id);
-            if (postToUpdate) {
-              postToUpdate.Liked = true; // Update the property name as per your post object structure
-              postToUpdate.likes += 1;
+          postApi.util.updateQueryData(
+            'getAllPosts',
+            undefined,
+            (draftPosts) => {
+              const postToUpdate = draftPosts.find((post) => post.id === id);
+              if (postToUpdate) {
+                postToUpdate.Liked = true; // Update the property name as per your post object structure
+                postToUpdate.likes += 1;
+              }
             }
-          })
+          )
         );
 
         try {
@@ -70,26 +74,29 @@ export const postApi = createApi({
     dislikePost: builder.mutation({
       query: (id) => ({
         url: `/likes/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: [{ type: "Post", id: "LIST" }],
+      invalidatesTags: [{ type: 'Post', id: 'LIST' }],
     }),
 
     savedPost: builder.mutation({
       query: (id) => ({
         url: `/bookmark/${id}`,
-        method: "POST",
+        method: 'POST',
       }),
-      invalidatesTags: [{ type: "Post", id: "LIST" }],
+      invalidatesTags: [{ type: 'Post', id: 'LIST' }],
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
-          postApi.util.updateQueryData("getAllPosts", undefined, (draftPosts) => {
-            const postToUpdate = draftPosts.find((post) => post.id === id);
-            if (postToUpdate) {
-              postToUpdate.bookmark = true; // Update the property name as per your post object structure
-
+          postApi.util.updateQueryData(
+            'getAllPosts',
+            undefined,
+            (draftPosts) => {
+              const postToUpdate = draftPosts.find((post) => post.id === id);
+              if (postToUpdate) {
+                postToUpdate.bookmark = true; // Update the property name as per your post object structure
+              }
             }
-          })
+          )
         );
 
         try {
@@ -103,9 +110,9 @@ export const postApi = createApi({
     unSavedPost: builder.mutation({
       query: (id) => ({
         url: `/bookmark/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: [{ type: "Post", id: "LIST" }],
+      invalidatesTags: [{ type: 'Post', id: 'LIST' }],
     }),
   }),
 });

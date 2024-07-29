@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
-import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
-import { TfiComment } from "react-icons/tfi";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import Comments from "./Comments";
-import { useDeleteCommentMutation } from "../../01Redux/Service/Comment";
+import React, { useState, useRef, useEffect } from 'react';
+import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io';
+import { TfiComment } from 'react-icons/tfi';
+import { BsThreeDotsVertical } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import Comments from './Comments';
+import { useDeleteCommentMutation } from '../../01Redux/Service/Comment';
 
 const SingleReply = ({ reply, post }) => {
   const [like, setLike] = useState(false);
@@ -22,11 +22,11 @@ const SingleReply = ({ reply, post }) => {
   const handleDeleteComment = async (id) => {
     try {
       await deleteComment(id).unwrap();
-      toast.success("Post Deleted successfully");
+      toast.success('Post Deleted successfully');
       setPopup(false);
     } catch (error) {
-      console.error("Failed to delete the post: ", error);
-      toast.error("Post Deletion failed");
+      console.error('Failed to delete the post: ', error);
+      toast.error('Post Deletion failed');
     }
   };
 
@@ -38,12 +38,12 @@ const SingleReply = ({ reply, post }) => {
 
   useEffect(() => {
     if (popup) {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener('mousedown', handleClickOutside);
     } else {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     }
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [popup]);
 
@@ -84,7 +84,7 @@ const SingleReply = ({ reply, post }) => {
                 <span className="mb-1 ml-1">1</span>
               </button>
             </div>
-            {commentBtn && <Comments reply={reply}/>}
+            {commentBtn && <Comments reply={reply} />}
           </div>
         </div>
         {userInfo.user.username === reply?.comment_user?.username && (

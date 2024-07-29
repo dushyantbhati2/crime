@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const RightSection = () => {
   return (
@@ -98,7 +98,7 @@ const RightSection = () => {
         </li>
       </ul>
     </aside>
-  )
-}
+  );
+};
 
-export default RightSection
+export default RightSection;

@@ -1,48 +1,56 @@
-.youtube{
-    color: black;
-    /* border:none; */
-    border-color: black;
+.youtube {
+  color: black;
+  /* border:none; */
+  border-color: black;
 }
-.youtube:hover{
-    cursor: pointer;
-    color:white;
-    transition: all 0.3s;
-    border-color:#FF0000;
-    background-color: #FF0000;
+.youtube:hover {
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s;
+  border-color: #ff0000;
+  background-color: #ff0000;
 }
-.instagram{
-    /* border:none; */
-    color:black;
-    border-color: black;
+.instagram {
+  /* border:none; */
+  color: black;
+  border-color: black;
 }
-.instagram:hover{
-    cursor: pointer;
-    color:white;
-    transition: all 0.3s;
-    border-color:#dc2743;
-    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888, #7d1fa2);;
+.instagram:hover {
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s;
+  border-color: #dc2743;
+  background: linear-gradient(
+    45deg,
+    #f09433,
+    #e6683c,
+    #dc2743,
+    #cc2366,
+    #bc1888,
+    #7d1fa2
+  );
 }
-.github{
-    border-color: black;
-    color:black;
+.github {
+  border-color: black;
+  color: black;
 }
 
-.github:hover{
-    cursor: pointer;
-    color:white;
-    transition: all 0.3s;
-    border-color: #24292e;
-    background-color: #24292e;
+.github:hover {
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s;
+  border-color: #24292e;
+  background-color: #24292e;
 }
-.twitter{
-    color: rgb(0, 0, 0);
-    border-color: black;
+.twitter {
+  color: rgb(0, 0, 0);
+  border-color: black;
 }
 
 .twitter:hover {
-    color:white;
-    cursor: pointer;
-    transition: all 0.3s;
-    border-color:#0d8de5;
-    background-color: #0d8de5;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-color: #0d8de5;
+  background-color: #0d8de5;
 }
