@@ -41,9 +41,22 @@ X          <Route path="/login" element={<Login />} />
 
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+
+
+
           <Route path="/map" element={<CrimeMap />} />
           <Route path="/chat" element={<ChatGpt />} />
-          <Route path="/community" element={<Community />} />
+          <Route path="/community" element={<Community />} 
+          
+          
+          
+          />
+
+
+
+
+
+
           <Route path="/post/:id" element={<PostSection />} />
           <Route path="/community/:username" element={<Profile />} />
           <Route path="/sample" element={<Sample/>} />
