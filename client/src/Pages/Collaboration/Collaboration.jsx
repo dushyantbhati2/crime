@@ -3,7 +3,10 @@ import img from '../../assets/4529196 1.png';
 import img2 from '../../assets/demonstration_5389914 1.png';
 import img3 from '../../assets/smiling-businessman-face-portrait-wearing-suit 1.png';
 import TestimonialsCard from './TestimonialsCard';
+import { useGetAllCampsQuery } from '../../01Redux/Service/collab';
 function Collaboration() {
+  const { data: camps, loading, isError } = useGetAllCampsQuery();
+  console.log(camps);
   return (
     <>
       <div className="flex-col">
@@ -44,37 +47,21 @@ function Collaboration() {
               </button>
             </div>
             <div className="grid lg:grid-cols-2 gap-4 sm:grid-cols-1 ">
-              {Array(4)
-                .fill()
-                .map((_, index) => (
-                  <div
-                    key={index}
-                    className="bg-white rounded-2xl w-[600px] p-4 shadow-lg flex gap-10 "
-                  >
-                    <div>
-                      <h2 className="text-3xl text-black font-faint mb-2">
-                        Childs Safety
-                      </h2>
-                      <div className="flex items-center mb-2">
-                        <span className="bg-[#FFBF9C] text-sm text-black px-4 py-2 rounded-full">
-                          Camp
-                        </span>
-                        <span className="bg-[#FFBF9C] text-sm  text-black px-4 py-2 rounded-full ml-2 ">
-                          Offline
-                        </span>
-                        <span className="bg-[#FFBF9C] text-sm  text-black px-4 py-2 rounded-full ml-2 ">
-                          test
-                        </span>
-                        <span className="bg-[#FFBF9C] text-sm  text-black px-4 py-2 rounded-full ml-2 ">
-                          test
-                        </span>
-                      </div>
-                      <p className="text-base text-black font-bold  mb-2">
-                        Theme
-                      </p>
-
-                      <span className="bg-[#FFBF9C] text-sm  text-black px-4 py-2 rounded-full ">
-                        Cyber Bullying
+              {camps?.map((camp) => (
+                <div
+                  key={camp?.camp_id}
+                  className="bg-white rounded-2xl w-[600px] p-4 shadow-lg flex gap-10 "
+                >
+                  <div>
+                    <h2 className="text-3xl text-black font-faint mb-2">
+                      {camp?.camp_name}
+                    </h2>
+                    <div className="flex items-center mb-2">
+                      <span className="bg-[#FFBF9C] text-sm text-black px-4 py-2 rounded-full">
+                        Camp
+                      </span>
+                      <span className="bg-[#FFBF9C] text-sm  text-black px-4 py-2 rounded-full ml-2 ">
+                        {camp?.camp_type}
                       </span>
                       <span className="bg-[#FFBF9C] text-sm  text-black px-4 py-2 rounded-full ml-2 ">
                         test
@@ -82,20 +69,38 @@ function Collaboration() {
                       <span className="bg-[#FFBF9C] text-sm  text-black px-4 py-2 rounded-full ml-2 ">
                         test
                       </span>
-
-                      <p className="bg-[#ffe7db] text-base font-faint w-[150px]  text-black px-4 py-2 rounded-full my-5">
-                        Starts 01/07/24
-                      </p>
                     </div>
-                    <div className="flex-col ml-10 ">
-                      <img src={img2} alt="" className="my-9 ml-10" />
+                    <p className="text-base text-black font-bold  mb-2">
+                      Theme
+                    </p>
 
-                      <button className="bg-[#FF735C] text-black text-lg font-faint  rounded-full w-[170px] h-[50px] shadow-md hover:shadow-2xl ">
-                        Register
-                      </button>
-                    </div>
+                    <span className="bg-[#FFBF9C] text-sm  text-black px-4 py-2 rounded-full ">
+                      {camp?.description}
+                    </span>
+                    <span className="bg-[#FFBF9C] text-sm  text-black px-4 py-2 rounded-full ml-2 ">
+                      test
+                    </span>
+                    <span className="bg-[#FFBF9C] text-sm  text-black px-4 py-2 rounded-full ml-2 ">
+                      test
+                    </span>
+
+                    <p className="bg-[#ffe7db] text-base font-faint w-[150px]  text-black px-4 py-2 rounded-full my-5">
+                      Starts {camp?.date}
+                    </p>
                   </div>
-                ))}
+                  <div className="flex-col ml-10 ">
+                    <img
+                      src={`http://localhost:8000${camp?.files[0]}`}
+                      alt=""
+                      className="my-9 ml-10"
+                    />
+
+                    <button className="bg-[#FF735C] text-black text-lg font-faint  rounded-full w-[170px] h-[50px] shadow-md hover:shadow-2xl ">
+                      Register
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
           <div className="bg-gray-900 rounded-lg p-6 mt-8">

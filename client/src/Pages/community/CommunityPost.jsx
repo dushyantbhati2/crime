@@ -12,6 +12,7 @@ function CommunityPost({ post }) {
   const { userInfo } = useSelector((state) => state.auth);
   const [isVisible, setIsVisible] = useState(false);
   const [popup, setPopup] = useState(false);
+  console.log(post);
   const [files, setFiles] = useState([]);
 
   const [deletePost] = useDeletePostMutation();
